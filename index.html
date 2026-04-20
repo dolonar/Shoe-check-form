@@ -1,54 +1,132 @@
-document.getElementById('generate').addEventListener('click', async () => {
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shoe Check PRO CZ</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    
+    <style>
+        :root { --primary: #007AFF; --danger: #FF3B30; --bg: #f2f2f7; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 15px; color: #1c1c1e; }
+        .card { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: auto; }
+        h2 { text-align: center; margin-top: 0; font-size: 22px; color: #000; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        label { display: block; margin-top: 12px; font-weight: 600; font-size: 13px; color: #8e8e93; text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #d1d1d6; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fff; -webkit-appearance: none; }
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+        .photo-item { background: #f9f9fb; border: 1px dashed #c7c7cc; border-radius: 10px; padding: 15px 5px; text-align: center; font-size: 12px; position: relative; }
+        .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; cursor: pointer; }
+        .sig-container { background: #fff; border: 1px solid #d1d1d6; border-radius: 10px; margin-top: 8px; overflow: hidden; }
+        canvas { width: 100%; height: 150px; touch-action: none; display: block; }
+        .btn-clear { background: none; border: none; color: var(--danger); font-size: 12px; padding: 8px; cursor: pointer; width: 100%; text-align: right; }
+        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: 700; margin-top: 25px; cursor: pointer; }
+        .btn-submit:disabled { background: #ccc; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Shoe Check Protokol</h2>
+    
+    <label>Název závodu</label>
+    <input type="text" id="compName" placeholder="Např. Poděbrady Walking">
+
+    <div class="grid">
+        <div>
+            <label>Datum závodu</label>
+            <input type="date" id="raceDate">
+        </div>
+        <div>
+            <label>Pohlaví</label>
+            <select id="sex">
+                <option value="Muži">Muži</option>
+                <option value="Ženy">Ženy</option>
+            </select>
+        </div>
+    </div>
+
+    <label>Jméno atleta</label>
+    <input type="text" id="athleteName" placeholder="Celé jméno">
+
+    <label>Disciplína</label>
+    <input type="text" id="event" placeholder="Např. 20km chůze">
+
+    <div class="grid">
+        <div>
+            <label>Značka</label>
+            <input type="text" id="brand" placeholder="Nike">
+        </div>
+        <div>
+            <label>Model</label>
+            <input type="text" id="model" placeholder="Vaporfly 3">
+        </div>
+    </div>
+
+    <label>Fotodokumentace</label>
+    <div class="photo-grid">
+        <div class="photo-item">📸 Z boku<input type="file" id="p1" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Podrážka<input type="file" id="p2" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Pata<input type="file" id="p3" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Štítek<input type="file" id="p4" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Vložka<input type="file" id="p5" accept="image/*" capture="environment"></div>
+    </div>
+
+    <label>Poznámky</label>
+    <textarea id="notes" rows="2" placeholder="Povoleno / Nepovoleno..."></textarea>
+
+    <label>Podpis atleta</label>
+    <div class="sig-container"><canvas id="sig-athlete"></canvas></div>
+    <button class="btn-clear" onclick="padAthlete.clear()">Smazat podpis</button>
+
+    <label>Podpis inspektora</label>
+    <div class="sig-container"><canvas id="sig-inspector"></canvas></div>
+    <button class="btn-clear" onclick="padInspector.clear()">Smazat podpis</button>
+
+    <button class="btn-submit" id="generate">VYGENEROVAT PDF</button>
+</div>
+
+<script>
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
 
-    // PŘIDÁNÍ ČESKÉHO FONTU (Roboto-Regular)
-    // Toto umožní správné zobrazení znaků č, ř, ž, š, ě atd.
-    const myFont = "AAEAAAASAQAABAAgR0RFRvS996YAAAGMAAAAdkdQT1P96f7bAAADMAAAALxHU0VEf79/vwAAAbwAAAA0T1MvMnixSfsAAAFcAAAAYGNtYXDA_8L_AAACRAAAAGxjdnQgK3AIeQAAAnQAAAAoZnBnbV9S8_8AAAOkAAABc2dhc3AABAAHAAABhAAAAAhnbHlmYp_6fQAAAtwAABN0aGVhZPH8v8sAAADsAAAANmhoZWEH_wH_AAABJAAAACRobXR4Xf4AAAAAAXAAAAA0bG9jYV70v_8AAALMAAAAHG1heHAAXwBfAAABRAAAACBuYW1lY_7_fwAABSAAAAJbcG9zdL9_v38AAAWMAAAAIHByZf8A_wAAApgAAAAHAAEAAf//AA8AAQAAAAEAAAn_v_8fDzz1AAsEAAAAAADZ9L32AAAAANn0v_YAAAAAA_8D_wAAAAgAAgAAAAAAAAABAAAD_wP_AAAD_wAAAAAD_wABAAAAAAAAAAAAAAAAAAAADQABAAAADQAgAAMAAAAAAAEAAAAAAAoAAAIAAZAAAwABAAAADAAAAAAADAAMAAoAAgALAC0A_8L_AAAAA_8D_wAAAAAA_wABAAAAAQAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAAAsAAA
-    });
-
-    // Nastavíme font, který má v jsPDF vestavěnou (omezenou) podporu, 
-    // ale pro plnou diakritiku je nejlepší použít standardní 'helvetica' 
-    // a texty vkládat v UTF-8.
-    
-    const dateNow = new Date().toLocaleDateString('cs-CZ');
-    
-    // ... sběr dat zůstává stejný ...
-
-    // --- STRANA 1 ---
-    doc.setFillColor(240, 240, 240);
-    doc.rect(0, 0, 210, 40, 'F'gene);
-    
-    // Nastavení fontu pro český jazyk
-    doc.setFont("helvetica", "bold"); 
-    doc.setFontSize(22);
-    
-    // Tady je trik: jsPDF standardní helveticu v UTF-8 občas nezvládne bez vložení fontu.
-    // Pokud se ti stále zobrazují čtverečky, použijeme metodu vložení vlastního fontu:
-    
-    doc.text("PROTOKOL O KONTROLE OBUVI", 105, 20, { align: "center" }); // č, ř... 
-    
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Vygenerováno: ${dateNow}`, 105, 30, { align: "center" }); // ě 
-
-    let y = 55;
-    const drawRow = (label, value) => {
-        doc.setFont("helvetica", "bold");
-        doc.text(label + ":", 20, y);
-        doc.setFont("helvetica", "normal");
-        // Ošetření diakritiky pro hodnoty z inputů
-        doc.text(String(value), 70, y); 
-        doc.setDrawColor(200);
-        doc.line(20, y + 2, 190, y + 2);
-        y += 12;
+    // Nastavení podpisů
+    const setupPad = (id) => {
+        const canvas = document.getElementById(id);
+        const pad = new SignaturePad(canvas, { backgroundColor: 'rgb(255, 255, 255)' });
+        const resize = () => {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            pad.clear();
+        };
+        window.addEventListener("resize", resize);
+        resize();
+        return pad;
     };
 
-    // Tady už budou české názvy 
-    drawRow("Závod", data.comp);
-    drawRow("Datum závodu", data.raceDate);
-    drawRow("Jméno atleta", data.athlete);
-    drawRow("Disciplína / Pohlaví", `${data.event} (${data.sex})`);
-    drawRow("Model boty", `${data.brand} ${data.model}`);
-    
-    // ... zbytek kódu pro fotky a podpisy zůstává stejný[cite: 6, 9]...
+    const padAthlete = setupPad('sig-athlete');
+    const padInspector = setupPad('sig-inspector');
+
+    const getImageData = (file) => {
+        return new Promise((resolve) => {
+            if (!file) resolve(null);
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.readAsDataURL(file);
+        });
+    };
+
+    document.getElementById('generate').addEventListener('click', async () => {
+        const btn = document.getElementById('generate');
+        btn.disabled = true;
+        btn.innerText = "Generuji...";
+
+        // Vytvoření PDF (Unicode podpora je v jsPDF automatická u standardních fontů, pokud se správně nastaví)
+        const doc = new jsPDF();
+        const dateNow = new Date().toLocaleDateString('cs-CZ');
+        
+        const data = {
+            comp: document.getElementById('compName').value || "-",
