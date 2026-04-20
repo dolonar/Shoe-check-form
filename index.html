@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Shoe Check PRO Final Clean</title>
+    <title>Shoe Check PRO Legal</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <style>
@@ -96,8 +96,8 @@
     let currentLang = 'en';
 
     const translations = {
-        en: { title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", photo: "Photos", side: "📸 Side", outsole: "📸 Outsole", heel: "📸 Heel", label: "📸 Label", insole: "📸 Insole", notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol" },
-        cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", photo: "Fotky", side: "📸 Z boku", outsole: "📸 Podrážka", heel: "📸 Pata", label: "📸 Štítek", insole: "📸 Vložka", notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol" }
+        en: { title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", photo: "Photos", side: "📸 Side", outsole: "📸 Outsole", heel: "📸 Heel", label: "📸 Label", insole: "📸 Insole", notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol", legal: "This signature is used solely for the validation of the shoe check results. By signing, the athlete agrees to the processing of personal data for the purpose of evidencing race compliance in accordance with World Athletics rules and GDPR regulations." },
+        cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", photo: "Fotky", side: "📸 Z boku", outsole: "📸 Podrážka", heel: "📸 Pata", label: "📸 Štítek", insole: "📸 Vložka", notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol", legal: "Tento podpis slouží pouze pro validaci výsledků kontroly obuvi. Udělením podpisu atlet souhlasí se zpracováním osobních údajů uvedených v tomto protokolu pro účely doložení regulérnosti závodu v souladu s pravidly World Athletics a nařízeními GDPR." }
     };
 
     function setLang(lang) {
@@ -123,7 +123,6 @@
         const res = () => { const r = Math.max(window.devicePixelRatio || 1, 1); c.width = c.offsetWidth * r; c.height = c.offsetHeight * r; c.getContext("2d").scale(r, r); p.clear(); };
         window.addEventListener("resize", res); setTimeout(res, 500); return p;
     };
-
     const padA = setupPad('sig-a'); const padI = setupPad('sig-i');
 
     const resizeImg = (file) => {
@@ -156,21 +155,17 @@
             const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
             const dateStr = new Date().toLocaleDateString(currentLang === 'cs' ? 'cs-CZ' : 'en-GB');
 
-            const drawPageHeader = (titleText) => {
+            const drawHeader = (txt) => {
                 try { doc.addImage(logo, 'PNG', 155, 10, 35, 20, undefined, 'FAST'); } catch(e){}
-                doc.setFont("helvetica", "bold").setFontSize(20).text(titleText, 20, 20);
+                doc.setFont("helvetica", "bold").setFontSize(20).text(txt, 20, 20);
                 doc.setFillColor(0, 122, 255).rect(20, 32, 170, 2, 'F');
             };
-
-            const drawPageFooter = () => {
-                doc.setFontSize(8).setFont("helvetica", "normal");
-                doc.text(`${t.issued}: ${dateStr}`, 190, 285, { align: "right" });
+            const drawFooter = () => {
+                doc.setFontSize(8).setFont("helvetica", "normal").text(`${t.issued}: ${dateStr}`, 190, 285, { align: "right" });
             };
 
-            drawPageHeader(t.title);
-            drawPageFooter();
+            drawHeader(t.title); drawFooter();
             let y = 45; 
-
             const addRow = (l, v) => {
                 y += 8; doc.setFont("helvetica", "bold").text(l + ":", 25, y);
                 doc.setFont("helvetica", "normal").text(String(v || "-"), 75, y);
@@ -188,14 +183,21 @@
             doc.setFont("helvetica", "bold").text(t.notes.toUpperCase() + ":", 25, y + 8);
             doc.setFont("helvetica", "normal").text(document.getElementById('notes').value || "OK", 25, y + 16, { maxWidth: 160 });
 
-            y = 260; 
+            // Podpisy a Právní doložka
+            y = 250; 
             doc.setFontSize(8).setDrawColor(0).setLineWidth(0.3);
-            doc.line(20, y, 90, y); doc.line(120, y, 190, y);
-            doc.text(t.sigA.toUpperCase(), 55, y + 5, { align: "center" });
-            doc.text(t.sigI.toUpperCase(), 155, y + 5, { align: "center" });
+            doc.line(20, y, 90, y); doc.line(110, y, 180, y);
+            doc.text(t.sigA.toUpperCase(), 55, y + 4, { align: "center" });
+            doc.text(t.sigI.toUpperCase(), 145, y + 4, { align: "center" });
 
-            if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y - 25, 60, 22, undefined, 'FAST');
-            if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 125, y - 25, 60, 22, undefined, 'FAST');
+            if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y - 22, 60, 20, undefined, 'FAST');
+            if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y - 22, 60, 20, undefined, 'FAST');
+
+            // GDPR / Legal text
+            y += 10;
+            doc.setFontSize(6.5).setFont("helvetica", "italic").setTextColor(100);
+            doc.text(t.legal, 20, y, { maxWidth: 170, align: "justify" });
+            doc.setTextColor(0);
 
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
             const labels = [t.side, t.outsole, t.heel, t.label, t.insole];
@@ -203,23 +205,16 @@
             const resolvedImages = await Promise.all(imgPromises);
 
             if (resolvedImages.some(img => img !== null)) {
-                doc.addPage(); 
-                drawPageHeader(t.photoTitle);
-                drawPageFooter();
+                doc.addPage(); drawHeader(t.photoTitle); drawFooter();
                 let py = 50, count = 0;
                 resolvedImages.forEach((img, i) => {
                     if (img) {
-                        const x = (count % 2 === 0) ? 20 : 110;
+                        const x = (count % 2 === 0) ? 20 : 105;
                         doc.setFontSize(9).text(labels[i].replace('📸 ', ''), x, py - 3);
                         doc.setDrawColor(230).rect(x, py, 80, 60).addImage(img, 'JPEG', x, py, 80, 60, undefined, 'FAST');
                         if (count % 2 === 1) py += 75;
                         count++;
-                        if (count % 6 === 0 && count < resolvedImages.filter(x => x).length) { 
-                            doc.addPage(); 
-                            drawPageHeader(t.photoTitle); 
-                            drawPageFooter();
-                            py = 50; 
-                        }
+                        if (count % 6 === 0 && count < resolvedImages.filter(x => x).length) { doc.addPage(); drawHeader(t.photoTitle); drawFooter(); py = 50; }
                     }
                 });
             }
