@@ -1,82 +1,91 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shoe Check PRO Final</title>
+    <title>Official Shoe Check PRO</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <style>
         :root { --primary: #007AFF; --success: #34C759; --bg: #f2f2f7; }
         body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; }
         .card { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: auto; }
+        
+        .header-logo { text-align: center; margin-bottom: 20px; }
+        .header-logo img { max-width: 180px; height: auto; border-radius: 8px; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        label { display: block; margin-top: 10px; font-weight: 600; font-size: 13px; color: #8e8e93; text-transform: uppercase; }
+        label { display: block; margin-top: 10px; font-weight: 600; font-size: 11px; color: #8e8e93; text-transform: uppercase; }
         input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #d1d1d6; border-radius: 10px; box-sizing: border-box; font-size: 16px; -webkit-appearance: none; }
         
-        /* Styl pro externí odkaz */
-        .btn-link { display: block; background: var(--success); color: white; border: none; width: 100%; padding: 14px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; margin: 15px 0; box-sizing: border-box; }
+        .btn-link { display: block; background: var(--success); color: white; border: none; width: 100%; padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-align: center; text-decoration: none; margin: 15px 0; box-sizing: border-box; }
         
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .photo-item { background: #f9f9fb; border: 1px dashed #c7c7cc; border-radius: 10px; padding: 12px 5px; text-align: center; position: relative; font-size: 12px; }
+        .photo-item { background: #f9f9fb; border: 1px dashed #c7c7cc; border-radius: 10px; padding: 12px 5px; text-align: center; position: relative; font-size: 12px; color: #555; }
         .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; cursor: pointer; }
+        
         .sig-container { background: #fff; border: 1px solid #d1d1d6; border-radius: 10px; margin-top: 8px; touch-action: none; }
         canvas { width: 100%; height: 140px; display: block; border-radius: 10px; }
+        
         .btn-clear { background: none; border: none; color: #FF3B30; font-size: 11px; padding: 5px; cursor: pointer; width: 100%; text-align: right; }
-        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: 700; margin-top: 20px; cursor: pointer; }
-        .btn-submit:disabled { background: #ccc; }
+        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: 700; margin-top: 20px; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2 style="text-align:center; margin-top:0;">Shoe Check Protokol</h2>
+    <div class="header-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png" alt="World Athletics Logo">
+    </div>
     
     <a href="https://certcheck.worldathletics.org/" target="_blank" class="btn-link">
         LIST OF APPROVED ATHLETIC SHOES
     </a>
 
-    <label>Název závodu</label>
-    <input type="text" id="compName" placeholder="Např. Poděbrady Walking">
+    <label>Competition Name</label>
+    <input type="text" id="compName" placeholder="e.g. World Athletics Championships">
 
     <div class="grid">
-        <div><label>Datum závodu</label><input type="date" id="raceDate"></div>
-        <div><label>Pohlaví</label><select id="sex"><option value="Muži">Muži</option><option value="Ženy">Ženy</option></select></div>
+        <div><label>Race Date</label><input type="date" id="raceDate"></div>
+        <div><label>Sex Category</label><select id="sex"><option value="Men">Men</option><option value="Women">Women</option></select></div>
     </div>
 
-    <label>Jméno atleta</label><input type="text" id="athleteName" placeholder="Celé jméno">
-    <label>Disciplína</label><input type="text" id="event" placeholder="Např. 20km chůze">
+    <label>Athlete's Name</label><input type="text" id="athleteName" placeholder="Full Name">
+    <label>Event</label><input type="text" id="event" placeholder="e.g. 20km Race Walk">
 
     <div class="grid">
-        <div><label>Značka</label><input type="text" id="brand" placeholder="Nike"></div>
-        <div><label>Model</label><input type="text" id="model" placeholder="Vaporfly 3"></div>
+        <div><label>Shoe Brand</label><input type="text" id="brand" placeholder="Nike"></div>
+        <div><label>Shoe Model</label><input type="text" id="model" placeholder="Vaporfly 3"></div>
     </div>
 
-    <label>Fotodokumentace</label>
+    <label>Photo Documentation</label>
     <div class="photo-grid">
-        <div class="photo-item">📸 Z boku<input type="file" id="p1" accept="image/*" capture="environment"></div>
-        <div class="photo-item">📸 Podrážka<input type="file" id="p2" accept="image/*" capture="environment"></div>
-        <div class="photo-item">📸 Pata<input type="file" id="p3" accept="image/*" capture="environment"></div>
-        <div class="photo-item">📸 Štítek<input type="file" id="p4" accept="image/*" capture="environment"></div>
-        <div class="photo-item">📸 Vložka<input type="file" id="p5" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Side View<input type="file" id="p1" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Outsole<input type="file" id="p2" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Heel<input type="file" id="p3" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Label<input type="file" id="p4" accept="image/*" capture="environment"></div>
+        <div class="photo-item">📸 Insole/Orthotics<input type="file" id="p5" accept="image/*" capture="environment"></div>
     </div>
 
-    <label>Poznámky</label>
-    <textarea id="notes" rows="2" placeholder="Povoleno / Nepovoleno..."></textarea>
+    <label>Technical Notes / Decision</label>
+    <textarea id="notes" rows="2" placeholder="Approved / Remarks..."></textarea>
 
-    <label>Podpis atleta</label>
+    <label>Athlete's Signature</label>
     <div class="sig-container"><canvas id="sig-a"></canvas></div>
-    <button class="btn-clear" type="button" onclick="padA.clear()">Smazat podpis</button>
+    <button class="btn-clear" type="button" onclick="padA.clear()">Clear Signature</button>
 
-    <label>Podpis inspektora</label>
+    <label>Inspector's Signature</label>
     <div class="sig-container"><canvas id="sig-i"></canvas></div>
-    <button class="btn-clear" type="button" onclick="padI.clear()">Smazat podpis</button>
+    <button class="btn-clear" type="button" onclick="padI.clear()">Clear Signature</button>
 
-    <button class="btn-submit" id="generate">VYGENEROVAT PDF</button>
+    <button class="btn-submit" id="generate">GENERATE PDF PROTOCOL</button>
 </div>
 
 <script>
     const { jsPDF } = window.jspdf;
+
+    // Use a proxy or direct URL for the PDF logo
+    const PDF_LOGO_URL = 'https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png';
 
     const setupPad = (id) => {
         const c = document.getElementById(id);
@@ -119,28 +128,34 @@
 
     document.getElementById('generate').onclick = async () => {
         const btn = document.getElementById('generate');
-        btn.innerText = "Generuji..."; btn.disabled = true;
+        btn.innerText = "Processing..."; btn.disabled = true;
 
         try {
             const doc = new jsPDF();
-            const dateStr = new Date().toLocaleDateString('cs-CZ');
+            const dateStr = new Date().toLocaleDateString('en-GB');
             const data = {
-                comp: document.getElementById('compName').value || "Zavod",
+                comp: document.getElementById('compName').value || "Competition",
                 date: document.getElementById('raceDate').value || "-",
-                athlete: document.getElementById('athleteName').value || "Neznamy_Atlet",
+                athlete: document.getElementById('athleteName').value || "Unknown_Athlete",
                 sex: document.getElementById('sex').value,
                 event: document.getElementById('event').value || "-",
                 brand: document.getElementById('brand').value || "-",
                 model: document.getElementById('model').value || "-",
-                notes: document.getElementById('notes').value || "Bez poznamek"
+                notes: document.getElementById('notes').value || "Approved"
             };
 
-            // --- STRANA 1: DESIGN ---
+            // --- PAGE 1 DESIGN ---
             doc.setFillColor(0, 122, 255); doc.rect(20, 15, 170, 2, 'F');
-            doc.setFont("helvetica", "bold"); doc.setFontSize(22);
-            doc.text("SHOE CHECK PROTOCOL", 20, 30);
-            doc.setFontSize(10); doc.setFont("", "normal");
-            doc.text(`Issued: ${dateStr}`, 190, 35, { align: "right" });
+            
+            // Try to add Logo to PDF
+            try {
+                doc.addImage(PDF_LOGO_URL, 'PNG', 20, 20, 35, 20);
+            } catch (e) { console.log("Logo skip"); }
+
+            doc.setFont("helvetica", "bold"); doc.setFontSize(20);
+            doc.text("SHOE CHECK PROTOCOL", 60, 33);
+            doc.setFontSize(9); doc.setFont("", "normal");
+            doc.text(`Issued: ${dateStr}`, 190, 33, { align: "right" });
 
             let y = 50;
             doc.setDrawColor(0); doc.setLineWidth(0.5); doc.line(20, y, 190, y);
@@ -163,18 +178,17 @@
             doc.setFont("", "bold"); doc.text("TECHNICAL NOTES / DECISION:", 25, y + 8);
             doc.setFont("", "normal"); doc.text(data.notes, 25, y + 16, { maxWidth: 160 });
 
-            // --- FOTODOKUMENTACE STATUS ---
+            // Status List
             y += 35;
             doc.setFont("", "bold"); doc.setFontSize(10);
             const check = (id) => document.getElementById(id).files[0] ? "[ X ]" : "[   ]";
-            
             doc.text(`${check('p1')} Side View Photo Captured`, 25, y); y += 6;
             doc.text(`${check('p2')} Outsole Photo Captured`, 25, y); y += 6;
             doc.text(`${check('p3')} Heel Photo Captured`, 25, y); y += 6;
             doc.text(`${check('p4')} Label Photo Captured`, 25, y); y += 6;
-            doc.text(`${check('p5')} Insole Photo Captured`, 25, y);
+            doc.text(`${check('p5')} Insole/Orthotics Photo Captured`, 25, y);
 
-            // Podpisy
+            // Signatures
             y = 235; doc.setDrawColor(0); doc.setLineWidth(0.5);
             doc.rect(20, y, 80, 40); doc.setFontSize(8); doc.text("ATHLETE'S SIGNATURE", 60, y + 35, { align: "center" });
             if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y + 5, 70, 25);
@@ -182,7 +196,7 @@
             doc.rect(110, y, 80, 40); doc.text("OFFICIAL INSPECTOR", 150, y + 35, { align: "center" });
             if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y + 5, 70, 25);
 
-            // --- STRANA 2: FOTKY ---
+            // --- PAGE 2 PHOTOS ---
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
             const labels = ['SIDE VIEW', 'OUTSOLE', 'HEEL', 'LABEL', 'INSOLE'];
             let hasPhotos = false;
@@ -208,12 +222,11 @@
                 }
             }
 
-            // --- NÁZEV SOUBORU ---
             const fileName = `${data.comp}_${data.athlete}`.replace(/\s+/g, '_');
             doc.save(`${fileName}.pdf`);
             
-        } catch (e) { alert("Chyba při generování."); console.error(e); }
-        btn.innerText = "VYGENEROVAT PDF"; btn.disabled = false;
+        } catch (e) { alert("Error generating PDF."); console.error(e); }
+        btn.innerText = "GENERATE PDF PROTOCOL"; btn.disabled = false;
     };
 </script>
 </body>
