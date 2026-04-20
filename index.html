@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Shoe Check PRO Ultra</title>
+    <title>Shoe Check PRO</title>
     
-    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png">
-    <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png">
+    <link rel="icon" type="image/png" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,7 +20,7 @@
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; -webkit-font-smoothing: antialiased; }
         .card { background: var(--card-bg); padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 800px; margin: 10px auto; position: relative; }
         .form-logo { text-align: center; margin-bottom: 20px; }
-        .form-logo img { max-width: 200px; width: 45%; height: auto; }
+        .form-logo img { max-width: 200px; width: 45%; height: auto; border-radius: 10px; }
         .lang-switch { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
         .lang-btn { padding: 10px 20px; border-radius: 10px; border: 1.5px solid var(--primary); background: transparent; color: var(--primary); font-weight: 600; cursor: pointer; transition: 0.2s; }
         .lang-btn.active { background: var(--primary); color: white; }
@@ -38,7 +38,7 @@
         canvas { width: 100%; height: 150px; display: block; }
         .btn-clear { background: none; border: none; color: var(--danger); font-size: 11px; padding: 5px; cursor: pointer; width: 100%; text-align: right; }
         .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
-        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 14px; font-size: 18px; font-weight: 700; cursor: pointer; }
+        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 14px; font-size: 18px; font-weight: 700; margin-top: 20px; cursor: pointer; }
         .btn-reset { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); width: 100%; padding: 12px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
         .legal-notice { margin-top: 15px; font-size: 11px; color: var(--text-gray); text-align: justify; font-style: italic; border-top: 1px solid #e5e5ea; padding-top: 10px; }
         .help-trigger-container { text-align: center; margin-top: 25px; border-top: 1px solid #e5e5ea; padding-top: 15px; }
@@ -88,7 +88,7 @@
 
     <label id="lbl-photo">Photo Documentation</label>
     <div class="photo-grid">
-        <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">Bib & Accr Card</span><input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')"></div>
+        <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">BIB and shoe</span><input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')"></div>
         <div class="photo-item" id="item-p2"><span>📸</span><span id="p-side2">Side View</span><input type="file" id="p2" accept="image/*" capture="environment" onchange="markFilled('p2')"></div>
         <div class="photo-item" id="item-p3"><span>📸</span><span id="p-side3">Outsole</span><input type="file" id="p3" accept="image/*" capture="environment" onchange="markFilled('p3')"></div>
         <div class="photo-item" id="item-p4"><span>📸</span><span id="p-side4">Label / Tongue</span><input type="file" id="p4" accept="image/*" capture="environment" onchange="markFilled('p4')"></div>
@@ -145,7 +145,7 @@
     const translations = {
         en: { 
             title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", inspName: "Inspector's Name", inspId: "Inspector's ID", photo: "Photos", 
-            p1: "Bib & Card", p2: "Side View", p3: "Outsole", p4: "Label / Tongue", p5: "Orthotics Side", p6: "Orthotics Top",
+            p1: "BIB and shoe", p2: "Side View", p3: "Outsole", p4: "Label / Tongue", p5: "Orthotics Side", p6: "Orthotics Top",
             notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", reset: "RESET FORM", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol",
             legal: "This signature is used solely for the validation of the shoe check results. By signing, the athlete agrees to the processing of personal data for the purpose of evidencing race compliance in accordance with World Athletics rules and GDPR regulations.",
             phComp: "e.g. World Athletics Tour", phName: "Full Name", phEvent: "e.g. 20km Race Walk", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Inspector Name", phId: "ID Number", phNotes: "Approved / Remarks...",
@@ -154,8 +154,8 @@
             androidSteps: ["Open in **Chrome**.", "Tap **three dots**.", "Select **'Install app'**.", "Confirm."]
         },
         cs: { 
-            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", inspName: "Jméno rozhodčího", inspId: "Průkaz rozhodčího (číslo)", photo: "Fotky", 
-            p1: "Číslo a karta", p2: "Z boku", p3: "Podrážka", p4: "Štítek / Jazyk", p5: "Vložka z boku", p6: "Vložka shora",
+            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Název závodu", date: "Datum závodu", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka obuvi", model: "Model obuvi", inspName: "Jméno rozhodčího", inspId: "Průkaz rozhodčího (číslo)", photo: "Fotodokumentace", 
+            p1: "Startovní číslo a bota", p2: "Z boku", p3: "Podrážka", p4: "Štítek / Jazyk", p5: "Vložka z boku", p6: "Vložka shora",
             notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", reset: "VYMAZAT FORMULÁŘ", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol",
             legal: "Tento podpis slouží pouze pro validaci výsledků kontroly obuvi. Udělením podpisu atlet souhlasí se zpracováním osobních údajů uvedených v tomto protokolu pro účely doložení regulérnosti závodu v souladu s pravidly World Athletics a nařízeními GDPR.",
             phComp: "např. Poděbrady Walking", phName: "Celé jméno", phEvent: "např. 20km chůze", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Jméno a příjmení", phId: "Číslo průkazu", phNotes: "Povoleno / Poznámky...",
@@ -170,39 +170,24 @@
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
         document.getElementById('btn-list').innerText = t.btnList;
-        document.getElementById('lbl-comp').innerText = t.comp;
-        document.getElementById('lbl-date').innerText = t.date;
-        document.getElementById('lbl-sex').innerText = t.sex;
-        document.getElementById('lbl-name').innerText = t.name;
-        document.getElementById('lbl-event').innerText = t.event;
-        document.getElementById('lbl-brand').innerText = t.brand;
-        document.getElementById('lbl-model').innerText = t.model;
-        document.getElementById('lbl-insp-name').innerText = t.inspName;
-        document.getElementById('lbl-insp-id').innerText = t.inspId;
-        document.getElementById('lbl-photo').innerText = t.photo;
-        document.getElementById('lbl-notes').innerText = t.notes;
-        document.getElementById('lbl-sig-a').innerText = t.sigA;
-        document.getElementById('lbl-sig-i').innerText = t.sigI;
-        document.getElementById('clear-a').innerText = t.clear;
-        document.getElementById('clear-i').innerText = t.clear;
-        document.getElementById('generate').innerText = t.btnGen;
-        document.getElementById('btn-reset-form').innerText = t.reset;
-        document.getElementById('legal-notice-text').innerText = t.legal;
-        document.getElementById('help-trigger-text').innerText = t.helpTrigger;
-        document.getElementById('modal-title').innerText = t.modalTitle;
+        document.getElementById('lbl-comp').innerText = t.comp; document.getElementById('lbl-date').innerText = t.date;
+        document.getElementById('lbl-sex').innerText = t.sex; document.getElementById('lbl-name').innerText = t.name;
+        document.getElementById('lbl-event').innerText = t.event; document.getElementById('lbl-brand').innerText = t.brand;
+        document.getElementById('lbl-model').innerText = t.model; document.getElementById('lbl-insp-name').innerText = t.inspName;
+        document.getElementById('lbl-insp-id').innerText = t.inspId; document.getElementById('lbl-photo').innerText = t.photo;
+        document.getElementById('lbl-notes').innerText = t.notes; document.getElementById('lbl-sig-a').innerText = t.sigA;
+        document.getElementById('lbl-sig-i').innerText = t.sigI; document.getElementById('clear-a').innerText = t.clear;
+        document.getElementById('clear-i').innerText = t.clear; document.getElementById('generate').innerText = t.btnGen;
+        document.getElementById('btn-reset-form').innerText = t.reset; document.getElementById('legal-notice-text').innerText = t.legal;
+        document.getElementById('help-trigger-text').innerText = t.helpTrigger; document.getElementById('modal-title').innerText = t.modalTitle;
         document.getElementById('modal-close-btn-text').innerText = t.modalClose;
 
         for(let i=1; i<=6; i++) { document.getElementById('p-side'+i).innerText = t['p'+i]; }
 
-        document.getElementById('compName').placeholder = t.phComp;
-        document.getElementById('athleteName').placeholder = t.phName;
-        document.getElementById('event').placeholder = t.phEvent;
-        document.getElementById('brand').placeholder = t.phBrand;
-        document.getElementById('model').placeholder = t.phModel;
-        document.getElementById('inspName').placeholder = t.phInsp;
-        document.getElementById('inspId').placeholder = t.phId;
-        document.getElementById('notes').placeholder = t.phNotes;
-
+        document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phName;
+        document.getElementById('event').placeholder = t.phEvent; document.getElementById('brand').placeholder = t.phBrand;
+        document.getElementById('model').placeholder = t.phModel; document.getElementById('inspName').placeholder = t.phInsp;
+        document.getElementById('inspId').placeholder = t.phId; document.getElementById('notes').placeholder = t.phNotes;
         const sexSel = document.getElementById('sex'); sexSel.options[0].text = t.men; sexSel.options[1].text = t.women;
 
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -217,16 +202,13 @@
     }
 
     function resetForm() {
-        document.getElementById('athleteName').value = "";
-        document.getElementById('event').value = "";
-        document.getElementById('brand').value = "";
-        document.getElementById('model').value = "";
+        document.getElementById('athleteName').value = ""; document.getElementById('event').value = "";
+        document.getElementById('brand').value = ""; document.getElementById('model').value = "";
         document.getElementById('notes').value = "";
         const photos = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'];
         photos.forEach(id => { document.getElementById(id).value = ""; document.getElementById('item-' + id).classList.remove('has-file'); });
         padA.clear(); padI.clear();
     }
-
     function confirmReset() { if(confirm(translations[currentLang].confirmReset)) resetForm(); }
     function openModal() { document.getElementById('modalOverlay').classList.add('show'); }
     function closeModal(event) { if (!event || event.target === document.getElementById('modalOverlay') || event.target.id === 'modal-close-btn-text') document.getElementById('modalOverlay').classList.remove('show'); }
@@ -251,7 +233,7 @@
                     let w = img.width, h = img.height;
                     if (w > h) { if (w > max) { h *= max / w; w = max; } } else { if (h > max) { w *= max / h; h = max; } }
                     canvas.width = w; canvas.height = h;
-                    canvas.getContext('2d', {alpha: false}).drawImage(img, 0, 0, w, h);
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
                     res(canvas.toDataURL('image/jpeg', 0.7));
                 };
                 img.src = e.target.result;
@@ -289,19 +271,14 @@
             y += 15; doc.setFillColor(245, 245, 245).rect(20, y, 170, 25, 'F');
             doc.setFont("helvetica", "bold").text(t.notes.toUpperCase() + ":", 25, y + 8);
             doc.setFont("helvetica", "normal").text(document.getElementById('notes').value || "OK", 25, y + 16, { maxWidth: 160 });
-            
             y = 250; doc.setFontSize(8).setDrawColor(0).setLineWidth(0.3);
             doc.line(20, y, 90, y); doc.line(110, y, 180, y);
             doc.text(t.sigA.toUpperCase(), 55, y + 4, { align: "center" }); 
-            
-            // Jméno inspektora a ID pod podpisem
             const inspInfo = `${document.getElementById('inspName').value} (${document.getElementById('inspId').value})`;
             doc.text(inspInfo.toUpperCase(), 145, y + 4, { align: "center" });
             doc.text(t.sigI.toUpperCase(), 145, y + 8, { align: "center" });
-
             if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y - 22, 60, 20, undefined, 'FAST');
             if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y - 22, 60, 20, undefined, 'FAST');
-            
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'];
             const labels = [t.p1, t.p2, t.p3, t.p4, t.p5, t.p6];
             const resolvedImages = await Promise.all(photos.map(id => resizeImg(document.getElementById(id).files[0])));
