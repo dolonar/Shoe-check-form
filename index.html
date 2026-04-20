@@ -117,14 +117,14 @@
             const doc = new jsPDF();
             const dateStr = new Date().toLocaleDateString('cs-CZ');
             const data = {
-                comp: document.getElementById('compName').value || "-",
+                comp: document.getElementById('compName').value || "Zavod",
                 date: document.getElementById('raceDate').value || "-",
-                athlete: document.getElementById('athleteName').value || "Neznámý",
+                athlete: document.getElementById('athleteName').value || "Neznamy_Atlet",
                 sex: document.getElementById('sex').value,
                 event: document.getElementById('event').value || "-",
                 brand: document.getElementById('brand').value || "-",
                 model: document.getElementById('model').value || "-",
-                notes: document.getElementById('notes').value || "Bez poznámek"
+                notes: document.getElementById('notes').value || "Bez poznamek"
             };
 
             // --- STRANA 1: DESIGN ---
@@ -155,18 +155,17 @@
             doc.setFont("", "bold"); doc.text("TECHNICAL NOTES / DECISION:", 25, y + 8);
             doc.setFont("", "normal"); doc.text(data.notes, 25, y + 16, { maxWidth: 160 });
 
-            // --- FOTODOKUMENTACE STATUS (VŽDY VIDITELNÉ) ---
+            // --- FOTODOKUMENTACE STATUS (POD SEBOU) ---
             y += 35;
             doc.setFont("", "bold"); doc.setFontSize(10);
             
             const check = (id) => document.getElementById(id).files[0] ? "[ X ]" : "[   ]";
             
-            doc.text(`${check('p1')} Side View Captured`, 25, y);
-            doc.text(`${check('p2')} Outsole Captured`, 85, y);
-            doc.text(`${check('p3')} Heel Captured`, 145, y);
-            y += 7;
-            doc.text(`${check('p4')} Label Captured`, 25, y);
-            doc.text(`${check('p5')} Insole Captured`, 85, y);
+            doc.text(`${check('p1')} Side View Photo Captured`, 25, y); y += 6;
+            doc.text(`${check('p2')} Outsole Photo Captured`, 25, y); y += 6;
+            doc.text(`${check('p3')} Heel Photo Captured`, 25, y); y += 6;
+            doc.text(`${check('p4')} Label Photo Captured`, 25, y); y += 6;
+            doc.text(`${check('p5')} Insole Photo Captured`, 25, y);
 
             // Podpisy
             y = 235; doc.setDrawColor(0); doc.setLineWidth(0.5);
@@ -202,7 +201,10 @@
                 }
             }
 
-            doc.save(`Protokol_${data.athlete.replace(/\s+/g, '_')}.pdf`);
+            // --- FORMÁT NÁZVU SOUBORU ---
+            const fileName = `${data.comp}_${data.athlete}`.replace(/\s+/g, '_');
+            doc.save(`${fileName}.pdf`);
+            
         } catch (e) { alert("Chyba při generování."); console.error(e); }
         btn.innerText = "VYGENEROVAT PDF"; btn.disabled = false;
     };
