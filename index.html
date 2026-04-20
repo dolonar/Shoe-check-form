@@ -87,6 +87,11 @@
         <div><label id="lbl-model">Model</label><input type="text" id="model"></div>
     </div>
 
+    <div class="grid">
+        <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName"></div>
+        <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId"></div>
+    </div>
+
     <label id="lbl-photo">Photo Documentation</label>
     <div class="photo-grid">
         <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">BIB & Shoe</span><input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')"></div>
@@ -129,12 +134,12 @@
         en: { 
             title: "SHOE CONTROL REPORT", comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", brand: "Brand", model: "Model", photo: "Photo Documentation", 
             p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", sigTitle: "Authentication", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", mClear: "Clear", mSave: "Save", confirm: "Clear all data?",
-            phComp: "Event Name", phAthlete: "Full Name", phBrand: "e.g. Nike", phModel: "e.g. Vaporfly 3", hist: "HISTORY", check: "DOCUMENTS ATTACHED"
+            phComp: "Event Name", phAthlete: "Full Name", phBrand: "e.g. Nike", phModel: "e.g. Vaporfly 3", hist: "HISTORY", check: "DOCUMENTS ATTACHED", inspName: "Inspector Name", inspId: "ID Number", phInsp: "Name", phId: "Number"
         },
         cs: { 
             title: "PROTOKOL KONTROLY OBUVI", comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka", model: "Model", photo: "Fotodokumentace", 
             p1: "BIB a bota", p2: "Bok", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", sigTitle: "Ověření", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", mClear: "Smazat", mSave: "Uložit", confirm: "Opravdu vymazat?",
-            phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", hist: "HISTORIE", check: "PŘILOŽENÁ DOKUMENTACE"
+            phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", hist: "HISTORIE", check: "PŘILOŽENÁ DOKUMENTACE", inspName: "Jméno rozhodčího", inspId: "Průkaz (číslo)", phInsp: "Jméno a příjmení", phId: "Číslo průkazu"
         }
     };
 
@@ -147,18 +152,16 @@
         document.getElementById('lbl-comp').innerText = t.comp; document.getElementById('lbl-date').innerText = t.date;
         document.getElementById('lbl-name').innerText = t.athlete; document.getElementById('lbl-sex').innerText = t.sex;
         document.getElementById('lbl-brand').innerText = t.brand; document.getElementById('lbl-model').innerText = t.model;
+        document.getElementById('lbl-insp-name').innerText = t.inspName; document.getElementById('lbl-insp-id').innerText = t.inspId;
         document.getElementById('lbl-photo').innerText = t.photo; document.getElementById('lbl-sig-title').innerText = t.sigTitle;
         document.getElementById('txt-sig-a').innerText = t.sigA; document.getElementById('txt-sig-i').innerText = t.sigI;
         document.getElementById('btn-gen').innerText = t.gen; document.getElementById('btn-reset').innerText = t.reset;
         document.getElementById('m-clear').innerText = t.mClear; document.getElementById('m-save').innerText = t.mSave;
-        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('opt-men').innerText = t.men;
-        document.getElementById('opt-women').innerText = t.women;
+        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('opt-men').innerText = t.men; document.getElementById('opt-women').innerText = t.women;
         
-        // Aktualizované nápovědy (placeholdery) s příklady
-        document.getElementById('compName').placeholder = t.phComp; 
-        document.getElementById('athleteName').placeholder = t.phAthlete;
-        document.getElementById('brand').placeholder = t.phBrand; 
-        document.getElementById('model').placeholder = t.phModel;
+        document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phAthlete;
+        document.getElementById('brand').placeholder = t.phBrand; document.getElementById('model').placeholder = t.phModel;
+        document.getElementById('inspName').placeholder = t.phInsp; document.getElementById('inspId').placeholder = t.phId;
         
         for(let i=1; i<=6; i++) document.getElementById('p-side'+i).innerText = t['p'+i];
         renderHistory();
@@ -228,17 +231,19 @@
         const comp = removeDiacritics(compRaw);
         const brand = removeDiacritics(document.getElementById('brand').value);
         const model = removeDiacritics(document.getElementById('model').value);
+        const inspName = removeDiacritics(document.getElementById('inspName').value);
+        const inspId = removeDiacritics(document.getElementById('inspId').value);
         const dateVal = document.getElementById('raceDate').value;
         
         const doc = new jsPDF();
         const now = new Date().toLocaleString('en-GB');
         const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
 
+        let hasAnyPhoto = false;
+        const processedImages = [];
         const photos = ['p1','p2','p3','p4','p5','p6'];
         const pLabels = [eng.p1, eng.p2, eng.p3, eng.p4, eng.p5, eng.p6];
         
-        let hasAnyPhoto = false;
-        const processedImages = [];
         for (let id of photos) {
             const file = document.getElementById(id).files[0];
             if (file) hasAnyPhoto = true;
@@ -278,7 +283,11 @@
         doc.setDrawColor(180).line(20, sigY, 85, sigY);
         doc.line(125, sigY, 190, sigY);
         doc.setFontSize(9).setTextColor(100).text(eng.sigA, 52, sigY + 5, {align:'center'});
-        doc.text(eng.sigI, 157, sigY + 5, {align:'center'});
+        
+        // Jméno inspektora v PDF
+        doc.text(`${inspName} (${inspId})`, 157, sigY + 5, {align:'center'});
+        doc.text(eng.sigI, 157, sigY + 9, {align:'center'});
+
         if(sigData.a) doc.addImage(sigData.a, 'PNG', 27, sigY - 25, 45, 20);
         if(sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
         drawFooter();
@@ -289,7 +298,6 @@
             doc.addImage(logo, 'PNG', 150, 10, 40, 20);
             doc.setFontSize(18).setFont("helvetica", "bold").setTextColor(0).text(eng.photo, 20, 25);
             doc.setDrawColor(0, 122, 255).setLineWidth(0.5).line(20, 32, 190, 32);
-
             processedImages.forEach((data, i) => {
                 const x = 20 + (i % 2 * 90);
                 const y = 45 + (Math.floor(i / 2) * 75);
@@ -306,7 +314,6 @@
         localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
         setTimeout(()=>location.reload(), 1000);
     };
-
     window.onload = () => setLang('cs');
 </script>
 </body>
