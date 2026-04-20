@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Shoe Check web app </title>
+    <title>Shoe Check PRO Ultra</title>
     
     <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png">
     <link rel="apple-touch-icon" href="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png">
@@ -16,9 +16,9 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     
     <style>
-        :root { --primary: #007AFF; --success: #34C759; --bg: #f2f2f7; --card-bg: #ffffff; --text-gray: #8e8e93; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; }
-        .card { background: var(--card-bg); padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 800px; margin: 10px auto; }
+        :root { --primary: #007AFF; --success: #34C759; --bg: #f2f2f7; --card-bg: #ffffff; --text-gray: #8e8e93; --modal-overlay: rgba(0, 0, 0, 0.4); }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; -webkit-font-smoothing: antialiased; }
+        .card { background: var(--card-bg); padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 800px; margin: 10px auto; position: relative; }
         .form-logo { text-align: center; margin-bottom: 20px; }
         .form-logo img { max-width: 200px; width: 45%; height: auto; }
         .lang-switch { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
@@ -28,7 +28,7 @@
         @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
         label { display: block; margin-top: 15px; font-weight: 700; font-size: 11px; color: var(--text-gray); text-transform: uppercase; }
         input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #d1d1d6; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fff; appearance: none; -webkit-appearance: none; }
-        .btn-link { display: block; background: var(--success); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; margin: 15px 0; box-sizing: border-box; transition: opacity 0.2s; }
+        .btn-link { display: block; background: var(--success); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; margin: 15px 0; box-sizing: border-box; }
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px; }
         @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(5, 1fr); } }
         .photo-item { background: #ffffff; border: 2px solid #e5e5ea; border-radius: 14px; padding: 20px 5px; text-align: center; position: relative; font-size: 12px; font-weight: 600; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80px; }
@@ -40,12 +40,29 @@
         .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 14px; font-size: 18px; font-weight: 700; margin-top: 20px; cursor: pointer; }
         .legal-notice { margin-top: 15px; font-size: 11px; color: var(--text-gray); text-align: justify; font-style: italic; border-top: 1px solid #e5e5ea; padding-top: 10px; }
 
-        .help-section { margin: 25px 0 10px 0; border-top: 1px solid #e5e5ea; padding-top: 10px; }
-        .help-trigger { display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; padding: 10px; color: var(--primary); }
-        .help-icon { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; border: 2px solid currentColor; font-weight: bold; }
-        .help-content { display: none; padding: 15px; background: #f9f9fb; border-radius: 12px; margin-top: 10px; border: 1px solid #e5e5ea; }
-        .help-content li { margin-bottom: 8px; font-size: 14px; }
-        .help-content.show { display: block; }
+        /* --- STYLY PRO GRAFICKÉ PLOVOUCÍ OKNO (MODAL) --- */
+        .help-trigger-container { text-align: center; margin-top: 25px; border-top: 1px solid #e5e5ea; padding-top: 15px; }
+        .help-trigger { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; color: var(--primary); background: rgba(0, 122, 255, 0.08); padding: 8px 16px; border-radius: 20px; transition: background 0.2s; }
+        .help-trigger:active { background: rgba(0, 122, 255, 0.15); }
+        .help-icon-circle { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: white; font-weight: bold; font-size: 16px; box-shadow: 0 2px 4px rgba(0,122,255,0.3); }
+        .help-trigger-text { font-weight: 600; font-size: 15px; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; }
+        .modal-overlay.show { display: flex; opacity: 1; }
+        
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 24px; max-width: 500px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: translateY(20px); transition: transform 0.3s ease-out; position: relative; }
+        .modal-overlay.show .modal-content { transform: translateY(0); }
+        
+        .modal-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; color: var(--primary); }
+        .modal-header .help-icon-circle { width: 36px; height: 36px; font-size: 20px; }
+        .modal-header h2 { margin: 0; font-size: 22px; font-weight: 800; color: #1c1c1e; }
+        
+        .modal-steps { margin: 0; padding-left: 25px; }
+        .modal-steps li { margin-bottom: 12px; font-size: 15px; color: #3a3a3c; line-height: 1.5; }
+        .modal-steps b { color: #1c1c1e; }
+        
+        .modal-close-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; margin-top: 25px; cursor: pointer; transition: background 0.2s; }
+        .modal-close-btn:active { background: #0056b3; }
     </style>
 </head>
 <body>
@@ -92,24 +109,32 @@
     <textarea id="notes" rows="2"></textarea>
 
     <div class="sig-container"><canvas id="sig-a"></canvas></div>
-    <button class="btn-clear" type="button" id="clear-a" onclick="padA.clear()">Clear Signature</button>
+    <button class="btn-clear" type="button" id="clear-a" onclick="padA.clear()">Clear Athlete Signature</button>
     
     <div class="sig-container"><canvas id="sig-i"></canvas></div>
-    <button class="btn-clear" type="button" id="clear-i" onclick="padI.clear()">Clear Signature</button>
+    <button class="btn-clear" type="button" id="clear-i" onclick="padI.clear()">Clear Inspector Signature</button>
 
-    <div class="help-section">
-        <div class="help-trigger" onclick="toggleHelp()">
-            <div class="help-icon">?</div>
-            <div class="help-title" id="help-trigger-text">App Installation</div>
-        </div>
-        <div class="help-content" id="help-content-box">
-            <ol id="help-steps-list"></ol>
+    <div class="help-trigger-container">
+        <div class="help-trigger" onclick="openModal()">
+            <div class="help-icon-circle">?</div>
+            <div class="help-trigger-text" id="help-trigger-text">App Installation</div>
         </div>
     </div>
 
     <button class="btn-submit" id="generate">GENERATE PDF PROTOCOL</button>
 
     <div class="legal-notice" id="legal-notice-text"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <div class="help-icon-circle">?</div>
+            <h2 id="modal-title">App Installation</h2>
+        </div>
+        <ol class="modal-steps" id="help-steps-list"></ol>
+        <button class="modal-close-btn" id="modal-close-btn-text" onclick="closeModal()">Close</button>
+    </div>
 </div>
 
 <script>
@@ -121,15 +146,15 @@
             title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", photo: "Photos", side: "Side", outsole: "Outsole", heel: "Heel", label: "Label", insole: "Insole", notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol",
             legal: "This signature is used solely for the validation of the shoe check results. By signing, the athlete agrees to the processing of personal data for the purpose of evidencing race compliance in accordance with World Athletics rules and GDPR regulations.",
             phComp: "e.g. World Athletics Tour", phName: "Full Name", phEvent: "e.g. 20km Race Walk", phBrand: "Nike", phModel: "Vaporfly 3", phNotes: "Approved / Remarks...",
-            helpTrigger: "Add to Phone Home Screen",
+            helpTrigger: "Add to Phone Home Screen", modalTitle: "Installation Guide", modalClose: "Close",
             iosSteps: ["Open this page in **Safari**.", "Tap the **Share** button (square with arrow).", "Select **'Add to Home Screen'**.", "Tap **'Add'** in the top right corner."],
-            androidSteps: ["Open this page in **Chrome**.", "Tap the **three dots** in the top right corner.", "Select **'Install app'** or **'Add to Home screen'**.", "Confirm the installation."]
+            androidSteps: ["Open this page in **Chrome**.", "Tap the **three dots** in the top right.", "Select **'Install app'** or **'Add to Home screen'**.", "Confirm the installation."]
         },
         cs: { 
             title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", photo: "Fotky", side: "Z boku", outsole: "Podrážka", heel: "Pata", label: "Štítek", insole: "Vložka", notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol",
             legal: "Tento podpis slouží pouze pro validaci výsledků kontroly obuvi. Udělením podpisu atlet souhlasí se zpracováním osobních údajů uvedených v tomto protokolu pro účely doložení regulérnosti závodu v souladu s pravidly World Athletics a nařízeními GDPR.",
             phComp: "např. Poděbrady Walking", phName: "Celé jméno", phEvent: "např. 20km chůze", phBrand: "Nike", phModel: "Vaporfly 3", phNotes: "Povoleno / Poznámky...",
-            helpTrigger: "Vložení do telefonu",
+            helpTrigger: "Vložení do telefonu", modalTitle: "Návod na instalaci", modalClose: "Zavřít",
             iosSteps: ["Otevřete tuto stránku v prohlížeči **Safari**.", "Klikněte na tlačítko **Sdílet** (čtvereček se šipkou).", "Zvolte možnost **'Přidat na plochu'**.", "Vpravo nahoře klikněte na **'Přidat'**."],
             androidSteps: ["Otevřete tuto stránku v prohlížeči **Chrome**.", "Klikněte na **tři tečky** v pravém horním rohu.", "Zvolte **'Instalovat aplikaci'** nebo **'Přidat na plochu'**.", "Potvrďte instalaci."]
         }
@@ -162,6 +187,8 @@
         document.getElementById('generate').innerText = t.btnGen;
         document.getElementById('legal-notice-text').innerText = t.legal;
         document.getElementById('help-trigger-text').innerText = t.helpTrigger;
+        document.getElementById('modal-title').innerText = t.modalTitle;
+        document.getElementById('modal-close-btn-text').innerText = t.modalClose;
 
         const sexSel = document.getElementById('sex'); sexSel.options[0].text = t.men; sexSel.options[1].text = t.women;
 
@@ -177,7 +204,10 @@
         });
     }
 
-    function toggleHelp() { document.getElementById('help-content-box').classList.toggle('show'); }
+    // Funkce pro MODAL
+    function openModal() { document.getElementById('modalOverlay').classList.add('show'); document.body.style.overflow = 'hidden'; }
+    function closeModal(event) { if (!event || event.target === document.getElementById('modalOverlay') || event.target.id === 'modal-close-btn-text') { document.getElementById('modalOverlay').classList.remove('show'); document.body.style.overflow = ''; } }
+
     function markFilled(id) { document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0); }
 
     const setupPad = (id) => {
@@ -252,7 +282,7 @@
                 resolvedImages.forEach((img, i) => {
                     if (img) {
                         const x = (count % 2 === 0) ? 20 : 105;
-                        doc.setFontSize(9).text(labels[i], x, py - 3);
+                        doc.setFontSize(9).text(labels[i].replace('📸 ', ''), x, py - 3);
                         doc.setDrawColor(230).rect(x, py, 80, 60).addImage(img, 'JPEG', x, py, 80, 60, undefined, 'FAST');
                         if (count % 2 === 1) py += 75;
                         count++;
