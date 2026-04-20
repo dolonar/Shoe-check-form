@@ -8,18 +8,19 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <style>
         :root { --primary: #007AFF; --bg: #f2f2f7; }
-        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 10px; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; }
         .card { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: auto; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         label { display: block; margin-top: 10px; font-weight: 600; font-size: 13px; color: #8e8e93; text-transform: uppercase; }
         input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #d1d1d6; border-radius: 10px; box-sizing: border-box; font-size: 16px; -webkit-appearance: none; }
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
         .photo-item { background: #f9f9fb; border: 1px dashed #c7c7cc; border-radius: 10px; padding: 12px 5px; text-align: center; position: relative; font-size: 12px; }
-        .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; }
+        .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; cursor: pointer; }
         .sig-container { background: #fff; border: 1px solid #d1d1d6; border-radius: 10px; margin-top: 8px; touch-action: none; }
         canvas { width: 100%; height: 140px; display: block; border-radius: 10px; }
         .btn-clear { background: none; border: none; color: #FF3B30; font-size: 11px; padding: 5px; cursor: pointer; width: 100%; text-align: right; }
-        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: 700; margin-top: 20px; }
+        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: 700; margin-top: 20px; cursor: pointer; }
+        .btn-submit:disabled { background: #ccc; }
     </style>
 </head>
 <body>
@@ -28,7 +29,7 @@
     <h2 style="text-align:center; margin-top:0;">Shoe Check Protokol</h2>
     
     <label>Název závodu</label>
-    <input type="text" id="compName" placeholder="Poděbrady 2026">
+    <input type="text" id="compName" placeholder="Např. Poděbrady Walking">
 
     <div class="grid">
         <div><label>Datum závodu</label><input type="date" id="raceDate"></div>
@@ -57,11 +58,11 @@
 
     <label>Podpis atleta</label>
     <div class="sig-container"><canvas id="sig-a"></canvas></div>
-    <button class="btn-clear" onclick="padA.clear()">Smazat podpis</button>
+    <button class="btn-clear" type="button" onclick="padA.clear()">Smazat podpis</button>
 
     <label>Podpis inspektora</label>
     <div class="sig-container"><canvas id="sig-i"></canvas></div>
-    <button class="btn-clear" onclick="padI.clear()">Smazat podpis</button>
+    <button class="btn-clear" type="button" onclick="padI.clear()">Smazat podpis</button>
 
     <button class="btn-submit" id="generate">VYGENEROVAT PDF</button>
 </div>
@@ -69,9 +70,10 @@
 <script>
     const { jsPDF } = window.jspdf;
 
-    const setup = (id) => {
+    // --- NASTAVENÍ PODPISŮ ---
+    const setupPad = (id) => {
         const c = document.getElementById(id);
-        const p = new SignaturePad(c, { backgroundColor: '#ffffff' });
+        const p = new SignaturePad(c, { backgroundColor: '#ffffff', penColor: '#000000' });
         const res = () => {
             const r = Math.max(window.devicePixelRatio || 1, 1);
             c.width = c.offsetWidth * r; c.height = c.offsetHeight * r;
@@ -83,9 +85,10 @@
         return p;
     };
 
-    const padA = setup('sig-a');
-    const padI = setup('sig-i');
+    const padA = setupPad('sig-a');
+    const padI = setupPad('sig-i');
 
+    // --- ZMENŠENÍ FOTEK PRO PAMĚŤ IPHONU ---
     const resizeImg = (file) => {
         return new Promise((res) => {
             if (!file) return res(null);
@@ -94,13 +97,13 @@
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const max = 1200;
+                    const max = 1200; // Optimalizovaná šířka pro ostrost i paměť
                     let w = img.width, h = img.height;
                     if (w > h) { if (w > max) { h *= max / w; w = max; } }
                     else { if (h > max) { w *= max / h; h = max; } }
                     canvas.width = w; canvas.height = h;
                     canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    res(canvas.toDataURL('image/jpeg', 0.8));
+                    res(canvas.toDataURL('image/jpeg', 0.75)); // Komprese 75%
                 };
                 img.src = e.target.result;
             };
@@ -108,69 +111,90 @@
         });
     };
 
+    // --- HLAVNÍ GENERÁTOR PDF ---
     document.getElementById('generate').onclick = async () => {
         const btn = document.getElementById('generate');
         btn.innerText = "Generuji..."; btn.disabled = true;
 
         try {
             const doc = new jsPDF();
-            const date = new Date().toLocaleDateString('cs-CZ');
-            const info = {
+            const dateStr = new Date().toLocaleDateString('cs-CZ');
+            const data = {
                 comp: document.getElementById('compName').value || "-",
                 date: document.getElementById('raceDate').value || "-",
-                athlete: document.getElementById('athleteName').value || "Neznamy",
+                athlete: document.getElementById('athleteName').value || "Neznámý",
                 sex: document.getElementById('sex').value,
                 event: document.getElementById('event').value || "-",
-                shoe: document.getElementById('brand').value + " " + document.getElementById('model').value,
+                brand: document.getElementById('brand').value || "-",
+                model: document.getElementById('model').value || "-",
                 notes: document.getElementById('notes').value || "Povoleno"
             };
 
-            // Strana 1
-            doc.setFillColor(240, 240, 240); doc.rect(0, 0, 210, 40, 'F');
-            doc.setFont("helvetica", "bold"); doc.setFontSize(20);
-            doc.text("SHOE CHECK PROTOKOL", 105, 20, { align: "center" });
+            // --- STRANA 1: DESIGN ŠABLONY ---
+            doc.setFillColor(0, 122, 255); doc.rect(20, 15, 170, 2, 'F');
+            doc.setFont("helvetica", "bold"); doc.setFontSize(22);
+            doc.text("SHOE CHECK PROTOCOL", 20, 30);
             
-            doc.setFontSize(10); doc.setFont("helvetica", "normal");
-            let y = 55;
-            const add = (l, v) => {
-                doc.setFont("", "bold"); doc.text(l + ":", 20, y);
-                doc.setFont("", "normal"); doc.text(String(v), 70, y);
-                doc.setDrawColor(220); doc.line(20, y+2, 190, y+2); y += 12;
+            doc.setFontSize(10); doc.setFont("", "normal");
+            doc.text(`Issued: ${dateStr}`, 190, 35, { align: "right" });
+
+            let y = 50;
+            doc.setDrawColor(0); doc.setLineWidth(0.5); doc.line(20, y, 190, y);
+
+            const addRow = (label, value) => {
+                y += 8; doc.setFont("", "bold"); doc.text(label + ":", 25, y);
+                doc.setFont("", "normal"); doc.text(String(value), 75, y);
+                y += 4; doc.setDrawColor(200); doc.setLineWidth(0.1); doc.line(20, y, 190, y);
             };
 
-            add("Competition", info.comp);
-            add("Race Date", info.date);
-            add("Athlete", info.athlete);
-            add("Event/Sex", info.event + " / " + info.sex);
-            add("Shoe", info.shoe);
+            addRow("Competition", data.comp);
+            addRow("Race Date", data.date);
+            addRow("Athlete", data.athlete);
+            addRow("Event / Sex", `${data.event} / ${data.sex}`);
+            addRow("Shoe Brand", data.brand);
+            addRow("Shoe Model", data.model);
 
-            doc.setFont("", "bold"); doc.text("Notes:", 20, y+5);
-            doc.setFont("", "normal"); doc.text(info.notes, 20, y+13, { maxWidth: 170 });
+            y += 15;
+            doc.setFillColor(245, 245, 245); doc.rect(20, y, 170, 25, 'F');
+            doc.setFont("", "bold"); doc.text("TECHNICAL NOTES / DECISION:", 25, y + 8);
+            doc.setFont("", "normal"); doc.text(data.notes, 25, y + 16, { maxWidth: 160 });
 
-            if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, 240, 50, 25);
-            if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 135, 240, 50, 25);
-            doc.setFontSize(9); doc.text("Athlete Signature", 50, 270, {align:"center"}); doc.text("Inspector Signature", 160, 270, {align:"center"});
+            // Podpisy v boxech
+            y = 235; doc.setDrawColor(0); doc.setLineWidth(0.5);
+            doc.rect(20, y, 80, 40); doc.setFontSize(8); doc.text("ATHLETE'S SIGNATURE", 60, y + 35, { align: "center" });
+            if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y + 5, 70, 25);
 
-            // Fotky
+            doc.rect(110, y, 80, 40); doc.text("OFFICIAL INSPECTOR", 150, y + 35, { align: "center" });
+            if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y + 5, 70, 25);
+
+            // --- STRANA 2: FOTODOKUMENTACE ---
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
-            const labels = ['Side View', 'Outsole', 'Heel', 'Label', 'Insole'];
-            doc.addPage();
-            doc.setFontSize(18); doc.text("PHOTO DOCUMENTATION", 105, 20, { align: "center" });
-            
-            let py = 40, count = 0;
-            for (let i = 0; i < photos.length; i++) {
-                const img = await resizeImg(document.getElementById(photos[i]).files[0]);
-                if (img) {
-                    const x = (count % 2 === 0) ? 20 : 110;
-                    doc.setFontSize(10); doc.text(labels[i], x, py-5);
-                    doc.addImage(img, 'JPEG', x, py, 80, 60);
-                    if (count % 2 === 1) py += 85;
-                    count++;
+            const labels = ['SIDE VIEW', 'OUTSOLE', 'HEEL', 'LABEL', 'INSOLE'];
+            let hasPhotos = false;
+            for(let id of photos) if(document.getElementById(id).files[0]) hasPhotos = true;
+
+            if (hasPhotos) {
+                doc.addPage();
+                doc.setFillColor(0, 122, 255); doc.rect(20, 15, 170, 2, 'F');
+                doc.setFont("", "bold"); doc.setFontSize(18); doc.text("PHOTO DOCUMENTATION", 20, 30);
+                
+                let py = 45, count = 0;
+                for (let i = 0; i < photos.length; i++) {
+                    const img = await resizeImg(document.getElementById(photos[i]).files[0]);
+                    if (img) {
+                        const x = (count % 2 === 0) ? 20 : 110;
+                        doc.setFontSize(9); doc.text(labels[i], x, py - 3);
+                        doc.setDrawColor(230); doc.rect(x, py, 80, 60);
+                        doc.addImage(img, 'JPEG', x, py, 80, 60);
+                        if (count % 2 === 1) py += 75;
+                        count++;
+                        if (count % 6 === 0 && count < photos.length) { doc.addPage(); py = 45; }
+                    }
                 }
             }
 
-            doc.save(`Protokol_${info.athlete.replace(/\s+/g, '_')}.pdf`);
-        } catch (e) { alert("Chyba. Zkuste méně fotek nebo restart Safari."); }
+            doc.save(`Protokol_${data.athlete.replace(/\s+/g, '_')}.pdf`);
+        } catch (e) { alert("Chyba při generování PDF. Zkuste to znovu."); console.error(e); }
         btn.innerText = "VYGENEROVAT PDF"; btn.disabled = false;
     };
 </script>
