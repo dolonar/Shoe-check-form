@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shoe Check PRO</title>
+    <title>Shoe Check PRO Unified</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <style>
@@ -11,7 +11,6 @@
         body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; }
         .card { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: auto; }
         
-        /* Logo ve formuláři - vycentrované */
         .form-logo { text-align: center; margin-bottom: 20px; }
         .form-logo img { max-width: 200px; height: auto; }
 
@@ -207,19 +206,27 @@
             const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
             const dateStr = new Date().toLocaleDateString(currentLang === 'cs' ? 'cs-CZ' : 'en-GB');
 
-            // Pomocná funkce pro záhlaví PDF (Logo vpravo nahoře)
             const drawPageHeader = (titleText) => {
-                doc.setFillColor(0, 122, 255); doc.rect(20, 15, 170, 2, 'F');
-                try { doc.addImage(logo, 'PNG', 155, 18, 35, 20); } catch(e){}
+                // Logo vpravo nahoře
+                try { doc.addImage(logo, 'PNG', 155, 10, 35, 20); } catch(e){}
+                
+                // Název protokolu
                 doc.setFont("helvetica", "bold"); doc.setFontSize(20);
-                doc.text(titleText, 20, 33);
+                doc.text(titleText, 20, 20);
+                
+                // Datum pod názvem
                 doc.setFontSize(9); doc.setFont("", "normal");
-                doc.text(`${t.issued}: ${dateStr}`, 20, 38);
+                doc.text(`${t.issued}: ${dateStr}`, 20, 25);
+
+                // Modrá linka - nyní POD celou hlavičkou
+                doc.setFillColor(0, 122, 255); 
+                doc.rect(20, 32, 170, 2, 'F');
             };
 
             // STRANA 1
             drawPageHeader(t.title);
-            let y = 50; doc.setDrawColor(0); doc.setLineWidth(0.5); doc.line(20, y, 190, y);
+            let y = 45; // Posunuto níže pod novou linku
+            doc.setDrawColor(0); doc.setLineWidth(0.5); doc.line(20, y, 190, y);
 
             const addRow = (label, val) => {
                 y += 8; doc.setFont("", "bold"); doc.text(label + ":", 25, y);
@@ -259,7 +266,8 @@
 
             if (hasPh) {
                 doc.addPage(); drawPageHeader(t.photoTitle);
-                let py = 55, count = 0;
+                let py = 50; // Start pod hlavičkou
+                let count = 0;
                 for (let i = 0; i < photos.length; i++) {
                     const img = await resizeImg(document.getElementById(photos[i]).files[0]);
                     if (img) {
@@ -268,7 +276,7 @@
                         doc.setDrawColor(230); doc.rect(x, py, 80, 60); doc.addImage(img, 'JPEG', x, py, 80, 60);
                         if (count % 2 === 1) py += 75;
                         count++;
-                        if (count % 6 === 0 && count < 5) { doc.addPage(); drawPageHeader(t.photoTitle); py = 55; }
+                        if (count % 6 === 0 && count < 5) { doc.addPage(); drawPageHeader(t.photoTitle); py = 50; }
                     }
                 }
             }
