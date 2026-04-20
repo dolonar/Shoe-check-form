@@ -43,7 +43,6 @@
         .sig-trigger { width: 100%; padding: 16px; margin-top: 10px; border-radius: 14px; border: 1.5px dashed var(--primary); background: #fff; color: var(--primary); font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); background: #f6fff8; }
         
-        /* Modal pro podpisy */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
         .modal-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
@@ -54,15 +53,10 @@
         .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer; margin-top: 30px; }
         .btn-reset { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); width: 100%; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
 
-        /* Styl historie */
         .history-section { margin-top: 40px; border-top: 2px solid #e5e5ea; padding-top: 20px; }
         .history-title { font-size: 14px; color: var(--text-gray); font-weight: 800; margin-bottom: 15px; }
         .history-list { display: flex; flex-direction: column; gap: 8px; }
-        .history-item { background: #fff; padding: 12px 15px; border-radius: 12px; border: 1px solid #e5e5ea; display: flex; justify-content: space-between; align-items: center; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .history-info { display: flex; flex-direction: column; }
-        .history-name { font-weight: 700; color: #1c1c1e; }
-        .history-comp { font-size: 12px; color: var(--text-gray); }
-        .history-time { font-size: 11px; color: var(--placeholder); }
+        .history-item { background: #fff; padding: 12px 15px; border-radius: 12px; border: 1px solid #e5e5ea; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -106,11 +100,11 @@
     <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')"><span id="txt-sig-a">Athlete's Signature</span><span id="stat-a">❌</span></button>
     <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')"><span id="txt-sig-i">Inspector's Signature</span><span id="stat-i">❌</span></button>
 
-    <button class="btn-submit" id="btn-gen">GENERATE OFFICIAL REPORT</button>
+    <button class="btn-submit" id="btn-gen">CREATE REPORT</button>
     <div style="margin-top:20px; text-align:center;"><button class="btn-reset" onclick="confirmReset()" id="btn-reset">RESET FORM</button></div>
 
     <div class="history-section">
-        <div class="history-title" id="lbl-hist">HISTORY (LAST 20 CHECKS)</div>
+        <div class="history-title" id="lbl-hist">HISTORY</div>
         <div id="history-list" class="history-list"></div>
     </div>
 </div>
@@ -127,19 +121,19 @@
 <script>
     const { jsPDF } = window.jspdf;
     let currentLang = 'en';
-    let activePad, activeType;
     let sigData = { a: null, i: null };
+    let activePad, activeType;
 
     const translations = {
         en: { 
             title: "SHOE CONTROL REPORT", comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", brand: "Brand", model: "Model", photo: "Photo Documentation", 
-            p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", sigTitle: "Authentication", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "GENERATE OFFICIAL REPORT", reset: "RESET FORM", mClear: "Clear", mSave: "Save", confirm: "Clear all data?",
-            phComp: "Event Name", phAthlete: "Full Name", phBrand: "e.g. Nike", phModel: "e.g. Vaporfly", hist: "HISTORY (LAST 20 CHECKS)"
+            p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", sigTitle: "Authentication", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", mClear: "Clear", mSave: "Save", confirm: "Clear all data?",
+            phComp: "Event Name", phAthlete: "Full Name", phBrand: "e.g. Nike", phModel: "e.g. Vaporfly", hist: "HISTORY", check: "DOCUMENTS ATTACHED"
         },
         cs: { 
             title: "PROTOKOL KONTROLY OBUVI", comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka", model: "Model", photo: "Fotodokumentace", 
-            p1: "BIB a bota", p2: "Bok", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", sigTitle: "Ověření", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "GENEROVAT OFICIÁLNÍ REPORT", reset: "VYMAZAT FORMULÁŘ", mClear: "Smazat", mSave: "Uložit", confirm: "Opravdu vymazat?",
-            phComp: "Zadejte název", phAthlete: "Jméno a příjmení", phBrand: "Značka", phModel: "Model", hist: "HISTORIE (POSLEDNÍCH 20 KONTROL)"
+            p1: "BIB a bota", p2: "Bok", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", sigTitle: "Ověření", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", mClear: "Smazat", mSave: "Uložit", confirm: "Opravdu vymazat?",
+            phComp: "Zadejte název", phAthlete: "Jméno a příjmení", phBrand: "Značka", phModel: "Model", hist: "HISTORIE", check: "PŘILOŽENÁ DOKUMENTACE"
         }
     };
 
@@ -149,27 +143,17 @@
         currentLang = lang; const t = translations[lang];
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
-        document.getElementById('lbl-comp').innerText = t.comp;
-        document.getElementById('lbl-date').innerText = t.date;
-        document.getElementById('lbl-name').innerText = t.athlete;
-        document.getElementById('lbl-sex').innerText = t.sex;
-        document.getElementById('lbl-brand').innerText = t.brand;
-        document.getElementById('lbl-model').innerText = t.model;
-        document.getElementById('lbl-photo').innerText = t.photo;
-        document.getElementById('lbl-sig-title').innerText = t.sigTitle;
-        document.getElementById('txt-sig-a').innerText = t.sigA;
-        document.getElementById('txt-sig-i').innerText = t.sigI;
-        document.getElementById('btn-gen').innerText = t.gen;
-        document.getElementById('btn-reset').innerText = t.reset;
-        document.getElementById('m-clear').innerText = t.mClear;
-        document.getElementById('m-save').innerText = t.mSave;
-        document.getElementById('lbl-hist').innerText = t.hist;
-        document.getElementById('opt-men').innerText = t.men;
+        document.getElementById('lbl-comp').innerText = t.comp; document.getElementById('lbl-date').innerText = t.date;
+        document.getElementById('lbl-name').innerText = t.athlete; document.getElementById('lbl-sex').innerText = t.sex;
+        document.getElementById('lbl-brand').innerText = t.brand; document.getElementById('lbl-model').innerText = t.model;
+        document.getElementById('lbl-photo').innerText = t.photo; document.getElementById('lbl-sig-title').innerText = t.sigTitle;
+        document.getElementById('txt-sig-a').innerText = t.sigA; document.getElementById('txt-sig-i').innerText = t.sigI;
+        document.getElementById('btn-gen').innerText = t.gen; document.getElementById('btn-reset').innerText = t.reset;
+        document.getElementById('m-clear').innerText = t.mClear; document.getElementById('m-save').innerText = t.mSave;
+        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('opt-men').innerText = t.men;
         document.getElementById('opt-women').innerText = t.women;
-        document.getElementById('compName').placeholder = t.phComp;
-        document.getElementById('athleteName').placeholder = t.phAthlete;
-        document.getElementById('brand').placeholder = t.phBrand;
-        document.getElementById('model').placeholder = t.phModel;
+        document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phAthlete;
+        document.getElementById('brand').placeholder = t.phBrand; document.getElementById('model').placeholder = t.phModel;
         for(let i=1; i<=6; i++) document.getElementById('p-side'+i).innerText = t['p'+i];
         renderHistory();
     }
@@ -217,28 +201,13 @@
         });
     }
 
-    function addToHistory(name, comp) {
-        let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]');
-        const newItem = {
-            name: name || "Unknown Athlete",
-            comp: comp || "Unknown Competition",
-            time: new Date().toLocaleString(currentLang === 'cs' ? 'cs-CZ' : 'en-GB')
-        };
-        hist.unshift(newItem);
-        localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
-        renderHistory();
-    }
-
     function renderHistory() {
         const list = document.getElementById('history-list');
         const hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]');
         list.innerHTML = hist.map(h => `
             <div class="history-item">
-                <div class="history-info">
-                    <span class="history-name">${h.name}</span>
-                    <span class="history-comp">${h.comp}</span>
-                </div>
-                <span class="history-time">${h.time}</span>
+                <div><b>${h.name}</b><br><small>${h.comp}</small></div>
+                <small style="color:gray">${h.time}</small>
             </div>
         `).join('');
     }
@@ -259,11 +228,6 @@
         const now = new Date().toLocaleString('en-GB');
         const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
 
-        const drawFooter = () => {
-            doc.setFontSize(8).setTextColor(150);
-            doc.text(`Generated: ${now}`, 190, 285, {align: 'right'});
-        };
-
         // PAGE 1
         doc.addImage(logo, 'PNG', 150, 10, 40, 20);
         doc.setFontSize(22).setFont("helvetica", "bold").text(eng.title, 20, 25);
@@ -281,6 +245,18 @@
         doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("SHOE DETAILS", 20, 100);
         doc.setFontSize(14).setTextColor(0).text(`${brand} - ${model}`, 20, 108);
 
+        // Checklist fotek na první stránce
+        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text(eng.check, 20, 125);
+        const photos = ['p1','p2','p3','p4','p5','p6'];
+        const pLabels = [eng.p1, eng.p2, eng.p3, eng.p4, eng.p5, eng.p6];
+        doc.setFontSize(11).setTextColor(0).setFont("helvetica", "normal");
+        
+        photos.forEach((id, i) => {
+            const hasFile = document.getElementById(id).files.length > 0;
+            const marker = hasFile ? "[X]" : "[  ]";
+            doc.text(`${marker}  ${pLabels[i]}`, 25, 135 + (i * 8));
+        });
+
         const sigY = 240;
         doc.setDrawColor(180).line(20, sigY, 85, sigY);
         doc.line(125, sigY, 190, sigY);
@@ -288,7 +264,7 @@
         doc.text(eng.sigI, 157, sigY + 5, {align:'center'});
         if(sigData.a) doc.addImage(sigData.a, 'PNG', 27, sigY - 25, 45, 20);
         if(sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
-        drawFooter();
+        doc.setFontSize(8).setTextColor(150).text(`Generated: ${now}`, 190, 285, {align: 'right'});
 
         // PAGE 2
         doc.addPage();
@@ -296,8 +272,6 @@
         doc.setFontSize(18).setFont("helvetica", "bold").setTextColor(0).text(eng.photo, 20, 25);
         doc.setDrawColor(0, 122, 255).setLineWidth(0.5).line(20, 32, 190, 32);
 
-        const photos = ['p1','p2','p3','p4','p5','p6'];
-        const pLabels = [eng.p1, eng.p2, eng.p3, eng.p4, eng.p5, eng.p6];
         for(let i=0; i<6; i++) {
             const data = await processImg(document.getElementById(photos[i]).files[0]);
             const x = 20 + (i % 2 * 90);
@@ -306,10 +280,12 @@
             if(data) doc.addImage(data, 'JPEG', x, y, 80, 60);
             doc.setFontSize(10).setTextColor(100).text(pLabels[i], x, y + 66);
         }
-        drawFooter();
+        doc.setFontSize(8).setTextColor(150).text(`Generated: ${now}`, 190, 285, {align: 'right'});
 
         doc.save(`${name || "Report"}_ShoeControl.pdf`);
-        addToHistory(nameRaw, compRaw);
+        let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]');
+        hist.unshift({name: nameRaw, comp: compRaw, time: now});
+        localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
         setTimeout(()=>location.reload(), 1000);
     };
 
