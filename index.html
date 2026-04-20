@@ -70,7 +70,6 @@
 <script>
     const { jsPDF } = window.jspdf;
 
-    // --- NASTAVENÍ PODPISŮ ---
     const setupPad = (id) => {
         const c = document.getElementById(id);
         const p = new SignaturePad(c, { backgroundColor: '#ffffff', penColor: '#000000' });
@@ -88,7 +87,6 @@
     const padA = setupPad('sig-a');
     const padI = setupPad('sig-i');
 
-    // --- ZMENŠENÍ FOTEK PRO PAMĚŤ IPHONU ---
     const resizeImg = (file) => {
         return new Promise((res) => {
             if (!file) return res(null);
@@ -97,13 +95,13 @@
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const max = 1200; // Optimalizovaná šířka pro ostrost i paměť
+                    const max = 1200;
                     let w = img.width, h = img.height;
                     if (w > h) { if (w > max) { h *= max / w; w = max; } }
                     else { if (h > max) { w *= max / h; h = max; } }
                     canvas.width = w; canvas.height = h;
                     canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    res(canvas.toDataURL('image/jpeg', 0.75)); // Komprese 75%
+                    res(canvas.toDataURL('image/jpeg', 0.75));
                 };
                 img.src = e.target.result;
             };
@@ -111,7 +109,6 @@
         });
     };
 
-    // --- HLAVNÍ GENERÁTOR PDF ---
     document.getElementById('generate').onclick = async () => {
         const btn = document.getElementById('generate');
         btn.innerText = "Generuji..."; btn.disabled = true;
@@ -127,14 +124,13 @@
                 event: document.getElementById('event').value || "-",
                 brand: document.getElementById('brand').value || "-",
                 model: document.getElementById('model').value || "-",
-                notes: document.getElementById('notes').value || "Povoleno"
+                notes: document.getElementById('notes').value || "Bez poznámek"
             };
 
-            // --- STRANA 1: DESIGN ŠABLONY ---
+            // --- STRANA 1: DESIGN ---
             doc.setFillColor(0, 122, 255); doc.rect(20, 15, 170, 2, 'F');
             doc.setFont("helvetica", "bold"); doc.setFontSize(22);
             doc.text("SHOE CHECK PROTOCOL", 20, 30);
-            
             doc.setFontSize(10); doc.setFont("", "normal");
             doc.text(`Issued: ${dateStr}`, 190, 35, { align: "right" });
 
@@ -159,7 +155,20 @@
             doc.setFont("", "bold"); doc.text("TECHNICAL NOTES / DECISION:", 25, y + 8);
             doc.setFont("", "normal"); doc.text(data.notes, 25, y + 16, { maxWidth: 160 });
 
-            // Podpisy v boxech
+            // --- FOTODOKUMENTACE STATUS (VŽDY VIDITELNÉ) ---
+            y += 35;
+            doc.setFont("", "bold"); doc.setFontSize(10);
+            
+            const check = (id) => document.getElementById(id).files[0] ? "[ X ]" : "[   ]";
+            
+            doc.text(`${check('p1')} Side View Captured`, 25, y);
+            doc.text(`${check('p2')} Outsole Captured`, 85, y);
+            doc.text(`${check('p3')} Heel Captured`, 145, y);
+            y += 7;
+            doc.text(`${check('p4')} Label Captured`, 25, y);
+            doc.text(`${check('p5')} Insole Captured`, 85, y);
+
+            // Podpisy
             y = 235; doc.setDrawColor(0); doc.setLineWidth(0.5);
             doc.rect(20, y, 80, 40); doc.setFontSize(8); doc.text("ATHLETE'S SIGNATURE", 60, y + 35, { align: "center" });
             if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y + 5, 70, 25);
@@ -167,7 +176,7 @@
             doc.rect(110, y, 80, 40); doc.text("OFFICIAL INSPECTOR", 150, y + 35, { align: "center" });
             if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y + 5, 70, 25);
 
-            // --- STRANA 2: FOTODOKUMENTACE ---
+            // --- STRANA 2: FOTKY ---
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
             const labels = ['SIDE VIEW', 'OUTSOLE', 'HEEL', 'LABEL', 'INSOLE'];
             let hasPhotos = false;
@@ -194,7 +203,7 @@
             }
 
             doc.save(`Protokol_${data.athlete.replace(/\s+/g, '_')}.pdf`);
-        } catch (e) { alert("Chyba při generování PDF. Zkuste to znovu."); console.error(e); }
+        } catch (e) { alert("Chyba při generování."); console.error(e); }
         btn.innerText = "VYGENEROVAT PDF"; btn.disabled = false;
     };
 </script>
