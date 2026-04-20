@@ -29,27 +29,21 @@
         label { display: block; margin-top: 15px; font-weight: 700; font-size: 11px; color: var(--text-gray); text-transform: uppercase; }
         input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #d1d1d6; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fff; appearance: none; -webkit-appearance: none; }
         .btn-link { display: block; background: var(--success); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; margin: 15px 0; box-sizing: border-box; }
-        
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px; }
         @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(3, 1fr); } }
         .photo-item { background: #ffffff; border: 2px solid #e5e5ea; border-radius: 14px; padding: 15px 5px; text-align: center; position: relative; font-size: 11px; font-weight: 600; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90px; }
         .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; cursor: pointer; }
         .photo-item.has-file { border-color: var(--success); background: #f6fff8; }
-        
         .sig-container { background: #fff; border: 1px solid #d1d1d6; border-radius: 12px; margin-top: 8px; touch-action: none; overflow: hidden; }
         canvas { width: 100%; height: 150px; display: block; }
         .btn-clear { background: none; border: none; color: var(--danger); font-size: 11px; padding: 5px; cursor: pointer; width: 100%; text-align: right; }
-        
         .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 14px; font-size: 18px; font-weight: 700; cursor: pointer; }
         .btn-reset { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); width: 100%; padding: 12px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; }
-
         .legal-notice { margin-top: 15px; font-size: 11px; color: var(--text-gray); text-align: justify; font-style: italic; border-top: 1px solid #e5e5ea; padding-top: 10px; }
-
         .help-trigger-container { text-align: center; margin-top: 25px; border-top: 1px solid #e5e5ea; padding-top: 15px; }
         .help-trigger { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; color: var(--primary); background: rgba(0, 122, 255, 0.08); padding: 8px 16px; border-radius: 20px; }
         .help-icon-circle { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: white; font-weight: bold; }
-
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; box-sizing: border-box; }
         .modal-overlay.show { display: flex; }
         .modal-content { background: var(--card-bg); padding: 30px; border-radius: 24px; max-width: 500px; width: 100%; position: relative; }
@@ -85,6 +79,11 @@
     <div class="grid">
         <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand"></div>
         <div><label id="lbl-model">Shoe Model</label><input type="text" id="model"></div>
+    </div>
+
+    <div class="grid">
+        <div><label id="lbl-insp-name">Inspector's Name</label><input type="text" id="inspName"></div>
+        <div><label id="lbl-insp-id">Inspector's ID Number</label><input type="text" id="inspId"></div>
     </div>
 
     <label id="lbl-photo">Photo Documentation</label>
@@ -145,24 +144,24 @@
 
     const translations = {
         en: { 
-            title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", photo: "Photos", 
+            title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", inspName: "Inspector's Name", inspId: "Inspector's ID", photo: "Photos", 
             p1: "Bib & Card", p2: "Side View", p3: "Outsole", p4: "Label / Tongue", p5: "Orthotics Side", p6: "Orthotics Top",
             notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", reset: "RESET FORM", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol",
             legal: "This signature is used solely for the validation of the shoe check results. By signing, the athlete agrees to the processing of personal data for the purpose of evidencing race compliance in accordance with World Athletics rules and GDPR regulations.",
-            phComp: "e.g. World Athletics Tour", phName: "Full Name", phEvent: "e.g. 20km Race Walk", phBrand: "Nike", phModel: "Vaporfly 3", phNotes: "Approved / Remarks...",
-            helpTrigger: "Add to Phone Home Screen", modalTitle: "Installation Guide", modalClose: "Close", confirmReset: "Are you sure you want to clear the entire form?",
-            iosSteps: ["Open this page in **Safari**.", "Tap the **Share** button.", "Select **'Add to Home Screen'**.", "Tap **'Add'**."],
-            androidSteps: ["Open this page in **Chrome**.", "Tap the **three dots**.", "Select **'Install app'**.", "Confirm."]
+            phComp: "e.g. World Athletics Tour", phName: "Full Name", phEvent: "e.g. 20km Race Walk", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Inspector Name", phId: "ID Number", phNotes: "Approved / Remarks...",
+            helpTrigger: "Add to Phone Home Screen", modalTitle: "Installation Guide", modalClose: "Close", confirmReset: "Are you sure you want to clear the form (except race info)?",
+            iosSteps: ["Open in **Safari**.", "Tap **Share** button.", "Select **'Add to Home Screen'**.", "Tap **'Add'**."],
+            androidSteps: ["Open in **Chrome**.", "Tap **three dots**.", "Select **'Install app'**.", "Confirm."]
         },
         cs: { 
-            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", photo: "Fotky", 
+            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", inspName: "Jméno rozhodčího", inspId: "Průkaz rozhodčího (číslo)", photo: "Fotky", 
             p1: "Číslo a karta", p2: "Z boku", p3: "Podrážka", p4: "Štítek / Jazyk", p5: "Vložka z boku", p6: "Vložka shora",
             notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", reset: "VYMAZAT FORMULÁŘ", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol",
             legal: "Tento podpis slouží pouze pro validaci výsledků kontroly obuvi. Udělením podpisu atlet souhlasí se zpracováním osobních údajů uvedených v tomto protokolu pro účely doložení regulérnosti závodu v souladu s pravidly World Athletics a nařízeními GDPR.",
-            phComp: "např. Poděbrady Walking", phName: "Celé jméno", phEvent: "např. 20km chůze", phBrand: "Nike", phModel: "Vaporfly 3", phNotes: "Povoleno / Poznámky...",
-            helpTrigger: "Vložení do telefonu", modalTitle: "Návod na instalaci", modalClose: "Zavřít", confirmReset: "Opravdu chcete vymazat celý formulář?",
-            iosSteps: ["Otevřete tuto stránku v **Safari**.", "Klikněte na tlačítko **Sdílet**.", "Zvolte **'Přidat na plochu'**.", "Klikněte na **'Přidat'**."],
-            androidSteps: ["Otevřete tuto stránku v **Chrome**.", "Klikněte na **tři tečky**.", "Zvolte **'Instalovat aplikaci'**.", "Potvrďte."]
+            phComp: "např. Poděbrady Walking", phName: "Celé jméno", phEvent: "např. 20km chůze", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Jméno a příjmení", phId: "Číslo průkazu", phNotes: "Povoleno / Poznámky...",
+            helpTrigger: "Vložení do telefonu", modalTitle: "Návod na instalaci", modalClose: "Zavřít", confirmReset: "Opravdu chcete vymazat formulář (kromě info o závodu)?",
+            iosSteps: ["Otevřete v **Safari**.", "Klikněte na **Sdílet**.", "Zvolte **'Přidat na plochu'**.", "Klikněte na **'Přidat'**."],
+            androidSteps: ["Otevřete v **Chrome**.", "Klikněte na **tři tečky**.", "Zvolte **'Instalovat aplikaci'**.", "Potvrďte."]
         }
     };
 
@@ -178,6 +177,8 @@
         document.getElementById('lbl-event').innerText = t.event;
         document.getElementById('lbl-brand').innerText = t.brand;
         document.getElementById('lbl-model').innerText = t.model;
+        document.getElementById('lbl-insp-name').innerText = t.inspName;
+        document.getElementById('lbl-insp-id').innerText = t.inspId;
         document.getElementById('lbl-photo').innerText = t.photo;
         document.getElementById('lbl-notes').innerText = t.notes;
         document.getElementById('lbl-sig-a').innerText = t.sigA;
@@ -191,7 +192,6 @@
         document.getElementById('modal-title').innerText = t.modalTitle;
         document.getElementById('modal-close-btn-text').innerText = t.modalClose;
 
-        // Foto texty
         for(let i=1; i<=6; i++) { document.getElementById('p-side'+i).innerText = t['p'+i]; }
 
         document.getElementById('compName').placeholder = t.phComp;
@@ -199,11 +199,12 @@
         document.getElementById('event').placeholder = t.phEvent;
         document.getElementById('brand').placeholder = t.phBrand;
         document.getElementById('model').placeholder = t.phModel;
+        document.getElementById('inspName').placeholder = t.phInsp;
+        document.getElementById('inspId').placeholder = t.phId;
         document.getElementById('notes').placeholder = t.phNotes;
 
         const sexSel = document.getElementById('sex'); sexSel.options[0].text = t.men; sexSel.options[1].text = t.women;
 
-        // Aktualizace help kroků
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         const steps = isIOS ? t.iosSteps : t.androidSteps;
         const list = document.getElementById('help-steps-list');
@@ -288,9 +289,16 @@
             y += 15; doc.setFillColor(245, 245, 245).rect(20, y, 170, 25, 'F');
             doc.setFont("helvetica", "bold").text(t.notes.toUpperCase() + ":", 25, y + 8);
             doc.setFont("helvetica", "normal").text(document.getElementById('notes').value || "OK", 25, y + 16, { maxWidth: 160 });
+            
             y = 250; doc.setFontSize(8).setDrawColor(0).setLineWidth(0.3);
             doc.line(20, y, 90, y); doc.line(110, y, 180, y);
-            doc.text(t.sigA.toUpperCase(), 55, y + 4, { align: "center" }); doc.text(t.sigI.toUpperCase(), 145, y + 4, { align: "center" });
+            doc.text(t.sigA.toUpperCase(), 55, y + 4, { align: "center" }); 
+            
+            // Jméno inspektora a ID pod podpisem
+            const inspInfo = `${document.getElementById('inspName').value} (${document.getElementById('inspId').value})`;
+            doc.text(inspInfo.toUpperCase(), 145, y + 4, { align: "center" });
+            doc.text(t.sigI.toUpperCase(), 145, y + 8, { align: "center" });
+
             if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y - 22, 60, 20, undefined, 'FAST');
             if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y - 22, 60, 20, undefined, 'FAST');
             
