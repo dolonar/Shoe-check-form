@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Shoe Check PRO</title>
     
-    <link rel="icon" type="image/png" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon.png">
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -46,7 +48,7 @@
         .help-icon-circle { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--primary); color: white; font-weight: bold; }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; box-sizing: border-box; }
         .modal-overlay.show { display: flex; }
-        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 24px; max-width: 500px; width: 100%; position: relative; }
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 24px; max-width: 500px; width: 100%; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .modal-close-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; margin-top: 25px; cursor: pointer; }
     </style>
 </head>
@@ -112,7 +114,7 @@
         </div>
     </div>
 
-    <div class="help-trigger-container">
+    <div id="help-ui-container" class="help-trigger-container">
         <div class="help-trigger" onclick="openModal()">
             <div class="help-icon-circle">?</div>
             <div class="help-trigger-text" id="help-trigger-text">App Installation</div>
@@ -149,21 +151,26 @@
             notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", reset: "RESET FORM", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol",
             legal: "This signature is used solely for the validation of the shoe check results. By signing, the athlete agrees to the processing of personal data for the purpose of evidencing race compliance in accordance with World Athletics rules and GDPR regulations.",
             phComp: "e.g. World Athletics Tour", phName: "Full Name", phEvent: "e.g. 20km Race Walk", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Inspector Name", phId: "ID Number", phNotes: "Approved / Remarks...",
-            helpTrigger: "Add to Phone Home Screen", modalTitle: "Installation Guide", modalClose: "Close", confirmReset: "Are you sure you want to clear the form (except race info)?",
+            helpTrigger: "Add to Phone Home Screen", modalTitle: "Installation Guide", modalClose: "Close", confirmReset: "Are you sure you want to clear the form?",
             iosSteps: ["Open in **Safari**.", "Tap **Share** button.", "Select **'Add to Home Screen'**.", "Tap **'Add'**."],
             androidSteps: ["Open in **Chrome**.", "Tap **three dots**.", "Select **'Install app'**.", "Confirm."]
         },
         cs: { 
-            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Název závodu", date: "Datum závodu", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka obuvi", model: "Model obuvi", inspName: "Jméno rozhodčího", inspId: "Průkaz rozhodčího (číslo)", photo: "Fotodokumentace", 
+            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka obuvi", model: "Model obuvi", inspName: "Jméno rozhodčího", inspId: "Průkaz rozhodčího (číslo)", photo: "Fotodokumentace", 
             p1: "Startovní číslo a bota", p2: "Z boku", p3: "Podrážka", p4: "Štítek / Jazyk", p5: "Vložka z boku", p6: "Vložka shora",
             notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", reset: "VYMAZAT FORMULÁŘ", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol",
             legal: "Tento podpis slouží pouze pro validaci výsledků kontroly obuvi. Udělením podpisu atlet souhlasí se zpracováním osobních údajů uvedených v tomto protokolu pro účely doložení regulérnosti závodu v souladu s pravidly World Athletics a nařízeními GDPR.",
             phComp: "např. Poděbrady Walking", phName: "Celé jméno", phEvent: "např. 20km chůze", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Jméno a příjmení", phId: "Číslo průkazu", phNotes: "Povoleno / Poznámky...",
-            helpTrigger: "Vložení do telefonu", modalTitle: "Návod na instalaci", modalClose: "Zavřít", confirmReset: "Opravdu chcete vymazat formulář (kromě info o závodu)?",
+            helpTrigger: "Vložení do telefonu", modalTitle: "Návod na instalaci", modalClose: "Zavřít", confirmReset: "Opravdu chcete vymazat formulář?",
             iosSteps: ["Otevřete v **Safari**.", "Klikněte na **Sdílet**.", "Zvolte **'Přidat na plochu'**.", "Klikněte na **'Přidat'**."],
             androidSteps: ["Otevřete v **Chrome**.", "Klikněte na **tři tečky**.", "Zvolte **'Instalovat aplikaci'**.", "Potvrďte."]
         }
     };
+
+    function checkStandalone() {
+        const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+        if (isStandalone) document.getElementById('help-ui-container').style.display = 'none';
+    }
 
     function setLang(lang) {
         currentLang = lang; const t = translations[lang];
@@ -183,7 +190,6 @@
         document.getElementById('modal-close-btn-text').innerText = t.modalClose;
 
         for(let i=1; i<=6; i++) { document.getElementById('p-side'+i).innerText = t['p'+i]; }
-
         document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phName;
         document.getElementById('event').placeholder = t.phEvent; document.getElementById('brand').placeholder = t.phBrand;
         document.getElementById('model').placeholder = t.phModel; document.getElementById('inspName').placeholder = t.phInsp;
@@ -301,7 +307,11 @@
         } catch (e) { alert("Error: " + e.message); }
         btn.innerText = t.btnGen; btn.disabled = false;
     };
-    window.onload = () => setLang('en');
+    
+    window.onload = () => {
+        setLang('en');
+        checkStandalone();
+    };
 </script>
 </body>
 </html>
