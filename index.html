@@ -10,6 +10,7 @@
     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Shoe check form">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
@@ -128,12 +129,12 @@
         en: { 
             title: "SHOE CONTROL REPORT", comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", brand: "Brand", model: "Model", photo: "Photo Documentation", 
             p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", sigTitle: "Authentication", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", mClear: "Clear", mSave: "Save", confirm: "Clear all data?",
-            phComp: "Event Name", phAthlete: "Full Name", phBrand: "e.g. Nike", phModel: "e.g. Vaporfly", hist: "HISTORY", check: "DOCUMENTS ATTACHED"
+            phComp: "Event Name", phAthlete: "Full Name", phBrand: "e.g. Nike", phModel: "e.g. Vaporfly 3", hist: "HISTORY", check: "DOCUMENTS ATTACHED"
         },
         cs: { 
             title: "PROTOKOL KONTROLY OBUVI", comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka", model: "Model", photo: "Fotodokumentace", 
             p1: "BIB a bota", p2: "Bok", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", sigTitle: "Ověření", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", mClear: "Smazat", mSave: "Uložit", confirm: "Opravdu vymazat?",
-            phComp: "Zadejte název", phAthlete: "Jméno a příjmení", phBrand: "Značka", phModel: "Model", hist: "HISTORIE", check: "PŘILOŽENÁ DOKUMENTACE"
+            phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", hist: "HISTORIE", check: "PŘILOŽENÁ DOKUMENTACE"
         }
     };
 
@@ -152,8 +153,13 @@
         document.getElementById('m-clear').innerText = t.mClear; document.getElementById('m-save').innerText = t.mSave;
         document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('opt-men').innerText = t.men;
         document.getElementById('opt-women').innerText = t.women;
-        document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phAthlete;
-        document.getElementById('brand').placeholder = t.phBrand; document.getElementById('model').placeholder = t.phModel;
+        
+        // Aktualizované nápovědy (placeholdery) s příklady
+        document.getElementById('compName').placeholder = t.phComp; 
+        document.getElementById('athleteName').placeholder = t.phAthlete;
+        document.getElementById('brand').placeholder = t.phBrand; 
+        document.getElementById('model').placeholder = t.phModel;
+        
         for(let i=1; i<=6; i++) document.getElementById('p-side'+i).innerText = t['p'+i];
         renderHistory();
     }
@@ -231,7 +237,6 @@
         const photos = ['p1','p2','p3','p4','p5','p6'];
         const pLabels = [eng.p1, eng.p2, eng.p3, eng.p4, eng.p5, eng.p6];
         
-        // Kontrola přítomnosti fotek
         let hasAnyPhoto = false;
         const processedImages = [];
         for (let id of photos) {
@@ -262,7 +267,6 @@
         doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("SHOE DETAILS", 20, 100);
         doc.setFontSize(14).setTextColor(0).text(`${brand} - ${model}`, 20, 108);
 
-        // Checklist
         doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text(eng.check, 20, 125);
         doc.setFontSize(11).setTextColor(0).setFont("helvetica", "normal");
         photos.forEach((id, i) => {
@@ -279,7 +283,7 @@
         if(sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
         drawFooter();
 
-        // PAGE 2 - Pouze pokud existuje fotka
+        // PAGE 2
         if (hasAnyPhoto) {
             doc.addPage();
             doc.addImage(logo, 'PNG', 150, 10, 40, 20);
