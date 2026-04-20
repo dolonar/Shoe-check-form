@@ -31,8 +31,8 @@
         .btn-link { display: block; background: var(--success); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; margin: 15px 0; box-sizing: border-box; }
         
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px; }
-        @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(5, 1fr); } }
-        .photo-item { background: #ffffff; border: 2px solid #e5e5ea; border-radius: 14px; padding: 20px 5px; text-align: center; position: relative; font-size: 12px; font-weight: 600; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80px; }
+        @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(3, 1fr); } }
+        .photo-item { background: #ffffff; border: 2px solid #e5e5ea; border-radius: 14px; padding: 15px 5px; text-align: center; position: relative; font-size: 11px; font-weight: 600; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90px; }
         .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; cursor: pointer; }
         .photo-item.has-file { border-color: var(--success); background: #f6fff8; }
         
@@ -89,21 +89,29 @@
 
     <label id="lbl-photo">Photo Documentation</label>
     <div class="photo-grid">
-        <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side">Side</span><input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')"></div>
-        <div class="photo-item" id="item-p2"><span>📸</span><span id="p-outsole">Outsole</span><input type="file" id="p2" accept="image/*" capture="environment" onchange="markFilled('p2')"></div>
-        <div class="photo-item" id="item-p3"><span>📸</span><span id="p-heel">Heel</span><input type="file" id="p3" accept="image/*" capture="environment" onchange="markFilled('p3')"></div>
-        <div class="photo-item" id="item-p4"><span>📸</span><span id="p-label">Label</span><input type="file" id="p4" accept="image/*" capture="environment" onchange="markFilled('p4')"></div>
-        <div class="photo-item" id="item-p5"><span>📸</span><span id="p-insole">Insole</span><input type="file" id="p5" accept="image/*" capture="environment" onchange="markFilled('p5')"></div>
+        <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">Bib & Accr Card</span><input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')"></div>
+        <div class="photo-item" id="item-p2"><span>📸</span><span id="p-side2">Side View</span><input type="file" id="p2" accept="image/*" capture="environment" onchange="markFilled('p2')"></div>
+        <div class="photo-item" id="item-p3"><span>📸</span><span id="p-side3">Outsole</span><input type="file" id="p3" accept="image/*" capture="environment" onchange="markFilled('p3')"></div>
+        <div class="photo-item" id="item-p4"><span>📸</span><span id="p-side4">Label / Tongue</span><input type="file" id="p4" accept="image/*" capture="environment" onchange="markFilled('p4')"></div>
+        <div class="photo-item" id="item-p5"><span>📸</span><span id="p-side5">Orthotics Side</span><input type="file" id="p5" accept="image/*" capture="environment" onchange="markFilled('p5')"></div>
+        <div class="photo-item" id="item-p6"><span>📸</span><span id="p-side6">Orthotics Top</span><input type="file" id="p6" accept="image/*" capture="environment" onchange="markFilled('p6')"></div>
     </div>
 
     <label id="lbl-notes">Technical Notes / Decision</label>
     <textarea id="notes" rows="2"></textarea>
 
-    <div class="sig-container"><canvas id="sig-a"></canvas></div>
-    <button class="btn-clear" type="button" id="clear-a" onclick="padA.clear()">Clear Athlete Signature</button>
-    
-    <div class="sig-container"><canvas id="sig-i"></canvas></div>
-    <button class="btn-clear" type="button" id="clear-i" onclick="padI.clear()">Clear Inspector Signature</button>
+    <div class="sig-row">
+        <div>
+            <label id="lbl-sig-a">Athlete's Signature</label>
+            <div class="sig-container"><canvas id="sig-a"></canvas></div>
+            <button class="btn-clear" type="button" id="clear-a" onclick="padA.clear()">Clear</button>
+        </div>
+        <div>
+            <label id="lbl-sig-i">Inspector's Signature</label>
+            <div class="sig-container"><canvas id="sig-i"></canvas></div>
+            <button class="btn-clear" type="button" id="clear-i" onclick="padI.clear()">Clear</button>
+        </div>
+    </div>
 
     <div class="help-trigger-container">
         <div class="help-trigger" onclick="openModal()">
@@ -137,7 +145,9 @@
 
     const translations = {
         en: { 
-            title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", photo: "Photos", side: "Side", outsole: "Outsole", heel: "Heel", label: "Label", insole: "Insole", notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", reset: "RESET FORM", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol",
+            title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", photo: "Photos", 
+            p1: "Bib & Card", p2: "Side View", p3: "Outsole", p4: "Label / Tongue", p5: "Orthotics Side", p6: "Orthotics Top",
+            notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", reset: "RESET FORM", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol",
             legal: "This signature is used solely for the validation of the shoe check results. By signing, the athlete agrees to the processing of personal data for the purpose of evidencing race compliance in accordance with World Athletics rules and GDPR regulations.",
             phComp: "e.g. World Athletics Tour", phName: "Full Name", phEvent: "e.g. 20km Race Walk", phBrand: "Nike", phModel: "Vaporfly 3", phNotes: "Approved / Remarks...",
             helpTrigger: "Add to Phone Home Screen", modalTitle: "Installation Guide", modalClose: "Close", confirmReset: "Are you sure you want to clear the entire form?",
@@ -145,7 +155,9 @@
             androidSteps: ["Open this page in **Chrome**.", "Tap the **three dots**.", "Select **'Install app'**.", "Confirm."]
         },
         cs: { 
-            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", photo: "Fotky", side: "Z boku", outsole: "Podrážka", heel: "Pata", label: "Štítek", insole: "Vložka", notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", reset: "VYMAZAT FORMULÁŘ", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol",
+            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", photo: "Fotky", 
+            p1: "Číslo a karta", p2: "Z boku", p3: "Podrážka", p4: "Štítek / Jazyk", p5: "Vložka z boku", p6: "Vložka shora",
+            notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", reset: "VYMAZAT FORMULÁŘ", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol",
             legal: "Tento podpis slouží pouze pro validaci výsledků kontroly obuvi. Udělením podpisu atlet souhlasí se zpracováním osobních údajů uvedených v tomto protokolu pro účely doložení regulérnosti závodu v souladu s pravidly World Athletics a nařízeními GDPR.",
             phComp: "např. Poděbrady Walking", phName: "Celé jméno", phEvent: "např. 20km chůze", phBrand: "Nike", phModel: "Vaporfly 3", phNotes: "Povoleno / Poznámky...",
             helpTrigger: "Vložení do telefonu", modalTitle: "Návod na instalaci", modalClose: "Zavřít", confirmReset: "Opravdu chcete vymazat celý formulář?",
@@ -167,11 +179,6 @@
         document.getElementById('lbl-brand').innerText = t.brand;
         document.getElementById('lbl-model').innerText = t.model;
         document.getElementById('lbl-photo').innerText = t.photo;
-        document.getElementById('p-side').innerText = t.side;
-        document.getElementById('p-outsole').innerText = t.outsole;
-        document.getElementById('p-heel').innerText = t.heel;
-        document.getElementById('p-label').innerText = t.label;
-        document.getElementById('p-insole').innerText = t.insole;
         document.getElementById('lbl-notes').innerText = t.notes;
         document.getElementById('lbl-sig-a').innerText = t.sigA;
         document.getElementById('lbl-sig-i').innerText = t.sigI;
@@ -184,6 +191,9 @@
         document.getElementById('modal-title').innerText = t.modalTitle;
         document.getElementById('modal-close-btn-text').innerText = t.modalClose;
 
+        // Foto texty
+        for(let i=1; i<=6; i++) { document.getElementById('p-side'+i).innerText = t['p'+i]; }
+
         document.getElementById('compName').placeholder = t.phComp;
         document.getElementById('athleteName').placeholder = t.phName;
         document.getElementById('event').placeholder = t.phEvent;
@@ -193,6 +203,7 @@
 
         const sexSel = document.getElementById('sex'); sexSel.options[0].text = t.men; sexSel.options[1].text = t.women;
 
+        // Aktualizace help kroků
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         const steps = isIOS ? t.iosSteps : t.androidSteps;
         const list = document.getElementById('help-steps-list');
@@ -205,29 +216,17 @@
     }
 
     function resetForm() {
-        // Vymazat textová pole (kromě názvu závodu a data, ty se často opakují)
         document.getElementById('athleteName').value = "";
         document.getElementById('event').value = "";
         document.getElementById('brand').value = "";
         document.getElementById('model').value = "";
         document.getElementById('notes').value = "";
-        
-        // Vymazat soubory a barvy tlačítek
-        const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
-        photos.forEach(id => {
-            document.getElementById(id).value = "";
-            document.getElementById('item-' + id).classList.remove('has-file');
-        });
-
-        // Vymazat podpisy
-        padA.clear();
-        padI.clear();
+        const photos = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'];
+        photos.forEach(id => { document.getElementById(id).value = ""; document.getElementById('item-' + id).classList.remove('has-file'); });
+        padA.clear(); padI.clear();
     }
 
-    function confirmReset() {
-        if(confirm(translations[currentLang].confirmReset)) resetForm();
-    }
-
+    function confirmReset() { if(confirm(translations[currentLang].confirmReset)) resetForm(); }
     function openModal() { document.getElementById('modalOverlay').classList.add('show'); }
     function closeModal(event) { if (!event || event.target === document.getElementById('modalOverlay') || event.target.id === 'modal-close-btn-text') document.getElementById('modalOverlay').classList.remove('show'); }
     function markFilled(id) { document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0); }
@@ -295,8 +294,8 @@
             if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y - 22, 60, 20, undefined, 'FAST');
             if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y - 22, 60, 20, undefined, 'FAST');
             
-            const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
-            const labels = [t.side, t.outsole, t.heel, t.label, t.insole];
+            const photos = ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'];
+            const labels = [t.p1, t.p2, t.p3, t.p4, t.p5, t.p6];
             const resolvedImages = await Promise.all(photos.map(id => resizeImg(document.getElementById(id).files[0])));
             if (resolvedImages.some(img => img !== null)) {
                 doc.addPage(); drawHeader(t.photoTitle); drawFooter();
@@ -313,10 +312,7 @@
                 });
             }
             doc.save(`${document.getElementById('compName').value || t.fileName}_${(document.getElementById('athleteName').value || "Draft").replace(/\s+/g, '_')}.pdf`);
-            
-            // AUTOMATICKÝ RESET PO GENEROVÁNÍ
             setTimeout(resetForm, 1000);
-
         } catch (e) { alert("Error: " + e.message); }
         btn.innerText = t.btnGen; btn.disabled = false;
     };
