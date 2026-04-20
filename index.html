@@ -3,75 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Shoe Check PRO Global</title>
+    <title>Shoe Check PRO Clean</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <style>
         :root { --primary: #007AFF; --success: #34C759; --bg: #f2f2f7; --card-bg: #ffffff; }
-        
-        /* Základní nastavení pro všechny platformy */
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background: var(--bg); margin: 0; padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom) 10px; 
-            color: #1c1c1e; -webkit-font-smoothing: antialiased; 
-        }
-
-        .card { 
-            background: var(--card-bg); padding: 20px; border-radius: 16px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 800px; margin: 20px auto; 
-        }
-        
-        .form-logo { text-align: center; margin-bottom: 25px; }
-        .form-logo img { max-width: 180px; width: 40%; min-width: 120px; height: auto; }
-
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; }
+        .card { background: var(--card-bg); padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 800px; margin: 10px auto; }
+        .form-logo { text-align: center; margin-bottom: 20px; }
+        .form-logo img { max-width: 180px; width: 40%; height: auto; }
         .lang-switch { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
-        .lang-btn { 
-            padding: 10px 20px; border-radius: 10px; border: 1.5px solid var(--primary); 
-            background: transparent; color: var(--primary); font-weight: 600; cursor: pointer; transition: 0.2s;
-        }
+        .lang-btn { padding: 10px 20px; border-radius: 10px; border: 1.5px solid var(--primary); background: transparent; color: var(--primary); font-weight: 600; cursor: pointer; }
         .lang-btn.active { background: var(--primary); color: white; }
-
-        /* Responzivní mřížka formuláře */
         .grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
         @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
-
-        label { display: block; margin-top: 15px; font-weight: 700; font-size: 12px; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select, textarea { 
-            width: 100%; padding: 14px; margin-top: 6px; border: 1px solid #d1d1d6; 
-            border-radius: 12px; box-sizing: border-box; font-size: 16px; background: #fff;
-            appearance: none; -webkit-appearance: none;
-        }
-        
-        .btn-link { 
-            display: block; background: var(--success); color: white; border: none; 
-            width: 100%; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 700; 
-            text-align: center; text-decoration: none; margin: 20px 0; box-sizing: border-box;
-        }
-        
-        /* Fotky: Na mobilu 2 sloupce, na tabletu 3-5 */
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px; }
+        label { display: block; margin-top: 15px; font-weight: 700; font-size: 11px; color: #8e8e93; text-transform: uppercase; }
+        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #d1d1d6; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fff; appearance: none; -webkit-appearance: none; }
+        .btn-link { display: block; background: var(--success); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-size: 14px; font-weight: 700; text-align: center; text-decoration: none; margin: 15px 0; box-sizing: border-box; }
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
         @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(5, 1fr); } }
-
-        .photo-item { 
-            background: #f9f9fb; border: 1.5px dashed #c7c7cc; border-radius: 12px; 
-            padding: 15px 5px; text-align: center; position: relative; font-size: 11px; color: #555;
-        }
+        .photo-item { background: #f9f9fb; border: 1.5px dashed #c7c7cc; border-radius: 12px; padding: 12px 5px; text-align: center; position: relative; font-size: 11px; }
         .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; cursor: pointer; }
-        
-        /* Podpisy vedle sebe na tabletu */
-        .sig-row { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .sig-row { display: grid; grid-template-columns: 1fr; gap: 10px; }
         @media (min-width: 700px) { .sig-row { grid-template-columns: 1fr 1fr; } }
-
         .sig-container { background: #fff; border: 1px solid #d1d1d6; border-radius: 12px; margin-top: 8px; touch-action: none; overflow: hidden; }
-        canvas { width: 100%; height: 160px; display: block; cursor: crosshair; }
-        
-        .btn-clear { background: none; border: none; color: #FF3B30; font-size: 12px; padding: 8px; cursor: pointer; width: 100%; text-align: right; font-weight: 500; }
-        .btn-submit { 
-            background: var(--primary); color: white; border: none; width: 100%; 
-            padding: 20px; border-radius: 14px; font-size: 18px; font-weight: 700; 
-            margin-top: 30px; cursor: pointer; transition: transform 0.1s; 
-        }
-        .btn-submit:active { transform: scale(0.98); }
+        canvas { width: 100%; height: 150px; display: block; }
+        .btn-clear { background: none; border: none; color: #FF3B30; font-size: 11px; padding: 5px; cursor: pointer; width: 100%; text-align: right; }
+        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 14px; font-size: 18px; font-weight: 700; margin-top: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -89,21 +47,20 @@
     <a href="https://certcheck.worldathletics.org/" target="_blank" class="btn-link" id="btn-list">LIST OF APPROVED ATHLETIC SHOES</a>
 
     <div class="grid">
-        <div><label id="lbl-comp">Competition Name</label><input type="text" id="compName" placeholder="..."></div>
+        <div><label id="lbl-comp">Competition Name</label><input type="text" id="compName"></div>
         <div><label id="lbl-date">Race Date</label><input type="date" id="raceDate"></div>
     </div>
 
     <div class="grid">
-        <div><label id="lbl-name">Athlete's Name</label><input type="text" id="athleteName" placeholder="..."></div>
+        <div><label id="lbl-name">Athlete's Name</label><input type="text" id="athleteName"></div>
         <div><label id="lbl-sex">Sex Category</label><select id="sex"><option value="Men">Men</option><option value="Women">Women</option></select></div>
     </div>
 
-    <label id="lbl-event">Event</label>
-    <input type="text" id="event" placeholder="...">
+    <label id="lbl-event">Event</label><input type="text" id="event">
 
     <div class="grid">
-        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand" placeholder="..."></div>
-        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model" placeholder="..."></div>
+        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand"></div>
+        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model"></div>
     </div>
 
     <label id="lbl-photo">Photo Documentation</label>
@@ -116,7 +73,7 @@
     </div>
 
     <label id="lbl-notes">Technical Notes / Decision</label>
-    <textarea id="notes" rows="3"></textarea>
+    <textarea id="notes" rows="2"></textarea>
 
     <div class="sig-row">
         <div>
@@ -139,75 +96,35 @@
     let currentLang = 'en';
 
     const translations = {
-        en: {
-            title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES",
-            comp: "Competition Name", date: "Race Date", sex: "Sex Category",
-            name: "Athlete's Name", event: "Event", brand: "Shoe Brand", model: "Shoe Model",
-            photo: "Photo Documentation", side: "📸 Side", outsole: "📸 Outsole",
-            heel: "📸 Heel", label: "📸 Label", insole: "📸 Insole",
-            notes: "Technical Notes / Decision", sigA: "Athlete's Signature",
-            sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL",
-            issued: "Issued Date", photoTitle: "PHOTO DOCUMENTATION",
-            men: "Men", women: "Women", clear: "Clear Signature", fileName: "Protocol"
-        },
-        cs: {
-            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI",
-            comp: "Název závodu", date: "Datum závodu", sex: "Kategorie",
-            name: "Jméno atleta", event: "Disciplína", brand: "Značka obuvi", model: "Model obuvi",
-            photo: "Fotodokumentace", side: "📸 Z boku", outsole: "📸 Podrážka",
-            heel: "📸 Pata", label: "📸 Štítek", insole: "📸 Vložka",
-            notes: "Technické poznámky / Rozhodnutí", sigA: "Podpis atleta",
-            sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL",
-            issued: "Datum vydání", photoTitle: "FOTODOKUMENTACE",
-            men: "Muži", women: "Ženy", clear: "Smazat podpis", fileName: "Protokol"
-        }
+        en: { title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Race Date", sex: "Sex", name: "Athlete", event: "Event", brand: "Brand", model: "Model", photo: "Photos", side: "📸 Side", outsole: "📸 Outsole", heel: "📸 Heel", label: "📸 Label", insole: "📸 Insole", notes: "Technical Notes / Decision", sigA: "Athlete's Signature", sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL", issued: "Issued", photoTitle: "PHOTO DOCUMENTATION", men: "Men", women: "Women", clear: "Clear", fileName: "Protocol" },
+        cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", sex: "Kategorie", name: "Atlet", event: "Disciplína", brand: "Značka", model: "Model", photo: "Fotky", side: "📸 Z boku", outsole: "📸 Podrážka", heel: "📸 Pata", label: "📸 Štítek", insole: "📸 Vložka", notes: "Poznámky / Rozhodnutí", sigA: "Podpis atleta", sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL", issued: "Vydáno", photoTitle: "FOTODOKUMENTACE", men: "Muži", women: "Ženy", clear: "Smazat", fileName: "Protokol" }
     };
 
     function setLang(lang) {
-        currentLang = lang;
-        const t = translations[lang];
+        currentLang = lang; const t = translations[lang];
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
         document.getElementById('btn-list').innerText = t.btnList;
-        document.getElementById('lbl-comp').innerText = t.comp;
-        document.getElementById('lbl-date').innerText = t.date;
-        document.getElementById('lbl-sex').innerText = t.sex;
-        document.getElementById('lbl-name').innerText = t.name;
-        document.getElementById('lbl-event').innerText = t.event;
-        document.getElementById('lbl-brand').innerText = t.brand;
-        document.getElementById('lbl-model').innerText = t.model;
-        document.getElementById('lbl-photo').innerText = t.photo;
-        document.getElementById('p-side').innerText = t.side;
-        document.getElementById('p-outsole').innerText = t.outsole;
-        document.getElementById('p-heel').innerText = t.heel;
-        document.getElementById('p-label').innerText = t.label;
-        document.getElementById('p-insole').innerText = t.insole;
-        document.getElementById('lbl-notes').innerText = t.notes;
-        document.getElementById('lbl-sig-a').innerText = t.sigA;
-        document.getElementById('lbl-sig-i').innerText = t.sigI;
-        document.getElementById('clear-a').innerText = t.clear;
-        document.getElementById('clear-i').innerText = t.clear;
+        document.getElementById('lbl-comp').innerText = t.comp; document.getElementById('lbl-date').innerText = t.date;
+        document.getElementById('lbl-sex').innerText = t.sex; document.getElementById('lbl-name').innerText = t.name;
+        document.getElementById('lbl-event').innerText = t.event; document.getElementById('lbl-brand').innerText = t.brand;
+        document.getElementById('lbl-model').innerText = t.model; document.getElementById('lbl-photo').innerText = t.photo;
+        document.getElementById('p-side').innerText = t.side; document.getElementById('p-outsole').innerText = t.outsole;
+        document.getElementById('p-heel').innerText = t.heel; document.getElementById('p-label').innerText = t.label;
+        document.getElementById('p-insole').innerText = t.insole; document.getElementById('lbl-notes').innerText = t.notes;
+        document.getElementById('lbl-sig-a').innerText = t.sigA; document.getElementById('lbl-sig-i').innerText = t.sigI;
+        document.getElementById('clear-a').innerText = t.clear; document.getElementById('clear-i').innerText = t.clear;
         document.getElementById('generate').innerText = t.btnGen;
-        const sexSel = document.getElementById('sex');
-        sexSel.options[0].text = t.men; sexSel.options[1].text = t.women;
+        const sexSel = document.getElementById('sex'); sexSel.options[0].text = t.men; sexSel.options[1].text = t.women;
     }
 
     const setupPad = (id) => {
-        const c = document.getElementById(id);
-        const p = new SignaturePad(c, { backgroundColor: '#ffffff' });
-        const res = () => {
-            const r = Math.max(window.devicePixelRatio || 1, 1);
-            c.width = c.offsetWidth * r; c.height = c.offsetHeight * r;
-            c.getContext("2d").scale(r, r);
-            p.clear();
-        };
-        window.addEventListener("resize", res);
-        setTimeout(res, 500);
-        return p;
+        const c = document.getElementById(id); const p = new SignaturePad(c, { backgroundColor: '#ffffff' });
+        const res = () => { const r = Math.max(window.devicePixelRatio || 1, 1); c.width = c.offsetWidth * r; c.height = c.offsetHeight * r; c.getContext("2d").scale(r, r); p.clear(); };
+        window.addEventListener("resize", res); setTimeout(res, 500); return p;
     };
 
-    const padA = setupPad('sig-a');
-    const padI = setupPad('sig-i');
+    const padA = setupPad('sig-a'); const padI = setupPad('sig-i');
 
     const resizeImg = (file) => {
         return new Promise((res) => {
@@ -217,13 +134,12 @@
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const max = 1200;
+                    const max = 1000;
                     let w = img.width, h = img.height;
-                    if (w > h) { if (w > max) { h *= max / w; w = max; } }
-                    else { if (h > max) { w *= max / h; h = max; } }
+                    if (w > h) { if (w > max) { h *= max / w; w = max; } } else { if (h > max) { w *= max / h; h = max; } }
                     canvas.width = w; canvas.height = h;
-                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    res(canvas.toDataURL('image/jpeg', 0.8));
+                    canvas.getContext('2d', {alpha: false}).drawImage(img, 0, 0, w, h);
+                    res(canvas.toDataURL('image/jpeg', 0.7));
                 };
                 img.src = e.target.result;
             };
@@ -232,73 +148,79 @@
     };
 
     document.getElementById('generate').onclick = async () => {
-        const btn = document.getElementById('generate');
-        const t = translations[currentLang];
+        const btn = document.getElementById('generate'); const t = translations[currentLang];
         btn.innerText = "..."; btn.disabled = true;
 
         try {
-            const doc = new jsPDF();
+            const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4', compress: true });
             const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
             const dateStr = new Date().toLocaleDateString(currentLang === 'cs' ? 'cs-CZ' : 'en-GB');
 
             const drawPageHeader = (titleText) => {
-                try { doc.addImage(logo, 'PNG', 155, 10, 35, 20); } catch(e){}
-                doc.setFont("helvetica", "bold"); doc.setFontSize(20);
-                doc.text(titleText, 20, 20);
-                doc.setFontSize(9); doc.setFont("", "normal");
-                doc.text(`${t.issued}: ${dateStr}`, 20, 25);
-                doc.setFillColor(0, 122, 255); doc.rect(20, 32, 170, 2, 'F');
+                try { doc.addImage(logo, 'PNG', 155, 10, 35, 20, undefined, 'FAST'); } catch(e){}
+                doc.setFont("helvetica", "bold").setFontSize(20).text(titleText, 20, 20);
+                doc.setFontSize(9).setFont("helvetica", "normal").text(`${t.issued}: ${dateStr}`, 20, 25);
+                doc.setFillColor(0, 122, 255).rect(20, 32, 170, 2, 'F');
             };
 
+            // STRANA 1
             drawPageHeader(t.title);
-            let y = 45; doc.setDrawColor(0); doc.setLineWidth(0.5); doc.line(20, y, 190, y);
+            let y = 45; 
 
             const addRow = (l, v) => {
-                y += 8; doc.setFont("", "bold"); doc.text(l + ":", 25, y);
-                doc.setFont("", "normal"); doc.text(String(v || "-"), 75, y);
-                y += 4; doc.setDrawColor(200); doc.setLineWidth(0.1); doc.line(20, y, 190, y);
+                y += 8; doc.setFont("helvetica", "bold").text(l + ":", 25, y);
+                doc.setFont("helvetica", "normal").text(String(v || "-"), 75, y);
+                y += 2; // Odsazení místo čáry
             };
 
             addRow(t.comp, document.getElementById('compName').value);
             addRow(t.date, document.getElementById('raceDate').value);
-            addRow(addRow(t.name, document.getElementById('athleteName').value));
+            addRow(t.name, document.getElementById('athleteName').value);
             addRow(t.event + " / " + t.sex, document.getElementById('event').value + " / " + document.getElementById('sex').value);
             addRow(t.brand, document.getElementById('brand').value);
             addRow(t.model, document.getElementById('model').value);
 
-            y += 15; doc.setFillColor(245, 245, 245); doc.rect(20, y, 170, 25, 'F');
-            doc.setFont("", "bold"); doc.text(t.notes.toUpperCase() + ":", 25, y + 8);
-            doc.setFont("", "normal"); doc.text(document.getElementById('notes').value || "OK", 25, y + 16, { maxWidth: 160 });
+            y += 15; doc.setFillColor(245, 245, 245).rect(20, y, 170, 25, 'F');
+            doc.setFont("helvetica", "bold").text(t.notes.toUpperCase() + ":", 25, y + 8);
+            doc.setFont("helvetica", "normal").text(document.getElementById('notes').value || "OK", 25, y + 16, { maxWidth: 160 });
 
-            y = 235; doc.setDrawColor(0); doc.setLineWidth(0.5);
-            doc.rect(20, y, 80, 40); doc.setFontSize(8); doc.text(t.sigA.toUpperCase(), 60, y + 35, { align: "center" });
-            if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y + 5, 70, 25);
-            doc.rect(110, y, 80, 40); doc.text(t.sigI.toUpperCase(), 150, y + 35, { align: "center" });
-            if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y + 5, 70, 25);
+            // Podpisy - bez rámečků
+            y = 260; 
+            doc.setFontSize(8);
+            doc.setDrawColor(0).setLineWidth(0.3);
+            doc.line(20, y, 90, y); // Čára pro podpis atleta
+            doc.line(120, y, 190, y); // Čára pro podpis inspektora
+            
+            doc.text(t.sigA.toUpperCase(), 55, y + 5, { align: "center" });
+            doc.text(t.sigI.toUpperCase(), 155, y + 5, { align: "center" });
 
+            if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y - 25, 60, 22, undefined, 'FAST');
+            if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 125, y - 25, 60, 22, undefined, 'FAST');
+
+            // FOTKY
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
             const labels = [t.side, t.outsole, t.heel, t.label, t.insole];
-            let hasPh = false; for(let id of photos) if(document.getElementById(id).files[0]) hasPh = true;
+            const imgPromises = photos.map(id => resizeImg(document.getElementById(id).files[0]));
+            const resolvedImages = await Promise.all(imgPromises);
 
-            if (hasPh) {
+            if (resolvedImages.some(img => img !== null)) {
                 doc.addPage(); drawPageHeader(t.photoTitle);
                 let py = 50, count = 0;
-                for (let i = 0; i < photos.length; i++) {
-                    const img = await resizeImg(document.getElementById(photos[i]).files[0]);
+                resolvedImages.forEach((img, i) => {
                     if (img) {
                         const x = (count % 2 === 0) ? 20 : 110;
-                        doc.setFontSize(9); doc.text(labels[i].replace('📸 ', ''), x, py - 3);
-                        doc.setDrawColor(230); doc.rect(x, py, 80, 60); doc.addImage(img, 'JPEG', x, py, 80, 60);
+                        doc.setFontSize(9).text(labels[i].replace('📸 ', ''), x, py - 3);
+                        doc.setDrawColor(230).rect(x, py, 80, 60).addImage(img, 'JPEG', x, py, 80, 60, undefined, 'FAST');
                         if (count % 2 === 1) py += 75;
                         count++;
-                        if (count % 6 === 0 && count < 5) { doc.addPage(); drawPageHeader(t.photoTitle); py = 50; }
+                        if (count % 6 === 0 && count < resolvedImages.filter(x => x).length) { doc.addPage(); drawPageHeader(t.photoTitle); py = 50; }
                     }
-                }
+                });
             }
 
             const fileName = `${document.getElementById('compName').value || t.fileName}_${(document.getElementById('athleteName').value || "Draft").replace(/\s+/g, '_')}.pdf`;
             doc.save(fileName);
-        } catch (e) { alert("Error"); console.error(e); }
+        } catch (e) { alert("Error: " + e.message); }
         btn.innerText = t.btnGen; btn.disabled = false;
     };
 </script>
