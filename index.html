@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Shoe Check PRO Clean</title>
+    <title>Shoe Check PRO Final Clean</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <style>
@@ -11,7 +11,7 @@
         body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; }
         .card { background: var(--card-bg); padding: 20px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 800px; margin: 10px auto; }
         .form-logo { text-align: center; margin-bottom: 20px; }
-        .form-logo img { max-width: 180px; width: 40%; height: auto; }
+        .form-logo img { max-width: 200px; width: 45%; height: auto; }
         .lang-switch { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
         .lang-btn { padding: 10px 20px; border-radius: 10px; border: 1.5px solid var(--primary); background: transparent; color: var(--primary); font-weight: 600; cursor: pointer; }
         .lang-btn.active { background: var(--primary); color: white; }
@@ -47,20 +47,20 @@
     <a href="https://certcheck.worldathletics.org/" target="_blank" class="btn-link" id="btn-list">LIST OF APPROVED ATHLETIC SHOES</a>
 
     <div class="grid">
-        <div><label id="lbl-comp">Competition Name</label><input type="text" id="compName"></div>
+        <div><label id="lbl-comp">Competition Name</label><input type="text" id="compName" placeholder="e.g. World Athletics Tour"></div>
         <div><label id="lbl-date">Race Date</label><input type="date" id="raceDate"></div>
     </div>
 
     <div class="grid">
-        <div><label id="lbl-name">Athlete's Name</label><input type="text" id="athleteName"></div>
+        <div><label id="lbl-name">Athlete's Name</label><input type="text" id="athleteName" placeholder="Full Name"></div>
         <div><label id="lbl-sex">Sex Category</label><select id="sex"><option value="Men">Men</option><option value="Women">Women</option></select></div>
     </div>
 
-    <label id="lbl-event">Event</label><input type="text" id="event">
+    <label id="lbl-event">Event</label><input type="text" id="event" placeholder="e.g. 20km Race Walk">
 
     <div class="grid">
-        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand"></div>
-        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model"></div>
+        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand" placeholder="Nike"></div>
+        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model" placeholder="Vaporfly 3"></div>
     </div>
 
     <label id="lbl-photo">Photo Documentation</label>
@@ -73,7 +73,7 @@
     </div>
 
     <label id="lbl-notes">Technical Notes / Decision</label>
-    <textarea id="notes" rows="2"></textarea>
+    <textarea id="notes" rows="2" placeholder="Approved / Remarks..."></textarea>
 
     <div class="sig-row">
         <div>
@@ -159,18 +159,22 @@
             const drawPageHeader = (titleText) => {
                 try { doc.addImage(logo, 'PNG', 155, 10, 35, 20, undefined, 'FAST'); } catch(e){}
                 doc.setFont("helvetica", "bold").setFontSize(20).text(titleText, 20, 20);
-                doc.setFontSize(9).setFont("helvetica", "normal").text(`${t.issued}: ${dateStr}`, 20, 25);
                 doc.setFillColor(0, 122, 255).rect(20, 32, 170, 2, 'F');
             };
 
-            // STRANA 1
+            const drawPageFooter = () => {
+                doc.setFontSize(8).setFont("helvetica", "normal");
+                doc.text(`${t.issued}: ${dateStr}`, 190, 285, { align: "right" });
+            };
+
             drawPageHeader(t.title);
+            drawPageFooter();
             let y = 45; 
 
             const addRow = (l, v) => {
                 y += 8; doc.setFont("helvetica", "bold").text(l + ":", 25, y);
                 doc.setFont("helvetica", "normal").text(String(v || "-"), 75, y);
-                y += 2; // Odsazení místo čáry
+                y += 2;
             };
 
             addRow(t.comp, document.getElementById('compName').value);
@@ -184,27 +188,24 @@
             doc.setFont("helvetica", "bold").text(t.notes.toUpperCase() + ":", 25, y + 8);
             doc.setFont("helvetica", "normal").text(document.getElementById('notes').value || "OK", 25, y + 16, { maxWidth: 160 });
 
-            // Podpisy - bez rámečků
             y = 260; 
-            doc.setFontSize(8);
-            doc.setDrawColor(0).setLineWidth(0.3);
-            doc.line(20, y, 90, y); // Čára pro podpis atleta
-            doc.line(120, y, 190, y); // Čára pro podpis inspektora
-            
+            doc.setFontSize(8).setDrawColor(0).setLineWidth(0.3);
+            doc.line(20, y, 90, y); doc.line(120, y, 190, y);
             doc.text(t.sigA.toUpperCase(), 55, y + 5, { align: "center" });
             doc.text(t.sigI.toUpperCase(), 155, y + 5, { align: "center" });
 
             if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y - 25, 60, 22, undefined, 'FAST');
             if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 125, y - 25, 60, 22, undefined, 'FAST');
 
-            // FOTKY
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
             const labels = [t.side, t.outsole, t.heel, t.label, t.insole];
             const imgPromises = photos.map(id => resizeImg(document.getElementById(id).files[0]));
             const resolvedImages = await Promise.all(imgPromises);
 
             if (resolvedImages.some(img => img !== null)) {
-                doc.addPage(); drawPageHeader(t.photoTitle);
+                doc.addPage(); 
+                drawPageHeader(t.photoTitle);
+                drawPageFooter();
                 let py = 50, count = 0;
                 resolvedImages.forEach((img, i) => {
                     if (img) {
@@ -213,7 +214,12 @@
                         doc.setDrawColor(230).rect(x, py, 80, 60).addImage(img, 'JPEG', x, py, 80, 60, undefined, 'FAST');
                         if (count % 2 === 1) py += 75;
                         count++;
-                        if (count % 6 === 0 && count < resolvedImages.filter(x => x).length) { doc.addPage(); drawPageHeader(t.photoTitle); py = 50; }
+                        if (count % 6 === 0 && count < resolvedImages.filter(x => x).length) { 
+                            doc.addPage(); 
+                            drawPageHeader(t.photoTitle); 
+                            drawPageFooter();
+                            py = 50; 
+                        }
                     }
                 });
             }
