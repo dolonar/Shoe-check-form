@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shoe Check Multi-Language</title>
+    <title>Shoe Check PRO</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <style>
@@ -11,11 +11,12 @@
         body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; }
         .card { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: auto; }
         
-        .header-logo { text-align: right; margin-bottom: 10px; }
-        .header-logo img { max-width: 120px; height: auto; border-radius: 5px; }
+        /* Logo ve formuláři - vycentrované */
+        .form-logo { text-align: center; margin-bottom: 20px; }
+        .form-logo img { max-width: 200px; height: auto; }
 
         .lang-switch { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
-        .lang-btn { padding: 8px 15px; border-radius: 8px; border: 1px solid var(--primary); background: white; color: var(--primary); font-weight: bold; cursor: pointer; }
+        .lang-btn { padding: 8px 15px; border-radius: 8px; border: 1px solid var(--primary); background: white; color: var(--primary); font-weight: bold; cursor: pointer; font-size: 13px; }
         .lang-btn.active { background: var(--primary); color: white; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -38,13 +39,13 @@
 <body>
 
 <div class="card">
-    <div class="header-logo">
-        <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png" alt="Logo">
+    <div class="form-logo">
+        <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png" alt="World Athletics">
     </div>
 
     <div class="lang-switch">
-        <button class="lang-btn active" onclick="setLang('en')">English</button>
-        <button class="lang-btn" onclick="setLang('cs')">Čeština</button>
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')">English</button>
+        <button class="lang-btn" id="btn-cs" onclick="setLang('cs')">Čeština</button>
     </div>
     
     <a href="https://certcheck.worldathletics.org/" target="_blank" class="btn-link" id="btn-list">
@@ -52,19 +53,19 @@
     </a>
 
     <label id="lbl-comp">Competition Name</label>
-    <input type="text" id="compName">
+    <input type="text" id="compName" placeholder="e.g. Podebrady 2026">
 
     <div class="grid">
         <div><label id="lbl-date">Race Date</label><input type="date" id="raceDate"></div>
         <div><label id="lbl-sex">Sex Category</label><select id="sex"><option value="Men">Men</option><option value="Women">Women</option></select></div>
     </div>
 
-    <label id="lbl-name">Athlete's Name</label><input type="text" id="athleteName">
-    <label id="lbl-event">Event</label><input type="text" id="event">
+    <label id="lbl-name">Athlete's Name</label><input type="text" id="athleteName" placeholder="Full Name">
+    <label id="lbl-event">Event</label><input type="text" id="event" placeholder="e.g. 20km Race Walk">
 
     <div class="grid">
-        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand"></div>
-        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model"></div>
+        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand" placeholder="Nike"></div>
+        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model" placeholder="Vaporfly 3"></div>
     </div>
 
     <label id="lbl-photo">Photo Documentation</label>
@@ -128,7 +129,8 @@
     function setLang(lang) {
         currentLang = lang;
         const t = translations[lang];
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase().includes(lang === 'cs' ? 'češ' : 'eng')));
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
         
         document.getElementById('btn-list').innerText = t.btnList;
         document.getElementById('lbl-comp').innerText = t.comp;
@@ -205,6 +207,7 @@
             const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
             const dateStr = new Date().toLocaleDateString(currentLang === 'cs' ? 'cs-CZ' : 'en-GB');
 
+            // Pomocná funkce pro záhlaví PDF (Logo vpravo nahoře)
             const drawPageHeader = (titleText) => {
                 doc.setFillColor(0, 122, 255); doc.rect(20, 15, 170, 2, 'F');
                 try { doc.addImage(logo, 'PNG', 155, 18, 35, 20); } catch(e){}
@@ -249,7 +252,7 @@
             doc.rect(110, y, 80, 40); doc.text(t.sigI.toUpperCase(), 150, y + 35, { align: "center" });
             if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y + 5, 70, 25);
 
-            // STRANA 2
+            // STRANA 2 (Fotky)
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
             const labels = [t.side, t.outsole, t.heel, t.label, t.insole];
             let hasPh = false; for(let id of photos) if(document.getElementById(id).files[0]) hasPh = true;
@@ -270,7 +273,8 @@
                 }
             }
 
-            doc.save(`${t.fileName}_${(document.getElementById('athleteName').value || "Draft").replace(/\s+/g, '_')}.pdf`);
+            const fileName = `${document.getElementById('compName').value || t.fileName}_${(document.getElementById('athleteName').value || "Draft").replace(/\s+/g, '_')}.pdf`;
+            doc.save(fileName);
         } catch (e) { alert("Error"); console.error(e); }
         btn.innerText = t.btnGen; btn.disabled = false;
     };
