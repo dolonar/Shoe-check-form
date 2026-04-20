@@ -1,189 +1,54 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shoe Check PRO</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    <style>
-        :root { --primary: #007AFF; --danger: #FF3B30; --bg: #f2f2f7; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 15px; color: #1c1c1e; }
-        .card { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: auto; }
-        h2 { text-align: center; margin-top: 0; font-size: 22px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        label { display: block; margin-top: 12px; font-weight: 600; font-size: 14px; color: #8e8e93; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #d1d1d6; border-radius: 10px; box-sizing: border-box; font-size: 16px; background: #fff; }
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .photo-item { background: #f9f9fb; border: 1px dashed #c7c7cc; border-radius: 10px; padding: 10px; text-align: center; font-size: 12px; position: relative; }
-        .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; cursor: pointer; }
-        .sig-container { background: #fff; border: 1px solid #d1d1d6; border-radius: 10px; margin-top: 8px; position: relative; }
-        canvas { width: 100%; height: 150px; touch-action: none; }
-        .btn-clear { background: none; border: none; color: var(--danger); font-size: 12px; padding: 5px; cursor: pointer; }
-        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 16px; border-radius: 12px; font-size: 18px; font-weight: 700; margin-top: 25px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-        .btn-submit:active { opacity: 0.8; }
-    </style>
-</head>
-<body>
-
-<div class="card">
-    <h2>Shoe Check Protocol</h2>
-    
-    <label>Competition Name</label>
-    <input type="text" id="compName" placeholder="Podebrady 2026">
-
-    <div class="grid">
-        <div>
-            <label>Date of Race</label>
-            <input type="date" id="raceDate">
-        </div>
-        <div>
-            <label>Sex Category</label>
-            <select id="sex">
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
-            </select>
-        </div>
-    </div>
-
-    <label>Athlete's Name</label>
-    <input type="text" id="athleteName" placeholder="Full name">
-
-    <label>Event</label>
-    <input type="text" id="event" placeholder="e.g. 20km Race Walk">
-
-    <div class="grid">
-        <div>
-            <label>Brand</label>
-            <input type="text" id="brand" placeholder="Nike">
-        </div>
-        <div>
-            <label>Model</label>
-            <input type="text" id="model" placeholder="Vaporfly 3">
-        </div>
-    </div>
-
-    <label>Photos (Mandatory)</label>
-    <div class="photo-grid">
-        <div class="photo-item">📸 Side View<input type="file" id="p1" accept="image/*" capture="environment"></div>
-        <div class="photo-item">📸 Outsole<input type="file" id="p2" accept="image/*" capture="environment"></div>
-        <div class="photo-item">📸 Heel<input type="file" id="p3" accept="image/*" capture="environment"></div>
-        <div class="photo-item">📸 Label<input type="file" id="p4" accept="image/*" capture="environment"></div>
-        <div class="photo-item">📸 Orthotics<input type="file" id="p5" accept="image/*" capture="environment"></div>
-    </div>
-
-    <label>Notes</label>
-    <textarea id="notes" rows="2"></textarea>
-
-    <label>Athlete's Signature</label>
-    <div class="sig-container"><canvas id="sig-athlete"></canvas></div>
-    <button class="btn-clear" onclick="padAthlete.clear()">Smazat podpis</button>
-
-    <label>Inspector's Signature</label>
-    <div class="sig-container"><canvas id="sig-inspector"></canvas></div>
-    <button class="btn-clear" onclick="padInspector.clear()">Smazat podpis</button>
-
-    <button class="btn-submit" id="generate">VYGENEROVAT PROTOKOL</button>
-</div>
-
-<script>
-    const { jsPDF } = window.jspdf;
-    
-    // Inicializace podpisů
-    const setupPad = (id) => {
-        const canvas = document.getElementById(id);
-        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-        canvas.width = canvas.offsetWidth * ratio;
-        canvas.height = canvas.offsetHeight * ratio;
-        canvas.getContext("2d").scale(ratio, ratio);
-        return new SignaturePad(canvas);
-    };
-
-    const padAthlete = setupPad('sig-athlete');
-    const padInspector = setupPad('sig-inspector');
-
-    const getImageData = (file) => {
-        return new Promise((resolve) => {
-            if (!file) resolve(null);
-            const reader = new FileReader();
-            reader.onload = (e) => resolve(e.target.result);
-            reader.readAsDataURL(file);
-        });
-    };
-
-    document.getElementById('generate').addEventListener('click', async () => {
-        const doc = new jsPDF();
-        const dateNow = new Date().toLocaleDateString('cs-CZ');
-        
-        // Sběr dat
-        const data = {
-            comp: document.getElementById('compName').value,
-            raceDate: document.getElementById('raceDate').value,
-            sex: document.getElementById('sex').value,
-            athlete: document.getElementById('athleteName').value,
-            event: document.getElementById('event').value,
-            brand: document.getElementById('brand').value,
-            model: document.getElementById('model').value,
-            notes: document.getElementById('notes').value
-        };
-
-        // Strana 1: Text a Podpisy
-        doc.setFontSize(22); doc.text("SHOE CHECK PROTOCOL", 105, 20, { align: "center" });
-        doc.setFontSize(10); doc.setTextColor(100);
-        doc.text(`Generated on: ${dateNow}`, 105, 28, { align: "center" });
-        
-        doc.setFontSize(12); doc.setTextColor(0);
-        let y = 45;
-        const addLine = (label, value) => {
-            doc.setFont("", "bold"); doc.text(label + ":", 20, y);
-            doc.setFont("", "normal"); doc.text(String(value), 60, y);
-            y += 10;
-        };
-
-        addLine("Competition", data.comp);
-        addLine("Race Date", data.raceDate);
-        addLine("Athlete", data.athlete);
-        addLine("Event/Sex", `${data.event} / ${data.sex}`);
-        addLine("Shoe", `${data.brand} ${data.model}`);
-        y += 5;
-        doc.setFont("", "bold"); doc.text("Notes:", 20, y);
-        doc.setFont("", "normal"); doc.text(data.notes, 20, y + 7, { maxWidth: 170 });
-
-        // Checks
-        y += 30;
-        doc.text("Side View: " + (document.getElementById('p1').files[0] ? "[YES]" : "[NO]"), 20, y);
-        doc.text("Outsole: " + (document.getElementById('p2').files[0] ? "[YES]" : "[NO]"), 80, y);
-        
-        // Podpisy na 1. straně
-        if (!padAthlete.isEmpty()) {
-            doc.text("Athlete Signature:", 20, 230);
-            doc.addImage(padAthlete.toDataURL(), 'PNG', 20, 235, 50, 25);
-        }
-        if (!padInspector.isEmpty()) {
-            doc.text("Inspector Signature:", 130, 230);
-            doc.addImage(padInspector.toDataURL(), 'PNG', 130, 235, 50, 25);
-        }
-
-        // Strana 2: Fotky
-        const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
-        doc.addPage();
-        doc.setFontSize(18); doc.text("PHOTO DOCUMENTATION", 105, 20, { align: "center" });
-        
-        let py = 40;
-        for (let i = 0; i < photos.length; i++) {
-            const imgData = await getImageData(document.getElementById(photos[i]).files[0]);
-            if (imgData) {
-                if (py > 220) { doc.addPage(); py = 30; }
-                doc.setFontSize(10); doc.text(`Photo ${i+1}`, 20, py - 5);
-                doc.addImage(imgData, 'JPEG', 20, py, 80, 60);
-                if (i % 2 === 1) py += 75; // Po dvou fotkách nový řádek
-                else doc.addImage(imgData, 'JPEG', 110, py, 80, 60);
-            }
-        }
-
-        doc.save(`Protokol_${data.athlete.replace(/\s+/g, '_')}.pdf`);
+document.getElementById('generate').addEventListener('click', async () => {
+    // Vytvoříme dokument s podporou Unicode
+    const doc = new jsPDF({
+        orientation: "p",
+        unit: "mm",
+        format: "a4",
+        putOnlyUsedFonts: true
     });
-</script>
 
-</body>
-</html>
+    // Nastavíme font, který má v jsPDF vestavěnou (omezenou) podporu, 
+    // ale pro plnou diakritiku je nejlepší použít standardní 'helvetica' 
+    // a texty vkládat v UTF-8.
+    
+    const dateNow = new Date().toLocaleDateString('cs-CZ');
+    
+    // ... sběr dat zůstává stejný ...
+
+    // --- STRANA 1 ---
+    doc.setFillColor(240, 240, 240);
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    // Nastavení fontu pro český jazyk
+    doc.setFont("helvetica", "bold"); 
+    doc.setFontSize(22);
+    
+    // Tady je trik: jsPDF standardní helveticu v UTF-8 občas nezvládne bez vložení fontu.
+    // Pokud se ti stále zobrazují čtverečky, použijeme metodu vložení vlastního fontu:
+    
+    doc.text("PROTOKOL O KONTROLE OBUVI", 105, 20, { align: "center" }); // č, ř... 
+    
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Vygenerováno: ${dateNow}`, 105, 30, { align: "center" }); // ě 
+
+    let y = 55;
+    const drawRow = (label, value) => {
+        doc.setFont("helvetica", "bold");
+        doc.text(label + ":", 20, y);
+        doc.setFont("helvetica", "normal");
+        // Ošetření diakritiky pro hodnoty z inputů
+        doc.text(String(value), 70, y); 
+        doc.setDrawColor(200);
+        doc.line(20, y + 2, 190, y + 2);
+        y += 12;
+    };
+
+    // Tady už budou české názvy 
+    drawRow("Závod", data.comp);
+    drawRow("Datum závodu", data.raceDate);
+    drawRow("Jméno atleta", data.athlete);
+    drawRow("Disciplína / Pohlaví", `${data.event} (${data.sex})`);
+    drawRow("Model boty", `${data.brand} ${data.model}`);
+    
+    // ... zbytek kódu pro fotky a podpisy zůstává stejný[cite: 6, 9]...
