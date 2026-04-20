@@ -2,37 +2,76 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shoe Check PRO Unified</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Shoe Check PRO Global</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <style>
-        :root { --primary: #007AFF; --success: #34C759; --bg: #f2f2f7; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; }
-        .card { background: white; padding: 20px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 500px; margin: auto; }
+        :root { --primary: #007AFF; --success: #34C759; --bg: #f2f2f7; --card-bg: #ffffff; }
         
-        .form-logo { text-align: center; margin-bottom: 20px; }
-        .form-logo img { max-width: 200px; height: auto; }
+        /* Základní nastavení pro všechny platformy */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            background: var(--bg); margin: 0; padding: env(safe-area-inset-top) 10px env(safe-area-inset-bottom) 10px; 
+            color: #1c1c1e; -webkit-font-smoothing: antialiased; 
+        }
 
-        .lang-switch { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
-        .lang-btn { padding: 8px 15px; border-radius: 8px; border: 1px solid var(--primary); background: white; color: var(--primary); font-weight: bold; cursor: pointer; font-size: 13px; }
+        .card { 
+            background: var(--card-bg); padding: 20px; border-radius: 16px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 800px; margin: 20px auto; 
+        }
+        
+        .form-logo { text-align: center; margin-bottom: 25px; }
+        .form-logo img { max-width: 180px; width: 40%; min-width: 120px; height: auto; }
+
+        .lang-switch { display: flex; gap: 8px; margin-bottom: 20px; justify-content: center; }
+        .lang-btn { 
+            padding: 10px 20px; border-radius: 10px; border: 1.5px solid var(--primary); 
+            background: transparent; color: var(--primary); font-weight: 600; cursor: pointer; transition: 0.2s;
+        }
         .lang-btn.active { background: var(--primary); color: white; }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        label { display: block; margin-top: 10px; font-weight: 600; font-size: 11px; color: #8e8e93; text-transform: uppercase; }
-        input, select, textarea { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #d1d1d6; border-radius: 10px; box-sizing: border-box; font-size: 16px; -webkit-appearance: none; }
+        /* Responzivní mřížka formuláře */
+        .grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+        label { display: block; margin-top: 15px; font-weight: 700; font-size: 12px; color: #8e8e93; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select, textarea { 
+            width: 100%; padding: 14px; margin-top: 6px; border: 1px solid #d1d1d6; 
+            border-radius: 12px; box-sizing: border-box; font-size: 16px; background: #fff;
+            appearance: none; -webkit-appearance: none;
+        }
         
-        .btn-link { display: block; background: var(--success); color: white; border: none; width: 100%; padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 700; text-align: center; text-decoration: none; margin: 15px 0; box-sizing: border-box; }
+        .btn-link { 
+            display: block; background: var(--success); color: white; border: none; 
+            width: 100%; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 700; 
+            text-align: center; text-decoration: none; margin: 20px 0; box-sizing: border-box;
+        }
         
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-        .photo-item { background: #f9f9fb; border: 1px dashed #c7c7cc; border-radius: 10px; padding: 12px 5px; text-align: center; position: relative; font-size: 12px; color: #555; }
+        /* Fotky: Na mobilu 2 sloupce, na tabletu 3-5 */
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px; }
+        @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(5, 1fr); } }
+
+        .photo-item { 
+            background: #f9f9fb; border: 1.5px dashed #c7c7cc; border-radius: 12px; 
+            padding: 15px 5px; text-align: center; position: relative; font-size: 11px; color: #555;
+        }
         .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; top:0; left:0; cursor: pointer; }
         
-        .sig-container { background: #fff; border: 1px solid #d1d1d6; border-radius: 10px; margin-top: 8px; touch-action: none; }
-        canvas { width: 100%; height: 140px; display: block; border-radius: 10px; }
+        /* Podpisy vedle sebe na tabletu */
+        .sig-row { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 700px) { .sig-row { grid-template-columns: 1fr 1fr; } }
+
+        .sig-container { background: #fff; border: 1px solid #d1d1d6; border-radius: 12px; margin-top: 8px; touch-action: none; overflow: hidden; }
+        canvas { width: 100%; height: 160px; display: block; cursor: crosshair; }
         
-        .btn-clear { background: none; border: none; color: #FF3B30; font-size: 11px; padding: 5px; cursor: pointer; width: 100%; text-align: right; }
-        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 12px; font-size: 18px; font-weight: 700; margin-top: 20px; cursor: pointer; width: 100%; }
+        .btn-clear { background: none; border: none; color: #FF3B30; font-size: 12px; padding: 8px; cursor: pointer; width: 100%; text-align: right; font-weight: 500; }
+        .btn-submit { 
+            background: var(--primary); color: white; border: none; width: 100%; 
+            padding: 20px; border-radius: 14px; font-size: 18px; font-weight: 700; 
+            margin-top: 30px; cursor: pointer; transition: transform 0.1s; 
+        }
+        .btn-submit:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
@@ -47,29 +86,29 @@
         <button class="lang-btn" id="btn-cs" onclick="setLang('cs')">Čeština</button>
     </div>
     
-    <a href="https://certcheck.worldathletics.org/" target="_blank" class="btn-link" id="btn-list">
-        LIST OF APPROVED ATHLETIC SHOES
-    </a>
-
-    <label id="lbl-comp">Competition Name</label>
-    <input type="text" id="compName" placeholder="e.g. Podebrady 2026">
+    <a href="https://certcheck.worldathletics.org/" target="_blank" class="btn-link" id="btn-list">LIST OF APPROVED ATHLETIC SHOES</a>
 
     <div class="grid">
+        <div><label id="lbl-comp">Competition Name</label><input type="text" id="compName" placeholder="..."></div>
         <div><label id="lbl-date">Race Date</label><input type="date" id="raceDate"></div>
+    </div>
+
+    <div class="grid">
+        <div><label id="lbl-name">Athlete's Name</label><input type="text" id="athleteName" placeholder="..."></div>
         <div><label id="lbl-sex">Sex Category</label><select id="sex"><option value="Men">Men</option><option value="Women">Women</option></select></div>
     </div>
 
-    <label id="lbl-name">Athlete's Name</label><input type="text" id="athleteName" placeholder="Full Name">
-    <label id="lbl-event">Event</label><input type="text" id="event" placeholder="e.g. 20km Race Walk">
+    <label id="lbl-event">Event</label>
+    <input type="text" id="event" placeholder="...">
 
     <div class="grid">
-        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand" placeholder="Nike"></div>
-        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model" placeholder="Vaporfly 3"></div>
+        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand" placeholder="..."></div>
+        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model" placeholder="..."></div>
     </div>
 
     <label id="lbl-photo">Photo Documentation</label>
     <div class="photo-grid">
-        <div class="photo-item"><span id="p-side">📸 Side View</span><input type="file" id="p1" accept="image/*" capture="environment"></div>
+        <div class="photo-item"><span id="p-side">📸 Side</span><input type="file" id="p1" accept="image/*" capture="environment"></div>
         <div class="photo-item"><span id="p-outsole">📸 Outsole</span><input type="file" id="p2" accept="image/*" capture="environment"></div>
         <div class="photo-item"><span id="p-heel">📸 Heel</span><input type="file" id="p3" accept="image/*" capture="environment"></div>
         <div class="photo-item"><span id="p-label">📸 Label</span><input type="file" id="p4" accept="image/*" capture="environment"></div>
@@ -77,15 +116,20 @@
     </div>
 
     <label id="lbl-notes">Technical Notes / Decision</label>
-    <textarea id="notes" rows="2"></textarea>
+    <textarea id="notes" rows="3"></textarea>
 
-    <label id="lbl-sig-a">Athlete's Signature</label>
-    <div class="sig-container"><canvas id="sig-a"></canvas></div>
-    <button class="btn-clear" type="button" id="clear-a">Clear Signature</button>
-
-    <label id="lbl-sig-i">Inspector's Signature</label>
-    <div class="sig-container"><canvas id="sig-i"></canvas></div>
-    <button class="btn-clear" type="button" id="clear-i">Clear Signature</button>
+    <div class="sig-row">
+        <div>
+            <label id="lbl-sig-a">Athlete's Signature</label>
+            <div class="sig-container"><canvas id="sig-a"></canvas></div>
+            <button class="btn-clear" type="button" id="clear-a" onclick="padA.clear()">Clear Signature</button>
+        </div>
+        <div>
+            <label id="lbl-sig-i">Inspector's Signature</label>
+            <div class="sig-container"><canvas id="sig-i"></canvas></div>
+            <button class="btn-clear" type="button" id="clear-i" onclick="padI.clear()">Clear Signature</button>
+        </div>
+    </div>
 
     <button class="btn-submit" id="generate">GENERATE PDF PROTOCOL</button>
 </div>
@@ -99,15 +143,12 @@
             title: "SHOE CHECK PROTOCOL", btnList: "LIST OF APPROVED ATHLETIC SHOES",
             comp: "Competition Name", date: "Race Date", sex: "Sex Category",
             name: "Athlete's Name", event: "Event", brand: "Shoe Brand", model: "Shoe Model",
-            photo: "Photo Documentation", side: "📸 Side View", outsole: "📸 Outsole",
+            photo: "Photo Documentation", side: "📸 Side", outsole: "📸 Outsole",
             heel: "📸 Heel", label: "📸 Label", insole: "📸 Insole",
             notes: "Technical Notes / Decision", sigA: "Athlete's Signature",
             sigI: "Inspector's Signature", btnGen: "GENERATE PDF PROTOCOL",
             issued: "Issued Date", photoTitle: "PHOTO DOCUMENTATION",
-            men: "Men", women: "Women", clear: "Clear Signature",
-            checkSide: "Side View Captured", checkOut: "Outsole Captured",
-            checkHeel: "Heel Captured", checkLabel: "Label Captured",
-            checkInsole: "Insole Captured", fileName: "Protocol"
+            men: "Men", women: "Women", clear: "Clear Signature", fileName: "Protocol"
         },
         cs: {
             title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI",
@@ -118,10 +159,7 @@
             notes: "Technické poznámky / Rozhodnutí", sigA: "Podpis atleta",
             sigI: "Podpis inspektora", btnGen: "VYGENEROVAT PDF PROTOKOL",
             issued: "Datum vydání", photoTitle: "FOTODOKUMENTACE",
-            men: "Muži", women: "Ženy", clear: "Smazat podpis",
-            checkSide: "Fotka z boku pořízena", checkOut: "Fotka podrážky pořízena",
-            checkHeel: "Fotka paty pořízena", checkLabel: "Fotka štítku pořízena",
-            checkInsole: "Fotka vložky pořízena", fileName: "Protokol"
+            men: "Muži", women: "Ženy", clear: "Smazat podpis", fileName: "Protokol"
         }
     };
 
@@ -130,7 +168,6 @@
         const t = translations[lang];
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
-        
         document.getElementById('btn-list').innerText = t.btnList;
         document.getElementById('lbl-comp').innerText = t.comp;
         document.getElementById('lbl-date').innerText = t.date;
@@ -151,7 +188,6 @@
         document.getElementById('clear-a').innerText = t.clear;
         document.getElementById('clear-i').innerText = t.clear;
         document.getElementById('generate').innerText = t.btnGen;
-        
         const sexSel = document.getElementById('sex');
         sexSel.options[0].text = t.men; sexSel.options[1].text = t.women;
     }
@@ -165,14 +201,13 @@
             c.getContext("2d").scale(r, r);
             p.clear();
         };
-        window.addEventListener("resize", res); setTimeout(res, 500);
+        window.addEventListener("resize", res);
+        setTimeout(res, 500);
         return p;
     };
 
     const padA = setupPad('sig-a');
     const padI = setupPad('sig-i');
-    document.getElementById('clear-a').onclick = () => padA.clear();
-    document.getElementById('clear-i').onclick = () => padI.clear();
 
     const resizeImg = (file) => {
         return new Promise((res) => {
@@ -188,7 +223,7 @@
                     else { if (h > max) { w *= max / h; h = max; } }
                     canvas.width = w; canvas.height = h;
                     canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    res(canvas.toDataURL('image/jpeg', 0.75));
+                    res(canvas.toDataURL('image/jpeg', 0.8));
                 };
                 img.src = e.target.result;
             };
@@ -207,36 +242,26 @@
             const dateStr = new Date().toLocaleDateString(currentLang === 'cs' ? 'cs-CZ' : 'en-GB');
 
             const drawPageHeader = (titleText) => {
-                // Logo vpravo nahoře
                 try { doc.addImage(logo, 'PNG', 155, 10, 35, 20); } catch(e){}
-                
-                // Název protokolu
                 doc.setFont("helvetica", "bold"); doc.setFontSize(20);
                 doc.text(titleText, 20, 20);
-                
-                // Datum pod názvem
                 doc.setFontSize(9); doc.setFont("", "normal");
                 doc.text(`${t.issued}: ${dateStr}`, 20, 25);
-
-                // Modrá linka - nyní POD celou hlavičkou
-                doc.setFillColor(0, 122, 255); 
-                doc.rect(20, 32, 170, 2, 'F');
+                doc.setFillColor(0, 122, 255); doc.rect(20, 32, 170, 2, 'F');
             };
 
-            // STRANA 1
             drawPageHeader(t.title);
-            let y = 45; // Posunuto níže pod novou linku
-            doc.setDrawColor(0); doc.setLineWidth(0.5); doc.line(20, y, 190, y);
+            let y = 45; doc.setDrawColor(0); doc.setLineWidth(0.5); doc.line(20, y, 190, y);
 
-            const addRow = (label, val) => {
-                y += 8; doc.setFont("", "bold"); doc.text(label + ":", 25, y);
-                doc.setFont("", "normal"); doc.text(String(val || "-"), 75, y);
+            const addRow = (l, v) => {
+                y += 8; doc.setFont("", "bold"); doc.text(l + ":", 25, y);
+                doc.setFont("", "normal"); doc.text(String(v || "-"), 75, y);
                 y += 4; doc.setDrawColor(200); doc.setLineWidth(0.1); doc.line(20, y, 190, y);
             };
 
             addRow(t.comp, document.getElementById('compName').value);
             addRow(t.date, document.getElementById('raceDate').value);
-            addRow(t.name, document.getElementById('athleteName').value);
+            addRow(addRow(t.name, document.getElementById('athleteName').value));
             addRow(t.event + " / " + t.sex, document.getElementById('event').value + " / " + document.getElementById('sex').value);
             addRow(t.brand, document.getElementById('brand').value);
             addRow(t.model, document.getElementById('model').value);
@@ -245,29 +270,19 @@
             doc.setFont("", "bold"); doc.text(t.notes.toUpperCase() + ":", 25, y + 8);
             doc.setFont("", "normal"); doc.text(document.getElementById('notes').value || "OK", 25, y + 16, { maxWidth: 160 });
 
-            y += 35; doc.setFont("", "bold"); doc.setFontSize(10);
-            const chk = (id) => document.getElementById(id).files[0] ? "[ X ]" : "[   ]";
-            doc.text(`${chk('p1')} ${t.checkSide}`, 25, y); y+=6;
-            doc.text(`${chk('p2')} ${t.checkOut}`, 25, y); y+=6;
-            doc.text(`${chk('p3')} ${t.checkHeel}`, 25, y); y+=6;
-            doc.text(`${chk('p4')} ${t.checkLabel}`, 25, y); y+=6;
-            doc.text(`${chk('p5')} ${t.checkInsole}`, 25, y);
-
             y = 235; doc.setDrawColor(0); doc.setLineWidth(0.5);
             doc.rect(20, y, 80, 40); doc.setFontSize(8); doc.text(t.sigA.toUpperCase(), 60, y + 35, { align: "center" });
             if (!padA.isEmpty()) doc.addImage(padA.toDataURL(), 'PNG', 25, y + 5, 70, 25);
             doc.rect(110, y, 80, 40); doc.text(t.sigI.toUpperCase(), 150, y + 35, { align: "center" });
             if (!padI.isEmpty()) doc.addImage(padI.toDataURL(), 'PNG', 115, y + 5, 70, 25);
 
-            // STRANA 2 (Fotky)
             const photos = ['p1', 'p2', 'p3', 'p4', 'p5'];
             const labels = [t.side, t.outsole, t.heel, t.label, t.insole];
             let hasPh = false; for(let id of photos) if(document.getElementById(id).files[0]) hasPh = true;
 
             if (hasPh) {
                 doc.addPage(); drawPageHeader(t.photoTitle);
-                let py = 50; // Start pod hlavičkou
-                let count = 0;
+                let py = 50, count = 0;
                 for (let i = 0; i < photos.length; i++) {
                     const img = await resizeImg(document.getElementById(photos[i]).files[0]);
                     if (img) {
