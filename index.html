@@ -25,10 +25,7 @@
             --placeholder: #c7c7cc;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -39,19 +36,8 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        .app-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 20px 0;
-        }
-
-        .app-header img {
-            max-width: 180px;
-            height: auto;
-            border-radius: 10px;
-        }
+        .app-header { display: flex; justify-content: center; align-items: center; width: 100%; padding: 20px 0; }
+        .app-header img { max-width: 180px; height: auto; border-radius: 10px; }
 
         .card {
             background: var(--card-bg);
@@ -63,311 +49,84 @@
             width: 100%;
         }
 
-        .lang-switch {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 25px;
-            justify-content: center;
-        }
-
+        .lang-switch { display: flex; gap: 8px; margin-bottom: 25px; justify-content: center; }
         .lang-btn {
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: 2px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
+            padding: 10px 20px; border-radius: 12px; border: 2px solid var(--primary);
+            background: transparent; color: var(--primary); font-weight: 700; cursor: pointer; transition: 0.3s;
         }
+        .lang-btn.active { background: var(--primary); color: white; }
 
-        .lang-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Průhledné zelené tlačítko s ikonkou */
         .db-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: rgba(52, 199, 89, 0.5); /* 50% průhledná zelená */
-            color: #155724; /* Tmavší zelený text pro čitelnost */
-            text-decoration: none;
-            text-align: center;
-            padding: 16px;
-            border-radius: 15px;
-            font-weight: 700;
-            font-size: 13px;
-            margin-bottom: 25px;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(52, 199, 89, 0.2);
-            transition: 0.2s all;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: rgba(52, 199, 89, 0.5); color: #155724; text-decoration: none;
+            padding: 16px; border-radius: 15px; font-weight: 700; font-size: 13px;
+            margin-bottom: 25px; width: 100%; text-transform: uppercase; letter-spacing: 0.5px;
+            border: 1px solid rgba(52, 199, 89, 0.2); transition: 0.2s all;
         }
+        .db-link svg { width: 18px; height: 18px; fill: #155724; }
 
-        .db-link svg {
-            width: 18px;
-            height: 18px;
-            fill: #155724;
-        }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
 
-        .db-link:active {
-            background: rgba(52, 199, 89, 0.7);
-            transform: scale(0.99);
-        }
+        label { display: block; margin-top: 18px; font-weight: 700; font-size: 11px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select { width: 100%; padding: 14px; margin-top: 6px; border: 1px solid #d1d1d6; border-radius: 12px; font-size: 16px; background: #fff; }
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        @media (min-width: 600px) {
-            .grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        label {
-            display: block;
-            margin-top: 18px;
-            font-weight: 700;
-            font-size: 11px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 14px;
-            margin-top: 6px;
-            border: 1px solid #d1d1d6;
-            border-radius: 12px;
-            box-sizing: border-box;
-            font-size: 16px;
-            background: #fff;
-            color: #1c1c1e;
-        }
-
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        @media (min-width: 768px) {
-            .photo-grid { grid-template-columns: repeat(3, 1fr); }
-        }
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
+        @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(3, 1fr); } }
 
         .photo-item {
-            background: #fff;
-            border: 2px solid #e5e5ea;
-            border-radius: 16px;
-            padding: 15px 5px;
-            text-align: center;
-            position: relative;
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
+            background: #fff; border: 2px solid #e5e5ea; border-radius: 16px; padding: 15px 5px;
+            text-align: center; position: relative; min-height: 100px; display: flex;
+            flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;
         }
-
-        .photo-item input {
-            position: absolute;
-            opacity: 0;
-            width: 100%; height: 100%;
-            cursor: pointer;
-            top: 0; left: 0;
-        }
-
-        .photo-item.has-file {
-            border-color: var(--success);
-            background: #f6fff8;
-        }
-
-        .add-photo-wrapper {
-            margin-top: 15px;
-            width: 100%;
-        }
+        .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; top: 0; left: 0; }
+        .photo-item.has-file { border-color: var(--success); background: #f6fff8; }
 
         .add-photo-btn {
-            width: 100%;
-            padding: 18px;
-            border-radius: 16px;
-            border: 2px dashed #d1d1d6;
-            background: #f9f9f9;
-            color: var(--text-gray);
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            position: relative;
+            width: 100%; padding: 18px; border-radius: 16px; border: 2px dashed #d1d1d6;
+            background: #f9f9f9; color: var(--text-gray); font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px; position: relative; margin-top: 15px;
         }
+        .add-photo-btn input { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
 
-        .add-photo-btn input {
-            position: absolute;
-            opacity: 0;
-            width: 100%; height: 100%;
-            cursor: pointer;
-        }
+        .other-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; justify-content: center; }
+        .other-tag { background: var(--primary); color: white; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
 
-        .other-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-            justify-content: center;
-        }
-
-        .other-tag {
-            background: var(--primary);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* OPRAVENO: Tlačítka pro podpis (standardní výška + centrování) */
         .sig-trigger {
-            width: 100%;
-            padding: 14px; /* Standardní výška jako ostatní vstupy */
-            margin-top: 10px;
-            border-radius: 12px;
-            border: 1.5px dashed var(--primary);
-            background: #fff;
-            color: var(--primary);
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
+            width: 100%; padding: 14px; margin-top: 10px; border-radius: 12px; border: 1.5px dashed var(--primary);
+            background: #fff; color: var(--primary); font-weight: 600; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; font-size: 16px;
         }
+        .sig-icon { width: 20px; height: 20px; fill: var(--primary); margin-right: 8px; }
+        .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); background: #f6fff8; }
+        .sig-trigger.signed .sig-icon { fill: var(--success); }
 
-        /* Ikona podpisu */
-        .sig-icon {
-            width: 20px;
-            height: 20px;
-            fill: var(--primary);
-            margin-right: 5px;
-        }
-
-        .sig-trigger.signed {
-            border-style: solid;
-            border-color: var(--success);
-            color: var(--success);
-            background: #f6fff8;
-        }
-        
-        .sig-trigger.signed .sig-icon {
-            fill: var(--success);
-        }
-
-        .modal {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: white;
-            z-index: 9999;
-            display: none;
-            flex-direction: column;
-        }
-
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
+        .modal-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
         .modal-body { flex: 1; background: #f9f9f9; position: relative; }
         canvas { width: 100%; height: 100%; touch-action: none; }
         .modal-footer { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-        .btn-submit {
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 20px;
-            border-radius: 18px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 30px;
-            box-shadow: 0 4px 15px rgba(0,122,255,0.2);
-        }
+        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 18px; font-size: 18px; font-weight: 700; cursor: pointer; margin-top: 30px; }
+        .btn-reset { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); width: 100%; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
 
-        .btn-reset {
-            background: transparent;
-            color: var(--danger);
-            border: 1.5px solid var(--danger);
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
+        /* Historie & Smazání */
+        .history-section { margin-top: 40px; border-top: 2px solid #e5e5ea; padding-top: 20px; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .history-title { font-size: 14px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; margin: 0; }
+        .btn-clear-hist { 
+            background: #e5e5ea; border: none; border-radius: 8px; padding: 5px 10px; 
+            color: #8e8e93; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700;
         }
-
-        .history-section {
-            margin-top: 40px;
-            border-top: 2px solid #e5e5ea;
-            padding-top: 20px;
-        }
-
-        .history-title {
-            font-size: 14px;
-            color: var(--text-gray);
-            font-weight: 800;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
+        .btn-clear-hist:active { background: #d1d1d6; }
         .history-list { display: flex; flex-direction: column; gap: 10px; }
-
-        .history-item {
-            background: #fff;
-            padding: 12px 15px;
-            border-radius: 14px;
-            border: 1px solid #e5e5ea;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-        }
-
+        .history-item { background: #fff; padding: 12px 15px; border-radius: 14px; border: 1px solid #e5e5ea; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
         .history-info b { display: block; color: #1c1c1e; }
         .history-info small { color: var(--text-gray); }
 
-        .app-footer {
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 11px;
-            color: var(--text-gray);
-        }
-
-        .app-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-        }
+        .app-footer { text-align: center; padding: 30px 20px; font-size: 11px; color: var(--text-gray); }
+        .app-footer a { color: var(--primary); text-decoration: none; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -391,17 +150,14 @@
         <div><label id="lbl-comp">Competition</label><input type="text" id="compName"></div>
         <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
     </div>
-
     <div class="grid">
         <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName"></div>
         <div><label id="lbl-sex">Category</label><select id="sex"><option value="Men" id="opt-men">Men</option><option value="Women" id="opt-women">Women</option></select></div>
     </div>
-
     <div class="grid">
         <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand"></div>
         <div><label id="lbl-model">Shoe Model</label><input type="text" id="model"></div>
     </div>
-
     <div class="grid">
         <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName"></div>
         <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId"></div>
@@ -448,7 +204,13 @@
     </div>
 
     <div class="history-section">
-        <div class="history-title" id="lbl-hist">HISTORY</div>
+        <div class="history-header">
+            <div class="history-title" id="lbl-hist">HISTORY</div>
+            <button class="btn-clear-hist" onclick="clearHistory()">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                <span id="txt-clear-hist">Clear</span>
+            </button>
+        </div>
         <div id="history-list" class="history-list"></div>
     </div>
 </div>
@@ -458,15 +220,9 @@
 </div>
 
 <div id="sigModal" class="modal">
-    <div class="modal-header">
-        <h3 id="m-title">Signature</h3>
-        <button onclick="closeSig()" style="border:none; background:none; font-size:24px; cursor:pointer;">✕</button>
-    </div>
+    <div class="modal-header"><h3 id="m-title">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:24px;">✕</button></div>
     <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
-    <div class="modal-footer">
-        <button class="btn-reset" onclick="activePad.clear()" id="m-clear">Clear</button>
-        <button class="btn-submit" style="margin:0; padding:12px" onclick="saveSig()" id="m-save">Save</button>
-    </div>
+    <div class="modal-footer"><button class="btn-reset" onclick="activePad.clear()" id="m-clear">Clear</button><button class="btn-submit" style="margin:0; padding:12px" onclick="saveSig()" id="m-save">Save</button></div>
 </div>
 
 <script>
@@ -480,12 +236,12 @@
         en: { 
             title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", brand: "Shoe Brand", model: "Shoe Model", photo: "Photo Documentation", other: "Other Photos", addOther: "+ Add Photo",
             p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top",
-            sigTitle: "Authentication", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", mClear: "Clear", mSave: "Save", confirm: "Clear form?", hist: "HISTORY", check: "DOCUMENTS ATTACHED", inspName: "Inspector Name", inspId: "ID Number", phComp: "Event Name", phAthlete: "Full Name", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Name", phId: "ID"
+            sigTitle: "Authentication", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", mClear: "Clear", mSave: "Save", confirm: "Clear form?", hist: "HISTORY", clearHist: "Clear", clearConfirm: "Delete entire history?", check: "DOCUMENTS ATTACHED", inspName: "Inspector Name", inspId: "ID Number", phComp: "Event Name", phAthlete: "Full Name", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Name", phId: "ID"
         },
         cs: { 
             title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka obuvi", model: "Model obuvi", photo: "Fotodokumentace", other: "Další fotografie", addOther: "+ Přidat další fotku",
             p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)",
-            sigTitle: "Ověření", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", mClear: "Smazat", mSave: "Uložit", confirm: "Opravdu smazat vše?", hist: "HISTORIE", check: "PŘILOŽENÁ DOKUMENTACE", inspName: "Jméno rozhodčího", inspId: "Průkaz (číslo)", phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", phInsp: "Jméno a příjmení", phId: "Číslo"
+            sigTitle: "Ověření", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", mClear: "Smazat", mSave: "Uložit", confirm: "Opravdu smazat vše?", hist: "HISTORIE", clearHist: "Smazat", clearConfirm: "Smazat celou historii?", check: "PŘILOŽENÁ DOKUMENTACE", inspName: "Jméno rozhodčího", inspId: "Průkaz (číslo)", phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", phInsp: "Jméno a příjmení", phId: "Číslo"
         }
     };
 
@@ -506,6 +262,7 @@
         document.getElementById('txt-sig-a').innerText = t.sigA; document.getElementById('txt-sig-i').innerText = t.sigI;
         document.getElementById('btn-gen').innerText = t.gen; document.getElementById('btn-reset').innerText = t.reset;
         document.getElementById('lbl-hist').innerText = t.hist;
+        document.getElementById('txt-clear-hist').innerText = t.clearHist;
         document.getElementById('opt-men').innerText = t.men; document.getElementById('opt-women').innerText = t.women;
         document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phAthlete;
         document.getElementById('brand').placeholder = t.phBrand; document.getElementById('model').placeholder = t.phModel;
@@ -518,7 +275,7 @@
 
     function handleOtherPhoto(input) {
         if (input.files && input.files[0]) {
-            if (otherPhotos.length >= 6) return alert("Maximum 6 photos");
+            if (otherPhotos.length >= 6) return alert("Max 6 photos");
             otherPhotos.push(input.files[0]);
             renderOtherList();
             input.value = ""; 
@@ -528,7 +285,7 @@
     function renderOtherList() {
         const list = document.getElementById('otherFileList');
         list.innerHTML = otherPhotos.map((f, i) => `
-            <div class="other-tag">Photo ${i + 1} <span onclick="removeOther(${i})" style="cursor:pointer; font-weight:bold; margin-left:5px;">✕</span></div>
+            <div class="other-tag">Photo ${i + 1} <span onclick="removeOther(${i})" style="cursor:pointer; margin-left:5px;">✕</span></div>
         `).join('');
     }
 
@@ -541,10 +298,9 @@
         activeType = type; const t = translations[currentLang];
         document.getElementById('m-title').innerText = (type === 'a' ? t.sigA : t.sigI);
         document.getElementById('sigModal').classList.add('active');
-        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-        canvas.width = canvas.offsetWidth * ratio; canvas.height = canvas.offsetHeight * r;
-        canvas.getContext("2d").scale(ratio, ratio);
-        activePad.clear(); if(sigData[type]) activePad.fromDataURL(sigData[type]);
+        const r = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * r; canvas.height = canvas.offsetHeight * r;
+        canvas.getContext("2d").scale(r, r); activePad.clear(); if(sigData[type]) activePad.fromDataURL(sigData[type]);
     }
 
     function saveSig() {
@@ -584,6 +340,13 @@
         list.innerHTML = hist.map(h => `<div class="history-item"><div class="history-info"><b>${h.name}</b><small>${h.comp}</small></div><div style="font-size:12px; color:var(--placeholder);">${h.time}</div></div>`).join('');
     }
 
+    function clearHistory() {
+        if(confirm(translations[currentLang].clearConfirm)) {
+            localStorage.removeItem('shoeHistory');
+            renderHistory();
+        }
+    }
+
     function confirmReset() { if(confirm(translations[currentLang].confirm)) location.reload(); }
 
     document.getElementById('btn-gen').onclick = async () => {
@@ -618,31 +381,24 @@
         doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 35, 190, 35);
         doc.setFontSize(10).setTextColor(120).text(t.comp.toUpperCase(), 20, 50);
         doc.setFontSize(14).setTextColor(0).setFont("helvetica", "normal").text(clean(compRaw) || "---", 20, 58);
-        doc.setFontSize(10).setTextColor(120).text(t.date.toUpperCase(), 150, 50);
+        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text(t.date.toUpperCase(), 150, 50);
         doc.setFontSize(14).text(document.getElementById('raceDate').value || "---", 150, 58);
-        doc.setFontSize(10).setTextColor(120).text(t.athlete.toUpperCase(), 20, 75);
+        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text(t.athlete.toUpperCase(), 20, 75);
         doc.setFontSize(14).text(`${clean(athleteRaw)} (${document.getElementById('sex').value})`, 20, 83);
-        doc.setFontSize(10).setTextColor(120).text("SHOE DETAILS", 20, 100);
+        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("SHOE DETAILS", 20, 100);
         doc.setFontSize(14).text(`${clean(brandRaw)} - ${clean(modelRaw)}`, 20, 108);
-        doc.setFontSize(10).setTextColor(120).text(t.check, 20, 125);
+        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text(t.check, 20, 125);
         doc.setFontSize(9).setTextColor(0);
-        mainPhotos.forEach((id, i) => { doc.text(`${document.getElementById(id).files.length > 0 ? "[X]" : "[  ]"}  ${mainLabels[i]}`, 25, 135 + (i * 7)); });
+        mainPhotos.forEach((id, i) => { const has = document.getElementById(id).files.length > 0; doc.text(`${has ? "[X]" : "[  ]"}  ${mainLabels[i]}`, 25, 135 + (i * 7)); });
         if (otherPhotos.length > 0) doc.text(`[X]  Other photos attached: ${otherPhotos.length}`, 25, 135 + (6 * 7));
 
-        // SIGNATURES & NAMES
         const sigY = 240;
-        doc.setDrawColor(180).line(20, sigY, 85, sigY); // Line Athlete
-        doc.line(125, sigY, 190, sigY); // Line Inspector
-        
+        doc.setDrawColor(180).line(20, sigY, 85, sigY); doc.line(125, sigY, 190, sigY);
         doc.setFontSize(9).setTextColor(100);
-        // Athlete Side
-        doc.text(clean(athleteRaw) || "---", 52, sigY + 5, {align:'center'}); // Athlete Name
-        doc.text(t.sigA, 52, sigY + 9, {align:'center'}); // Athlete Signature Title
-        
-        // Inspector Side
+        doc.text(clean(athleteRaw) || "---", 52, sigY + 5, {align:'center'});
+        doc.text(t.sigA, 52, sigY + 9, {align:'center'});
         doc.text(`${clean(inspNameRaw)} (${clean(inspIdRaw)})`, 157, sigY + 5, {align:'center'});
         doc.text(t.sigI, 157, sigY + 9, {align:'center'});
-        
         if(sigData.a) doc.addImage(sigData.a, 'PNG', 27, sigY - 25, 45, 20);
         if(sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
         footer();
@@ -671,7 +427,6 @@
         localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
         setTimeout(() => location.reload(), 1000);
     };
-
     window.onload = () => setLang('cs');
 </script>
 </body>
