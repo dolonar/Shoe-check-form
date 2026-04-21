@@ -239,11 +239,12 @@
             gap: 8px;
         }
 
+        /* OPRAVENO: Tlačítka pro podpis (standardní výška + centrování) */
         .sig-trigger {
             width: 100%;
-            padding: 166px;
+            padding: 14px; /* Standardní výška jako ostatní vstupy */
             margin-top: 10px;
-            border-radius: 14px;
+            border-radius: 12px;
             border: 1.5px dashed var(--primary);
             background: #fff;
             color: var(--primary);
@@ -252,6 +253,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 16px;
+        }
+
+        /* Ikona podpisu */
+        .sig-icon {
+            width: 20px;
+            height: 20px;
+            fill: var(--primary);
+            margin-right: 5px;
         }
 
         .sig-trigger.signed {
@@ -259,6 +269,10 @@
             border-color: var(--success);
             color: var(--success);
             background: #f6fff8;
+        }
+        
+        .sig-trigger.signed .sig-icon {
+            fill: var(--success);
         }
 
         .modal {
@@ -413,8 +427,20 @@
     </div>
 
     <label id="lbl-sig-title">Authentication</label>
-    <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')"><span id="txt-sig-a">Athlete's Signature</span><span id="stat-a">❌</span></button>
-    <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')"><span id="txt-sig-i">Inspector's Signature</span><span id="stat-i">❌</span></button>
+    <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')">
+        <span style="display:flex; align-items:center;">
+            <svg class="sig-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            <span id="txt-sig-a">Athlete's Signature</span>
+        </span>
+        <span id="stat-a">❌</span>
+    </button>
+    <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')">
+        <span style="display:flex; align-items:center;">
+            <svg class="sig-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            <span id="txt-sig-i">Inspector's Signature</span>
+        </span>
+        <span id="stat-i">❌</span>
+    </button>
 
     <button class="btn-submit" id="btn-gen">CREATE REPORT</button>
     <div style="margin-top:20px; text-align:center;">
@@ -516,7 +542,7 @@
         document.getElementById('m-title').innerText = (type === 'a' ? t.sigA : t.sigI);
         document.getElementById('sigModal').classList.add('active');
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
-        canvas.width = canvas.offsetWidth * ratio; canvas.height = canvas.offsetHeight * ratio;
+        canvas.width = canvas.offsetWidth * ratio; canvas.height = canvas.offsetHeight * r;
         canvas.getContext("2d").scale(ratio, ratio);
         activePad.clear(); if(sigData[type]) activePad.fromDataURL(sigData[type]);
     }
@@ -610,7 +636,7 @@
         
         doc.setFontSize(9).setTextColor(100);
         // Athlete Side
-        doc.text(clean(athleteRaw) || "---", 52, sigY + 5, {align:'center'}); // Athlete Name - PŘIDÁNO
+        doc.text(clean(athleteRaw) || "---", 52, sigY + 5, {align:'center'}); // Athlete Name
         doc.text(t.sigA, 52, sigY + 9, {align:'center'}); // Athlete Signature Title
         
         // Inspector Side
