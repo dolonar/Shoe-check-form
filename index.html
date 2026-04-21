@@ -340,7 +340,7 @@
             margin-bottom: 8px;
         }
 
-        /* Zápatí */
+        /* Footer */
         .app-footer {
             text-align: center;
             padding: 30px 20px;
@@ -397,7 +397,7 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="light">
 
 <div class="app-header">
     <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png" alt="Logo">
@@ -507,7 +507,7 @@
         </span>
         <span id="stat-a">❌</span>
     </button>
-
+    
     <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')">
         <span style="display:flex; align-items:center;">
             <svg class="sig-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
@@ -542,7 +542,7 @@
     <div class="modal-body">
         <canvas id="sigCanvas"></canvas>
     </div>
-    <div class="modal-footer">
+    <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
         <button onclick="activePad.clear()" style="padding:15px; border-radius:12px; border:1px solid var(--danger); color:var(--danger); background:none; font-weight:700;">Clear</button>
         <button onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:700;">Save</button>
     </div>
@@ -550,10 +550,7 @@
 
 <script>
     const { jsPDF } = window.jspdf;
-    let currentLang = 'en';
-    let sigData = { a: null, i: null };
-    let otherPhotos = [];
-    let activePad, activeType;
+    let currentLang = 'en', sigData = { a: null, i: null }, otherPhotos = [], activePad, activeType;
 
     const translations = {
         en: { 
@@ -563,7 +560,8 @@
             sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", 
             hist: "HISTORY", clear: "CLEAR", clearConfirm: "Delete history?", 
             phComp: "Event Name", phAthlete: "Full Name", phBrand: "Nike", phModel: "Vaporfly 3", 
-            p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" 
+            p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top",
+            warnMsg: "vášně chceš odeslat nedokončený formulář"
         },
         cs: { 
             title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", 
@@ -571,25 +569,25 @@
             brand: "Značka obuvi", model: "Model obuvi", photo: "Fotodokumentace", addOther: "+ Přidat fotku", 
             sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", 
             hist: "HISTORIE", clear: "SMAZAT", clearConfirm: "Smazat celou historii?", 
-            phComp: "Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "Nike", phModel: "Vaporfly 3", 
-            p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)" 
+            phComp: "Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", 
+            p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)",
+            warnMsg: "vášně chceš odeslat nedokončený formulář"
         }
     };
 
-    // Dark Mode
     function toggleTheme() {
-        const isDark = document.body.getAttribute('data-theme') === 'dark';
-        const newTheme = isDark ? 'light' : 'dark';
-        document.body.setAttribute('data-theme', newTheme);
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        body.setAttribute('data-theme', newTheme);
         document.getElementById('theme-icon').innerText = newTheme === 'light' ? '🌙' : '☀️';
-        localStorage.setItem('appTheme', newTheme);
+        localStorage.setItem('theme', newTheme);
     }
-    if (localStorage.getItem('appTheme') === 'dark') {
+    if (localStorage.getItem('theme') === 'dark') {
         document.body.setAttribute('data-theme', 'dark');
         document.getElementById('theme-icon').innerText = '☀️';
     }
 
-    // Jazyk
     function setLang(lang) {
         currentLang = lang;
         const t = translations[lang];
@@ -624,7 +622,6 @@
         renderHistory();
     }
 
-    // Našeptávač data
     function updateDatalists() {
         const comps = JSON.parse(localStorage.getItem('compList') || '[]');
         const insps = JSON.parse(localStorage.getItem('inspList') || '[]');
@@ -648,7 +645,6 @@
         localStorage.setItem('inspList', JSON.stringify(insps.slice(-10)));
     }
 
-    // Resety
     function partialReset() {
         document.getElementById('athleteName').value = "";
         document.getElementById('brand').value = "";
@@ -667,11 +663,8 @@
         document.getElementById('otherFileList').innerHTML = "";
     }
 
-    function confirmFullReset() {
-        if (confirm("Reset ALL fields?")) location.reload();
-    }
+    function confirmFullReset() { if (confirm("Reset ALL fields?")) location.reload(); }
 
-    // Fotky
     function handleOtherPhoto(input) {
         if (input.files && input.files[0]) {
             otherPhotos.push(input.files[0]);
@@ -688,10 +681,10 @@
     }
 
     function markFilled(id) {
-        document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0);
+        const item = document.getElementById('item-' + id);
+        item.classList.toggle('has-file', document.getElementById(id).files.length > 0);
     }
 
-    // Podpisy
     const canvas = document.getElementById('sigCanvas');
     activePad = new SignaturePad(canvas, { backgroundColor: 'white' });
 
@@ -719,7 +712,6 @@
 
     function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
 
-    // Historie UI
     function renderHistory() {
         const list = document.getElementById('history-list');
         const hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]');
@@ -733,15 +725,11 @@
 
     function clearHistory() {
         if (confirm(translations[currentLang].clearConfirm)) {
-            localStorage.removeItem('shoeHistory');
-            localStorage.removeItem('compList');
-            localStorage.removeItem('inspList');
-            updateDatalists();
-            renderHistory();
+            localStorage.removeItem('shoeHistory'); localStorage.removeItem('compList'); localStorage.removeItem('inspList');
+            updateDatalists(); renderHistory();
         }
     }
 
-    // PDF Pomocné
     const clean = (str) => str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
     async function processImg(file) {
         if (!file) return null;
@@ -751,8 +739,9 @@
                 const img = new Image();
                 img.onload = () => {
                     const c = document.createElement('canvas');
+                    const ctx = c.getContext('2d');
                     c.width = img.width; c.height = img.height;
-                    c.getContext('2d').drawImage(img, 0, 0);
+                    ctx.drawImage(img, 0, 0);
                     resolve({ data: c.toDataURL('image/jpeg', 0.8), w: img.width, h: img.height });
                 };
                 img.src = e.target.result;
@@ -761,15 +750,24 @@
         });
     }
 
-    // GENERÁTOR PDF
+    // --- GENERÁTOR PDF S KONTROLOU ---
     document.getElementById('btn-gen').onclick = async () => {
+        const athleteVal = document.getElementById('athleteName').value;
+        const compVal = document.getElementById('compName').value;
+        const brandVal = document.getElementById('brand').value;
+
+        // Podmínka kontroly vyplnění
+        if (!compVal || !athleteVal || !brandVal) {
+            if (!confirm(translations[currentLang].warnMsg)) {
+                return; // Přeruší odesílání
+            }
+        }
+
         const t = translations.en;
-        const athleteRaw = document.getElementById('athleteName').value;
-        const compRaw = document.getElementById('compName').value;
         const inspName = document.getElementById('inspName').value;
         const inspId = document.getElementById('inspId').value;
         
-        saveToMemory(compRaw, inspName, inspId);
+        saveToMemory(compVal, inspName, inspId);
         const doc = new jsPDF();
         const now = new Date().toLocaleString('en-GB');
         const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
@@ -786,19 +784,18 @@
             validPhotos.push({ ...await processImg(otherPhotos[i]), label: "Other Photo " + (i + 1) });
         }
 
-        // STRANA 1
         doc.addImage(logo, 'PNG', 150, 10, 40, 20);
         doc.setFontSize(22).setFont("helvetica", "bold").text(t.title, 20, 25);
         doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 35, 190, 35);
         
         doc.setFontSize(10).setTextColor(120).text("COMPETITION", 20, 50);
-        doc.setFontSize(14).setTextColor(0).setFont("helvetica", "normal").text(clean(compRaw) || "---", 20, 58);
+        doc.setFontSize(14).setTextColor(0).setFont("helvetica", "normal").text(clean(compVal) || "---", 20, 58);
         
         doc.setFontSize(10).setTextColor(120).text("ATHLETE", 20, 75);
-        doc.setFontSize(14).text(`${clean(athleteRaw)} (${document.getElementById('sex').value})`, 20, 83);
+        doc.setFontSize(14).text(`${clean(athleteVal)} (${document.getElementById('sex').value})`, 20, 83);
         
         doc.setFontSize(10).setTextColor(120).text("SHOE DETAILS", 20, 100);
-        doc.setFontSize(14).text(`${clean(document.getElementById('brand').value)} - ${clean(document.getElementById('model').value)}`, 20, 108);
+        doc.setFontSize(14).text(`${clean(brandVal)} - ${clean(document.getElementById('model').value)}`, 20, 108);
 
         doc.setFontSize(10).setTextColor(120).text("DOCUMENTS ATTACHED", 20, 125);
         doc.setFontSize(9).setTextColor(0);
@@ -812,7 +809,7 @@
         doc.setDrawColor(180).line(20, sigY, 85, sigY);
         doc.line(125, sigY, 190, sigY);
         doc.setFontSize(9).setTextColor(100);
-        doc.text(clean(athleteRaw) || "---", 52, sigY + 5, {align:'center'});
+        doc.text(clean(athleteVal) || "---", 52, sigY + 5, {align:'center'});
         doc.text(t.sigA, 52, sigY + 9, {align:'center'});
         doc.text(`${clean(inspName)} (${clean(inspId)})`, 157, sigY + 5, {align:'center'});
         doc.text(t.sigI, 157, sigY + 9, {align:'center'});
@@ -821,7 +818,6 @@
         if (sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
         doc.setFontSize(8).setTextColor(150).text(`Generated: ${now}`, 190, 285, {align: 'right'});
 
-        // STRANA 2
         if (validPhotos.length > 0) {
             doc.addPage();
             doc.setFontSize(18).setFont("helvetica", "bold").setTextColor(0).text("PHOTO DOCUMENTATION", 20, 25);
@@ -836,9 +832,9 @@
             });
         }
 
-        doc.save(`${clean(athleteRaw).replace(/\s+/g, '_')}_Report.pdf`);
+        doc.save(`${clean(athleteVal).replace(/\s+/g, '_')}_Report.pdf`);
         let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]');
-        hist.unshift({ name: athleteRaw || "N/A", comp: compRaw || "N/A", time: now });
+        hist.unshift({ name: athleteVal || "N/A", comp: compVal || "N/A", time: now });
         localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
 
         partialReset();
