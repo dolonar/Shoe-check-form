@@ -14,7 +14,6 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     
     <style>
-        /* Barevné schéma a Dark Mode */
         :root {
             --primary: #007AFF;
             --success: #34C759;
@@ -38,10 +37,7 @@
             --placeholder: #636366;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -52,7 +48,6 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Hlavička */
         .app-header {
             display: flex;
             justify-content: center;
@@ -79,7 +74,6 @@
             font-size: 20px;
         }
 
-        /* Karta formuláře */
         .card {
             background: var(--card-bg);
             padding: 25px;
@@ -112,7 +106,6 @@
             color: white;
         }
 
-        /* Tlačítko databáze - průhledné zelené */
         .db-link {
             display: flex;
             align-items: center;
@@ -137,7 +130,6 @@
             border-color: #81f09b;
         }
 
-        /* Grid pro vstupy */
         .grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -145,9 +137,7 @@
         }
 
         @media (min-width: 600px) {
-            .grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .grid { grid-template-columns: 1fr 1fr; }
         }
 
         label {
@@ -170,7 +160,6 @@
             color: var(--text-main);
         }
 
-        /* Foto sekce */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -236,7 +225,6 @@
             gap: 8px;
         }
 
-        /* Tlačítka pro podpisy */
         .sig-trigger {
             width: 100%;
             padding: 14px;
@@ -253,24 +241,12 @@
             font-size: 16px;
         }
 
-        .sig-icon {
-            width: 20px;
-            height: 20px;
-            fill: var(--primary);
-            margin-right: 8px;
-        }
+        .sig-icon { width: 20px; height: 20px; fill: var(--primary); margin-right: 8px; }
 
-        .sig-trigger.signed {
-            border-style: solid;
-            border-color: var(--success);
-            color: var(--success);
-        }
+        .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
-        .sig-trigger.signed .sig-icon {
-            fill: var(--success);
-        }
+        .sig-trigger.signed .sig-icon { fill: var(--success); }
 
-        /* Hlavní akční tlačítka */
         .btn-submit {
             background: var(--primary);
             color: white;
@@ -298,7 +274,6 @@
             margin-top: 15px;
         }
 
-        /* Sekce historie */
         .history-section {
             margin-top: 40px;
             border-top: 2px solid var(--border);
@@ -312,21 +287,9 @@
             margin-bottom: 15px;
         }
 
-        .history-title {
-            font-size: 14px;
-            color: var(--text-gray);
-            font-weight: 800;
-            text-transform: uppercase;
-        }
+        .history-title { font-size: 14px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; }
 
-        .btn-clear-hist {
-            background: none;
-            border: none;
-            color: var(--danger);
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: 700;
-        }
+        .btn-clear-hist { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 11px; font-weight: 700; }
 
         .history-item {
             background: var(--input-bg);
@@ -340,7 +303,6 @@
             margin-bottom: 8px;
         }
 
-        /* Footer */
         .app-footer {
             text-align: center;
             padding: 30px 20px;
@@ -348,13 +310,8 @@
             color: var(--text-gray);
         }
 
-        .app-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-        }
+        .app-footer a { color: var(--primary); text-decoration: none; font-weight: 700; }
 
-        /* Modální okno */
         .modal {
             position: fixed;
             top: 0; left: 0;
@@ -365,9 +322,7 @@
             flex-direction: column;
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal-header {
             padding: 20px;
@@ -377,24 +332,9 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .modal-body {
-            flex: 1;
-            background: #ffffff;
-            position: relative;
-        }
-
-        canvas {
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
-
-        .modal-footer {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+        .modal-body { flex: 1; background: #ffffff; position: relative; }
+        canvas { width: 100%; height: 100%; touch-action: none; }
+        .modal-footer { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     </style>
 </head>
 <body data-theme="light">
@@ -536,45 +476,44 @@
 
 <div id="sigModal" class="modal">
     <div class="modal-header">
-        <h3 id="m-title">Signature</h3>
+        <h3 id="m-title-label">Signature</h3>
         <button onclick="closeSig()" style="border:none; background:none; font-size:28px; color:var(--text-main);">✕</button>
     </div>
     <div class="modal-body">
         <canvas id="sigCanvas"></canvas>
     </div>
     <div class="modal-footer">
-        <button onclick="activePad.clear()" style="padding:15px; border-radius:12px; border:1px solid var(--danger); color:var(--danger); background:none; font-weight:700;">Clear</button>
-        <button onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:700;">Save</button>
+        <button id="btn-sig-clear" onclick="activePad.clear()" style="padding:15px; border-radius:12px; border:1px solid var(--danger); color:var(--danger); background:none; font-weight:700;">Clear</button>
+        <button id="btn-sig-save" onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:700;">Save</button>
     </div>
 </div>
 
 <script>
     const { jsPDF } = window.jspdf;
-    let currentLang = 'en';
-    let sigData = { a: null, i: null };
-    let otherPhotos = [];
-    let activePad, activeType;
+    let currentLang = 'en', sigData = { a: null, i: null }, otherPhotos = [], activePad, activeType;
 
     const translations = {
         en: { 
             title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", 
-            comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", 
+            comp: "Competition", date: "Date", athlete: "Athlete Name", sex: "Category", men: "Men", women: "Women", 
             brand: "Shoe Brand", model: "Shoe Model", photo: "Photo Documentation", addOther: "+ Add Photo", 
+            inspName: "Inspector Name", inspId: "ID Number",
             sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", 
-            hist: "HISTORY", clear: "CLEAR", clearConfirm: "Delete history?", 
+            hist: "HISTORY", clear: "CLEAR", clearConfirm: "Delete history?", warnMsg: "vášně chceš odeslat nedokončený formulář",
+            sigModalTitle: "Signature", sigClear: "Clear", sigSave: "Save",
             phComp: "Event Name", phAthlete: "Full Name", phBrand: "Nike", phModel: "Vaporfly 3", 
-            p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top",
-            warnMsg: "vášně chceš odeslat nedokončený formulář"
+            p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" 
         },
         cs: { 
             title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", 
-            comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", 
+            comp: "Závod", date: "Datum", athlete: "Jméno atleta", sex: "Kategorie", men: "Muži", women: "Ženy", 
             brand: "Značka obuvi", model: "Model obuvi", photo: "Fotodokumentace", addOther: "+ Přidat fotku", 
+            inspName: "Jméno rozhodčího", inspId: "Průkaz (číslo)",
             sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", 
-            hist: "HISTORIE", clear: "SMAZAT", clearConfirm: "Smazat celou historii?", 
+            hist: "HISTORIE", clear: "SMAZAT", clearConfirm: "Smazat celou historii?", warnMsg: "vášně chceš odeslat nedokončený formulář",
+            sigModalTitle: "Podpis", sigClear: "Smazat", sigSave: "Uložit",
             phComp: "Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", 
-            p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)",
-            warnMsg: "vášně chceš odeslat nedokončený formulář"
+            p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)" 
         }
     };
 
@@ -596,13 +535,18 @@
         const t = translations[lang];
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
+        
         document.getElementById('txt-list').innerText = t.btnList;
         document.getElementById('lbl-comp').innerText = t.comp; 
         document.getElementById('lbl-date').innerText = t.date;
         document.getElementById('lbl-name').innerText = t.athlete; 
         document.getElementById('lbl-sex').innerText = t.sex;
+        document.getElementById('opt-men').innerText = t.men;
+        document.getElementById('opt-women').innerText = t.women;
         document.getElementById('lbl-brand').innerText = t.brand; 
         document.getElementById('lbl-model').innerText = t.model;
+        document.getElementById('lbl-insp-name').innerText = t.inspName; 
+        document.getElementById('lbl-insp-id').innerText = t.inspId;
         document.getElementById('lbl-photo').innerText = t.photo; 
         document.getElementById('txt-add-other').innerText = t.addOther;
         document.getElementById('txt-sig-a').innerText = t.sigA; 
@@ -611,25 +555,30 @@
         document.getElementById('btn-reset').innerText = t.reset;
         document.getElementById('lbl-hist').innerText = t.hist;
         document.getElementById('btn-clear-txt').innerText = t.clear;
+        
+        document.getElementById('m-title-label').innerText = t.sigModalTitle;
+        document.getElementById('btn-sig-clear').innerText = t.sigClear;
+        document.getElementById('btn-sig-save').innerText = t.sigSave;
+
         document.getElementById('compName').placeholder = t.phComp; 
         document.getElementById('athleteName').placeholder = t.phAthlete;
         document.getElementById('brand').placeholder = t.phBrand; 
         document.getElementById('model').placeholder = t.phModel;
+        
         document.getElementById('p-side1').innerText = t.p1;
         document.getElementById('p-side2').innerText = t.p2;
         document.getElementById('p-side3').innerText = t.p3;
         document.getElementById('p-side4').innerText = t.p4;
         document.getElementById('p-side5').innerText = t.p5;
         document.getElementById('p-side6').innerText = t.p6;
+        
         updateDatalists();
         renderHistory();
     }
 
-    // NAŠEPTÁVAČ LOGIKA
     function updateDatalists() {
         const comps = JSON.parse(localStorage.getItem('compList') || '[]');
         const insps = JSON.parse(localStorage.getItem('inspList') || '[]');
-        
         document.getElementById('compListOptions').innerHTML = comps.map(c => `<option value="${c}">`).join('');
         document.getElementById('inspListOptions').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
         document.getElementById('idListOptions').innerHTML = insps.map(i => `<option value="${i.id}">`).join('');
@@ -644,12 +593,10 @@
     function saveToMemory(comp, inspName, inspId) {
         let comps = JSON.parse(localStorage.getItem('compList') || '[]');
         let insps = JSON.parse(localStorage.getItem('inspList') || '[]');
-
         if (comp && !comps.includes(comp.trim())) comps.push(comp.trim());
         if (inspName && !insps.some(i => i.name.trim() === inspName.trim())) {
             insps.push({name: inspName.trim(), id: inspId.trim()});
         }
-
         localStorage.setItem('compList', JSON.stringify(comps.slice(-20)));
         localStorage.setItem('inspList', JSON.stringify(insps.slice(-20)));
     }
@@ -684,10 +631,7 @@
     function renderOtherList() {
         const container = document.getElementById('otherFileList');
         container.innerHTML = otherPhotos.map((f, i) => `
-            <div class="other-tag">
-                Photo ${i + 1} 
-                <span onclick="otherPhotos.splice(${i}, 1); renderOtherList();" style="cursor:pointer; font-weight:bold; margin-left:5px;">✕</span>
-            </div>
+            <div class="other-tag">Photo ${i + 1} <span onclick="otherPhotos.splice(${i}, 1); renderOtherList();" style="cursor:pointer; font-weight:bold; margin-left:5px;">✕</span></div>
         `).join('');
     }
 
