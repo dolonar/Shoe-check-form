@@ -86,7 +86,7 @@
             color: white;
         }
 
-        /* OPRAVENÉ: Průhledné zelené tlačítko s ikonkou */
+        /* Průhledné zelené tlačítko s ikonkou */
         .db-link {
             display: flex;
             align-items: center;
@@ -241,7 +241,7 @@
 
         .sig-trigger {
             width: 100%;
-            padding: 16px;
+            padding: 166px;
             margin-top: 10px;
             border-radius: 14px;
             border: 1.5px dashed var(--primary);
@@ -603,10 +603,20 @@
         mainPhotos.forEach((id, i) => { doc.text(`${document.getElementById(id).files.length > 0 ? "[X]" : "[  ]"}  ${mainLabels[i]}`, 25, 135 + (i * 7)); });
         if (otherPhotos.length > 0) doc.text(`[X]  Other photos attached: ${otherPhotos.length}`, 25, 135 + (6 * 7));
 
-        const sigY = 240; doc.setDrawColor(180).line(20, sigY, 85, sigY); doc.line(125, sigY, 190, sigY);
-        doc.setFontSize(9).setTextColor(100).text(t.sigA, 52, sigY + 5, {align:'center'});
+        // SIGNATURES & NAMES
+        const sigY = 240;
+        doc.setDrawColor(180).line(20, sigY, 85, sigY); // Line Athlete
+        doc.line(125, sigY, 190, sigY); // Line Inspector
+        
+        doc.setFontSize(9).setTextColor(100);
+        // Athlete Side
+        doc.text(clean(athleteRaw) || "---", 52, sigY + 5, {align:'center'}); // Athlete Name - PŘIDÁNO
+        doc.text(t.sigA, 52, sigY + 9, {align:'center'}); // Athlete Signature Title
+        
+        // Inspector Side
         doc.text(`${clean(inspNameRaw)} (${clean(inspIdRaw)})`, 157, sigY + 5, {align:'center'});
         doc.text(t.sigI, 157, sigY + 9, {align:'center'});
+        
         if(sigData.a) doc.addImage(sigData.a, 'PNG', 27, sigY - 25, 45, 20);
         if(sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
         footer();
@@ -635,6 +645,7 @@
         localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
         setTimeout(() => location.reload(), 1000);
     };
+
     window.onload = () => setLang('cs');
 </script>
 </body>
