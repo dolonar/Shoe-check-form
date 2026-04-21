@@ -25,6 +25,10 @@
             --placeholder: #c7c7cc;
         }
 
+        * {
+            box-sizing: border-box; /* Zabrání přetékání prvků */
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background: var(--bg);
@@ -55,6 +59,7 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.05);
             max-width: 800px;
             margin: 0 auto 20px auto;
+            width: 100%;
         }
 
         .lang-switch {
@@ -96,17 +101,7 @@
             letter-spacing: 0.5px;
             margin-bottom: 25px;
             box-shadow: 0 4px 15px rgba(52, 199, 89, 0.3);
-            transition: transform 0.2s;
-        }
-
-        .db-button:active {
-            transform: scale(0.98);
-        }
-
-        .db-button svg {
-            width: 22px;
-            height: 22px;
-            fill: white;
+            width: 100%;
         }
 
         .grid {
@@ -116,9 +111,7 @@
         }
 
         @media (min-width: 600px) {
-            .grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .grid { grid-template-columns: 1fr 1fr; }
         }
 
         label {
@@ -137,29 +130,16 @@
             margin-top: 6px;
             border: 1px solid #d1d1d6;
             border-radius: 12px;
-            box-sizing: border-box;
             font-size: 16px;
             background: #fff;
-            color: #1c1c1e;
-            -webkit-appearance: none;
         }
 
-        input::placeholder {
-            color: var(--placeholder);
-            opacity: 1;
-        }
-
+        /* Foto mřížka */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-top: 12px;
-        }
-
-        @media (min-width: 768px) {
-            .photo-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
         }
 
         .photo-item {
@@ -184,8 +164,7 @@
             width: 100%;
             height: 100%;
             cursor: pointer;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
         }
 
         .photo-item.has-file {
@@ -193,8 +172,10 @@
             background: #f6fff8;
         }
 
+        /* OPRAVA: Sekce pro další fotky */
         .add-photo-wrapper {
             margin-top: 15px;
+            width: 100%;
         }
 
         .add-photo-btn {
@@ -211,6 +192,7 @@
             justify-content: center;
             gap: 10px;
             position: relative;
+            margin: 0 auto;
         }
 
         .add-photo-btn input {
@@ -219,6 +201,7 @@
             width: 100%;
             height: 100%;
             cursor: pointer;
+            top: 0; left: 0;
         }
 
         .other-list {
@@ -226,6 +209,7 @@
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 12px;
+            justify-content: center;
         }
 
         .other-tag {
@@ -240,6 +224,7 @@
             gap: 8px;
         }
 
+        /* Podpisy */
         .sig-trigger {
             width: 100%;
             padding: 16px;
@@ -264,19 +249,15 @@
 
         .modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: white;
             z-index: 9999;
             display: none;
             flex-direction: column;
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal-header {
             padding: 20px;
@@ -286,24 +267,9 @@
             align-items: center;
         }
 
-        .modal-body {
-            flex: 1;
-            background: #f9f9f9;
-            position: relative;
-        }
-
-        canvas {
-            width: 100%;
-            height: 100%;
-            touch-action: none;
-        }
-
-        .modal-footer {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+        .modal-body { flex: 1; background: #f9f9f9; position: relative; }
+        canvas { width: 100%; height: 100%; touch-action: none; }
+        .modal-footer { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
         .btn-submit {
             background: var(--primary);
@@ -316,7 +282,6 @@
             font-weight: 700;
             cursor: pointer;
             margin-top: 30px;
-            box-shadow: 0 4px 15px rgba(0,122,255,0.2);
         }
 
         .btn-reset {
@@ -343,13 +308,10 @@
             font-weight: 800;
             margin-bottom: 15px;
             text-transform: uppercase;
+            text-align: center;
         }
 
-        .history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .history-list { display: flex; flex-direction: column; gap: 10px; }
 
         .history-item {
             background: #fff;
@@ -362,16 +324,6 @@
             font-size: 14px;
         }
 
-        .history-info b {
-            display: block;
-            color: #1c1c1e;
-        }
-
-        .history-info small {
-            color: var(--text-gray);
-        }
-
-        /* Copyright V APLIKACI - VRÁCENO */
         .app-footer {
             text-align: center;
             padding: 30px 20px;
@@ -404,78 +356,30 @@
     </a>
 
     <div class="grid">
-        <div>
-            <label id="lbl-comp">Competition</label>
-            <input type="text" id="compName">
-        </div>
-        <div>
-            <label id="lbl-date">Date</label>
-            <input type="date" id="raceDate">
-        </div>
+        <div><label id="lbl-comp">Competition</label><input type="text" id="compName"></div>
+        <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
     </div>
-
     <div class="grid">
-        <div>
-            <label id="lbl-name">Athlete Name</label>
-            <input type="text" id="athleteName">
-        </div>
-        <div>
-            <label id="lbl-sex">Category</label>
-            <select id="sex">
-                <option value="Men" id="opt-men">Men</option>
-                <option value="Women" id="opt-women">Women</option>
-            </select>
-        </div>
+        <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName"></div>
+        <div><label id="lbl-sex">Category</label><select id="sex"><option value="Men" id="opt-men">Men</option><option value="Women" id="opt-women">Women</option></select></div>
     </div>
-
     <div class="grid">
-        <div>
-            <label id="lbl-brand">Shoe Brand</label>
-            <input type="text" id="brand">
-        </div>
-        <div>
-            <label id="lbl-model">Shoe Model</label>
-            <input type="text" id="model">
-        </div>
+        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand"></div>
+        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model"></div>
     </div>
-
     <div class="grid">
-        <div>
-            <label id="lbl-insp-name">Inspector Name</label>
-            <input type="text" id="inspName">
-        </div>
-        <div>
-            <label id="lbl-insp-id">ID Number</label>
-            <input type="text" id="inspId">
-        </div>
+        <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName"></div>
+        <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId"></div>
     </div>
 
     <label id="lbl-photo">Photo Documentation</label>
     <div class="photo-grid">
-        <div class="photo-item" id="item-p1">
-            <span>📸</span><span id="p-side1">BIB & Shoe</span>
-            <input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')">
-        </div>
-        <div class="photo-item" id="item-p2">
-            <span>📸</span><span id="p-side2">Side View</span>
-            <input type="file" id="p2" accept="image/*" capture="environment" onchange="markFilled('p2')">
-        </div>
-        <div class="photo-item" id="item-p3">
-            <span>📸</span><span id="p-side3">Outsole</span>
-            <input type="file" id="p3" accept="image/*" capture="environment" onchange="markFilled('p3')">
-        </div>
-        <div class="photo-item" id="item-p4">
-            <span>📸</span><span id="p-side4">Label</span>
-            <input type="file" id="p4" accept="image/*" capture="environment" onchange="markFilled('p4')">
-        </div>
-        <div class="photo-item" id="item-p5">
-            <span>📸</span><span id="p-side5">Insole Side</span>
-            <input type="file" id="p5" accept="image/*" capture="environment" onchange="markFilled('p5')">
-        </div>
-        <div class="photo-item" id="item-p6">
-            <span>📸</span><span id="p-side6">Insole Top</span>
-            <input type="file" id="p6" accept="image/*" capture="environment" onchange="markFilled('p6')">
-        </div>
+        <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">BIB & Shoe</span><input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')"></div>
+        <div class="photo-item" id="item-p2"><span>📸</span><span id="p-side2">Side View</span><input type="file" id="p2" accept="image/*" capture="environment" onchange="markFilled('p2')"></div>
+        <div class="photo-item" id="item-p3"><span>📸</span><span id="p-side3">Outsole</span><input type="file" id="p3" accept="image/*" capture="environment" onchange="markFilled('p3')"></div>
+        <div class="photo-item" id="item-p4"><span>📸</span><span id="p-side4">Label</span><input type="file" id="p4" accept="image/*" capture="environment" onchange="markFilled('p4')"></div>
+        <div class="photo-item" id="item-p5"><span>📸</span><span id="p-side5">Insole Side</span><input type="file" id="p5" accept="image/*" capture="environment" onchange="markFilled('p5')"></div>
+        <div class="photo-item" id="item-p6"><span>📸</span><span id="p-side6">Insole Top</span><input type="file" id="p6" accept="image/*" capture="environment" onchange="markFilled('p6')"></div>
     </div>
 
     <div class="add-photo-wrapper">
@@ -488,14 +392,8 @@
     </div>
 
     <label id="lbl-sig-title">Authentication</label>
-    <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')">
-        <span id="txt-sig-a">Athlete's Signature</span>
-        <span id="stat-a">❌</span>
-    </button>
-    <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')">
-        <span id="txt-sig-i">Inspector's Signature</span>
-        <span id="stat-i">❌</span>
-    </button>
+    <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')"><span id="txt-sig-a">Athlete's Signature</span><span id="stat-a">❌</span></button>
+    <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')"><span id="txt-sig-i">Inspector's Signature</span><span id="stat-i">❌</span></button>
 
     <button class="btn-submit" id="btn-gen">CREATE REPORT</button>
     <div style="margin-top:20px; text-align:center;">
@@ -515,11 +413,9 @@
 <div id="sigModal" class="modal">
     <div class="modal-header">
         <h3 id="m-title">Signature</h3>
-        <button onclick="closeSig()" style="border:none; background:none; font-size:24px; cursor:pointer;">✕</button>
+        <button onclick="closeSig()" style="border:none; background:none; font-size:24px;">✕</button>
     </div>
-    <div class="modal-body">
-        <canvas id="sigCanvas"></canvas>
-    </div>
+    <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
     <div class="modal-footer">
         <button class="btn-reset" onclick="activePad.clear()" id="m-clear">Clear</button>
         <button class="btn-submit" style="margin:0; padding:12px" onclick="saveSig()" id="m-save">Save</button>
@@ -535,16 +431,12 @@
 
     const translations = {
         en: { 
-            title: "SHOE CONTROL REPORT", 
-            btnList: "LIST OF APPROVED ATHLETIC SHOES", 
-            comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", brand: "Shoe Brand", model: "Shoe Model", photo: "Photo Documentation", other: "Other Photos", addOther: "+ Add Photo",
+            title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", brand: "Shoe Brand", model: "Shoe Model", photo: "Photo Documentation", other: "Other Photos", addOther: "+ Add Photo",
             p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top",
             sigTitle: "Authentication", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", mClear: "Clear", mSave: "Save", confirm: "Clear form?", hist: "HISTORY", check: "DOCUMENTS ATTACHED", inspName: "Inspector Name", inspId: "ID Number", phComp: "Event Name", phAthlete: "Full Name", phBrand: "Nike", phModel: "Vaporfly 3", phInsp: "Name", phId: "ID"
         },
         cs: { 
-            title: "PROTOKOL KONTROLY OBUVI", 
-            btnList: "SEZNAM SCHVÁLENÉ OBUVI", 
-            comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka obuvi", model: "Model obuvi", photo: "Fotodokumentace", other: "Další fotografie", addOther: "+ Přidat další fotku",
+            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka obuvi", model: "Model obuvi", photo: "Fotodokumentace", other: "Další fotografie", addOther: "+ Přidat další fotku",
             p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)",
             sigTitle: "Ověření", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", mClear: "Smazat", mSave: "Uložit", confirm: "Opravdu smazat vše?", hist: "HISTORIE", check: "PŘILOŽENÁ DOKUMENTACE", inspName: "Jméno rozhodčího", inspId: "Průkaz (číslo)", phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", phInsp: "Jméno a příjmení", phId: "Číslo"
         }
@@ -553,42 +445,27 @@
     const clean = (str) => str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
 
     function setLang(lang) {
-        currentLang = lang;
-        const t = translations[lang];
+        currentLang = lang; const t = translations[lang];
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
         document.getElementById('txt-list').innerText = t.btnList;
-        document.getElementById('lbl-comp').innerText = t.comp; 
-        document.getElementById('lbl-date').innerText = t.date;
-        document.getElementById('lbl-name').innerText = t.athlete; 
-        document.getElementById('lbl-sex').innerText = t.sex;
-        document.getElementById('lbl-brand').innerText = t.brand; 
-        document.getElementById('lbl-model').innerText = t.model;
-        document.getElementById('lbl-insp-name').innerText = t.inspName; 
-        document.getElementById('lbl-insp-id').innerText = t.inspId;
-        document.getElementById('lbl-photo').innerText = t.photo; 
-        document.getElementById('lbl-other').innerText = t.other;
+        document.getElementById('lbl-comp').innerText = t.comp; document.getElementById('lbl-date').innerText = t.date;
+        document.getElementById('lbl-name').innerText = t.athlete; document.getElementById('lbl-sex').innerText = t.sex;
+        document.getElementById('lbl-brand').innerText = t.brand; document.getElementById('lbl-model').innerText = t.model;
+        document.getElementById('lbl-insp-name').innerText = t.inspName; document.getElementById('lbl-insp-id').innerText = t.inspId;
+        document.getElementById('lbl-photo').innerText = t.photo; document.getElementById('lbl-other').innerText = t.other;
         document.getElementById('txt-add-other').innerText = t.addOther;
         document.getElementById('lbl-sig-title').innerText = t.sigTitle;
-        document.getElementById('txt-sig-a').innerText = t.sigA; 
-        document.getElementById('txt-sig-i').innerText = t.sigI;
-        document.getElementById('btn-gen').innerText = t.gen; 
-        document.getElementById('btn-reset').innerText = t.reset;
-        document.getElementById('lbl-hist').innerText = t.hist;
-        document.getElementById('opt-men').innerText = t.men;
+        document.getElementById('txt-sig-a').innerText = t.sigA; document.getElementById('txt-sig-i').innerText = t.sigI;
+        document.getElementById('btn-gen').innerText = t.gen; document.getElementById('btn-reset').innerText = t.reset;
+        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('opt-men').innerText = t.men;
         document.getElementById('opt-women').innerText = t.women;
-        document.getElementById('compName').placeholder = t.phComp; 
-        document.getElementById('athleteName').placeholder = t.phAthlete;
-        document.getElementById('brand').placeholder = t.phBrand; 
-        document.getElementById('model').placeholder = t.phModel;
-        document.getElementById('inspName').placeholder = t.phInsp; 
-        document.getElementById('inspId').placeholder = t.phId;
-        document.getElementById('p-side1').innerText = t.p1;
-        document.getElementById('p-side2').innerText = t.p2;
-        document.getElementById('p-side3').innerText = t.p3;
-        document.getElementById('p-side4').innerText = t.p4;
-        document.getElementById('p-side5').innerText = t.p5;
-        document.getElementById('p-side6').innerText = t.p6;
+        document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phAthlete;
+        document.getElementById('brand').placeholder = t.phBrand; document.getElementById('model').placeholder = t.phModel;
+        document.getElementById('inspName').placeholder = t.phInsp; document.getElementById('inspId').placeholder = t.phId;
+        document.getElementById('p-side1').innerText = t.p1; document.getElementById('p-side2').innerText = t.p2;
+        document.getElementById('p-side3').innerText = t.p3; document.getElementById('p-side4').innerText = t.p4;
+        document.getElementById('p-side5').innerText = t.p5; document.getElementById('p-side6').innerText = t.p6;
         renderHistory();
     }
 
@@ -608,25 +485,19 @@
         `).join('');
     }
 
-    function removeOther(idx) {
-        otherPhotos.splice(idx, 1);
-        renderOtherList();
-    }
+    function removeOther(idx) { otherPhotos.splice(idx, 1); renderOtherList(); }
 
     const canvas = document.getElementById('sigCanvas');
     activePad = new SignaturePad(canvas, { backgroundColor: 'white' });
 
     function openSig(type) {
-        activeType = type;
-        const t = translations[currentLang];
+        activeType = type; const t = translations[currentLang];
         document.getElementById('m-title').innerText = (type === 'a' ? t.sigA : t.sigI);
         document.getElementById('sigModal').classList.add('active');
-        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-        canvas.width = canvas.offsetWidth * ratio;
-        canvas.height = canvas.offsetHeight * ratio;
-        canvas.getContext("2d").scale(ratio, ratio);
-        activePad.clear();
-        if(sigData[type]) activePad.fromDataURL(sigData[type]);
+        const r = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * r; canvas.height = canvas.offsetHeight * r;
+        canvas.getContext("2d").scale(r, r);
+        activePad.clear(); if(sigData[type]) activePad.fromDataURL(sigData[type]);
     }
 
     function saveSig() {
@@ -639,11 +510,7 @@
     }
 
     function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
-
-    function markFilled(id) {
-        const item = document.getElementById('item-' + id);
-        item.classList.toggle('has-file', document.getElementById(id).files.length > 0);
-    }
+    function markFilled(id) { document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0); }
 
     async function processImg(file) {
         if (!file) return null;
@@ -654,14 +521,9 @@
                 img.onload = () => {
                     const c = document.createElement('canvas');
                     const ctx = c.getContext('2d');
-                    c.width = img.width;
-                    c.height = img.height;
+                    c.width = img.width; c.height = img.height;
                     ctx.drawImage(img, 0, 0);
-                    resolve({
-                        data: c.toDataURL('image/jpeg', 0.8),
-                        w: img.width,
-                        h: img.height
-                    });
+                    resolve({ data: c.toDataURL('image/jpeg', 0.8), w: img.width, h: img.height });
                 };
                 img.src = e.target.result;
             };
@@ -707,28 +569,20 @@
             validPhotos.push({ ...await processImg(otherPhotos[i]), label: "Other Photo " + (i + 1) });
         }
 
-        const footer = () => {
-            doc.setFontSize(8).setTextColor(150);
-            doc.text(`Generated: ${now}`, 190, 285, {align: 'right'});
-        };
+        const footer = () => { doc.setFontSize(8).setTextColor(150); doc.text(`Generated: ${now}`, 190, 285, {align: 'right'}); };
 
-        // HLAVIČKA
         doc.addImage(logo, 'PNG', 150, 10, 40, 20);
         doc.setFontSize(22).setFont("helvetica", "bold").text(t.title, 20, 25);
         doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 35, 190, 35);
-        
-        // INFO SEKCE
         doc.setFontSize(10).setTextColor(120).text(t.comp.toUpperCase(), 20, 50);
         doc.setFontSize(14).setTextColor(0).setFont("helvetica", "normal").text(clean(compRaw) || "---", 20, 58);
-        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text(t.date.toUpperCase(), 150, 50);
+        doc.setFontSize(10).setTextColor(120).text(t.date.toUpperCase(), 150, 50);
         doc.setFontSize(14).text(document.getElementById('raceDate').value || "---", 150, 58);
-        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text(t.athlete.toUpperCase(), 20, 75);
+        doc.setFontSize(10).setTextColor(120).text(t.athlete.toUpperCase(), 20, 75);
         doc.setFontSize(14).text(`${clean(athleteRaw)} (${document.getElementById('sex').value})`, 20, 83);
-        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("SHOE DETAILS", 20, 100);
+        doc.setFontSize(10).setTextColor(120).text("SHOE DETAILS", 20, 100);
         doc.setFontSize(14).text(`${clean(brandRaw)} - ${clean(modelRaw)}`, 20, 108);
-        
-        // CHECKLIST
-        doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text(t.check, 20, 125);
+        doc.setFontSize(10).setTextColor(120).text(t.check, 20, 125);
         doc.setFontSize(9).setTextColor(0).setFont("helvetica", "normal");
         mainPhotos.forEach((id, i) => {
             const has = document.getElementById(id).files.length > 0;
@@ -736,10 +590,8 @@
         });
         if (otherPhotos.length > 0) doc.text(`[X]  Other photos attached: ${otherPhotos.length}`, 25, 135 + (6 * 7));
 
-        // SIGNATURES
         const sigY = 240;
-        doc.setDrawColor(180).line(20, sigY, 85, sigY);
-        doc.line(125, sigY, 190, sigY);
+        doc.setDrawColor(180).line(20, sigY, 85, sigY); doc.line(125, sigY, 190, sigY);
         doc.setFontSize(9).setTextColor(100).text(t.sigA, 52, sigY + 5, {align:'center'});
         doc.text(`${clean(inspNameRaw)} (${clean(inspIdRaw)})`, 157, sigY + 5, {align:'center'});
         doc.text(t.sigI, 157, sigY + 9, {align:'center'});
@@ -747,7 +599,6 @@
         if(sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
         footer();
 
-        // FOTKY - NATIVNÍ POMĚR
         if (validPhotos.length > 0) {
             doc.addPage();
             doc.addImage(logo, 'PNG', 150, 10, 40, 20);
@@ -755,16 +606,10 @@
             doc.setDrawColor(0, 122, 255).setLineWidth(0.5).line(20, 32, 190, 32);
 
             validPhotos.forEach((item, i) => {
-                const col = i % 2;
-                const row = Math.floor(i / 2);
-                const maxWidth = 80;
-                const maxHeight = 40;
-                let finalW = maxWidth;
-                let finalH = (item.h * maxWidth) / item.w;
-                if (finalH > maxHeight) {
-                    finalH = maxHeight;
-                    finalW = (item.w * maxHeight) / item.h;
-                }
+                const col = i % 2; const row = Math.floor(i / 2);
+                const maxWidth = 80; const maxHeight = 40;
+                let finalW = maxWidth; let finalH = (item.h * maxWidth) / item.w;
+                if (finalH > maxHeight) { finalH = maxHeight; finalW = (item.w * maxHeight) / item.h; }
                 const x = 20 + (col * 90) + (maxWidth - finalW) / 2;
                 const y = 40 + (row * 48) + (maxHeight - finalH) / 2;
                 doc.addImage(item.data, 'JPEG', x, y, finalW, finalH);
