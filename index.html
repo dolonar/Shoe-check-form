@@ -16,48 +16,287 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     
     <style>
-        :root { --primary: #007AFF; --success: #34C759; --danger: #FF3B30; --bg: #f2f2f7; --card-bg: #ffffff; --text-gray: #8e8e93; --placeholder: #c7c7cc; }
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); margin: 0; padding: 10px; color: #1c1c1e; -webkit-font-smoothing: antialiased; }
+        :root { 
+            --primary: #007AFF; 
+            --success: #34C759; 
+            --danger: #FF3B30; 
+            --bg: #f2f2f7; 
+            --card-bg: #ffffff; 
+            --text-gray: #8e8e93; 
+            --placeholder: #c7c7cc; 
+        }
         
-        .app-header { display: flex; justify-content: center; align-items: center; width: 100%; padding: 20px 0; }
-        .app-header img { max-width: 180px; height: auto; border-radius: 10px; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: var(--bg); 
+            margin: 0; 
+            padding: 10px; 
+            color: #1c1c1e; 
+            -webkit-font-smoothing: antialiased; 
+        }
+        
+        .app-header { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            width: 100%; 
+            padding: 20px 0; 
+        }
+        
+        .app-header img { 
+            max-width: 180px; 
+            height: auto; 
+            border-radius: 10px; 
+        }
 
-        .card { background: var(--card-bg); padding: 25px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); max-width: 800px; margin: 0 auto 20px auto; }
+        .card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+            max-width: 800px; 
+            margin: 0 auto 20px auto; 
+        }
         
-        .lang-switch { display: flex; gap: 8px; margin-bottom: 25px; justify-content: center; }
-        .lang-btn { padding: 8px 16px; border-radius: 10px; border: 2px solid var(--primary); background: transparent; color: var(--primary); font-weight: 700; cursor: pointer; }
-        .lang-btn.active { background: var(--primary); color: white; }
+        .lang-switch { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 25px; 
+            justify-content: center; 
+        }
+        
+        .lang-btn { 
+            padding: 8px 16px; 
+            border-radius: 10px; 
+            border: 2px solid var(--primary); 
+            background: transparent; 
+            color: var(--primary); 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+        
+        .lang-btn.active { 
+            background: var(--primary); 
+            color: white; 
+        }
+        
+        .btn-link { 
+            display: block; 
+            background: var(--success); 
+            color: white; 
+            border: none; 
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 12px; 
+            font-size: 14px; 
+            font-weight: 700; 
+            text-align: center; 
+            text-decoration: none; 
+            margin: 15px 0; 
+            box-sizing: border-box; 
+        }
 
-        .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
+        .grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 12px; 
+        }
         
-        label { display: block; margin-top: 18px; font-weight: 700; font-size: 11px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select { width: 100%; padding: 14px; margin-top: 6px; border: 1px solid #d1d1d6; border-radius: 12px; box-sizing: border-box; font-size: 16px; background: #fff; }
-        input::placeholder { color: var(--placeholder); opacity: 1; }
+        @media (min-width: 600px) { 
+            .grid { grid-template-columns: 1fr 1fr; } 
+        }
+        
+        label { 
+            display: block; 
+            margin-top: 18px; 
+            font-weight: 700; 
+            font-size: 11px; 
+            color: var(--text-gray); 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+        }
+        
+        input, select { 
+            width: 100%; 
+            padding: 14px; 
+            margin-top: 6px; 
+            border: 1px solid #d1d1d6; 
+            border-radius: 12px; 
+            box-sizing: border-box; 
+            font-size: 16px; 
+            background: #fff; 
+        }
+        
+        input::placeholder { 
+            color: var(--placeholder); 
+            opacity: 1; 
+        }
 
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
-        @media (min-width: 768px) { .photo-grid { grid-template-columns: repeat(3, 1fr); } }
-        .photo-item { background: #fff; border: 2px solid #e5e5ea; border-radius: 14px; padding: 15px 5px; text-align: center; position: relative; min-height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; }
-        .photo-item input { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
-        .photo-item.has-file { border-color: var(--success); background: #f6fff8; }
+        .photo-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+            margin-top: 12px; 
+        }
         
-        .sig-trigger { width: 100%; padding: 16px; margin-top: 10px; border-radius: 14px; border: 1.5px dashed var(--primary); background: #fff; color: var(--primary); font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); background: #f6fff8; }
+        @media (min-width: 768px) { 
+            .photo-grid { grid-template-columns: repeat(3, 1fr); } 
+        }
         
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: none; flex-direction: column; }
+        .photo-item { 
+            background: #fff; 
+            border: 2px solid #e5e5ea; 
+            border-radius: 14px; 
+            padding: 15px 5px; 
+            text-align: center; 
+            position: relative; 
+            min-height: 100px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 12px; 
+            font-weight: 600; 
+        }
+        
+        .photo-item input { 
+            position: absolute; 
+            opacity: 0; 
+            width: 100%; 
+            height: 100%; 
+            cursor: pointer; 
+        }
+        
+        .photo-item.has-file { 
+            border-color: var(--success); 
+            background: #f6fff8; 
+        }
+        
+        .sig-trigger { 
+            width: 100%; 
+            padding: 16px; 
+            margin-top: 10px; 
+            border-radius: 14px; 
+            border: 1.5px dashed var(--primary); 
+            background: #fff; 
+            color: var(--primary); 
+            font-weight: 600; 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .sig-trigger.signed { 
+            border-style: solid; 
+            border-color: var(--success); 
+            color: var(--success); 
+            background: #f6fff8; 
+        }
+        
+        .modal { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: white; 
+            z-index: 9999; 
+            display: none; 
+            flex-direction: column; 
+        }
+        
         .modal.active { display: flex; }
-        .modal-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .modal-body { flex: 1; background: #f9f9f9; position: relative; }
-        canvas { width: 100%; height: 100%; touch-action: none; }
-        .modal-footer { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .modal-header { 
+            padding: 20px; 
+            border-bottom: 1px solid #eee; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .modal-body { 
+            flex: 1; 
+            background: #f9f9f9; 
+            position: relative; 
+        }
+        
+        canvas { 
+            width: 100%; 
+            height: 100%; 
+            touch-action: none; 
+        }
+        
+        .modal-footer { 
+            padding: 20px; 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+        }
 
-        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 16px; font-size: 18px; font-weight: 700; cursor: pointer; margin-top: 30px; }
-        .btn-reset { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); width: 100%; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; }
+        .btn-submit { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            width: 100%; 
+            padding: 20px; 
+            border-radius: 16px; 
+            font-size: 18px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 30px; 
+        }
+        
+        .btn-reset { 
+            background: transparent; 
+            color: var(--danger); 
+            border: 1.5px solid var(--danger); 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 12px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            cursor: pointer; 
+        }
 
-        .history-section { margin-top: 40px; border-top: 2px solid #e5e5ea; padding-top: 20px; }
-        .history-title { font-size: 14px; color: var(--text-gray); font-weight: 800; margin-bottom: 15px; }
-        .history-list { display: flex; flex-direction: column; gap: 8px; }
-        .history-item { background: #fff; padding: 12px 15px; border-radius: 12px; border: 1px solid #e5e5ea; display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+        .history-section { 
+            margin-top: 40px; 
+            border-top: 2px solid #e5e5ea; 
+            padding-top: 20px; 
+        }
+        
+        .history-title { 
+            font-size: 14px; 
+            color: var(--text-gray); 
+            font-weight: 800; 
+            margin-bottom: 15px; 
+        }
+        
+        .history-list { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+        }
+        
+        .history-item { 
+            background: #fff; 
+            padding: 12px 15px; 
+            border-radius: 12px; 
+            border: 1px solid #e5e5ea; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 14px; 
+        }
+        
+        .app-footer { 
+            text-align: center; 
+            padding: 20px; 
+            font-size: 11px; 
+            color: var(--text-gray); 
+        }
     </style>
 </head>
 <body>
@@ -71,6 +310,8 @@
         <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
         <button class="lang-btn" id="btn-cs" onclick="setLang('cs')">Čeština</button>
     </div>
+
+    <a href="https://certcheck.worldathletics.org/" target="_blank" class="btn-link" id="btn-list">LIST OF APPROVED ATHLETIC SHOES</a>
 
     <div class="grid">
         <div><label id="lbl-comp">Competition</label><input type="text" id="compName"></div>
@@ -115,6 +356,10 @@
     </div>
 </div>
 
+<div class="app-footer">
+    Developed & Designed by <b>David Lux</b> &copy; 2026
+</div>
+
 <div id="sigModal" class="modal">
     <div class="modal-header"><h3 id="m-title">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:24px;">✕</button></div>
     <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
@@ -132,12 +377,12 @@
 
     const translations = {
         en: { 
-            title: "SHOE CONTROL REPORT", comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", brand: "Brand", model: "Model", photo: "Photo Documentation", 
+            title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Date", athlete: "Athlete", sex: "Sex", men: "Men", women: "Women", brand: "Brand", model: "Model", photo: "Photo Documentation", 
             p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", sigTitle: "Authentication", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", mClear: "Clear", mSave: "Save", confirm: "Clear all data?",
             phComp: "Event Name", phAthlete: "Full Name", phBrand: "e.g. Nike", phModel: "e.g. Vaporfly 3", hist: "HISTORY", check: "DOCUMENTS ATTACHED", inspName: "Inspector Name", inspId: "ID Number", phInsp: "Name", phId: "Number"
         },
         cs: { 
-            title: "PROTOKOL KONTROLY OBUVI", comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka", model: "Model", photo: "Fotodokumentace", 
+            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", athlete: "Atlet", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka", model: "Model", photo: "Fotodokumentace", 
             p1: "Startovní číslo a bota", p2: "Bok", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", sigTitle: "Ověření", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", mClear: "Smazat", mSave: "Uložit", confirm: "Opravdu vymazat?",
             phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "např. Nike", phModel: "např. Vaporfly 3", hist: "HISTORIE", check: "PŘILOŽENÁ DOKUMENTACE", inspName: "Jméno rozhodčího", inspId: "Průkaz (číslo)", phInsp: "Jméno a příjmení", phId: "Číslo průkazu"
         }
@@ -149,19 +394,33 @@
         currentLang = lang; const t = translations[lang];
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
-        document.getElementById('lbl-comp').innerText = t.comp; document.getElementById('lbl-date').innerText = t.date;
-        document.getElementById('lbl-name').innerText = t.athlete; document.getElementById('lbl-sex').innerText = t.sex;
-        document.getElementById('lbl-brand').innerText = t.brand; document.getElementById('lbl-model').innerText = t.model;
-        document.getElementById('lbl-insp-name').innerText = t.inspName; document.getElementById('lbl-insp-id').innerText = t.inspId;
-        document.getElementById('lbl-photo').innerText = t.photo; document.getElementById('lbl-sig-title').innerText = t.sigTitle;
-        document.getElementById('txt-sig-a').innerText = t.sigA; document.getElementById('txt-sig-i').innerText = t.sigI;
-        document.getElementById('btn-gen').innerText = t.gen; document.getElementById('btn-reset').innerText = t.reset;
-        document.getElementById('m-clear').innerText = t.mClear; document.getElementById('m-save').innerText = t.mSave;
-        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('opt-men').innerText = t.men; document.getElementById('opt-women').innerText = t.women;
+        document.getElementById('btn-list').innerText = t.btnList;
+        document.getElementById('lbl-comp').innerText = t.comp; 
+        document.getElementById('lbl-date').innerText = t.date;
+        document.getElementById('lbl-name').innerText = t.athlete; 
+        document.getElementById('lbl-sex').innerText = t.sex;
+        document.getElementById('lbl-brand').innerText = t.brand; 
+        document.getElementById('lbl-model').innerText = t.model;
+        document.getElementById('lbl-insp-name').innerText = t.inspName; 
+        document.getElementById('lbl-insp-id').innerText = t.inspId;
+        document.getElementById('lbl-photo').innerText = t.photo; 
+        document.getElementById('lbl-sig-title').innerText = t.sigTitle;
+        document.getElementById('txt-sig-a').innerText = t.sigA; 
+        document.getElementById('txt-sig-i').innerText = t.sigI;
+        document.getElementById('btn-gen').innerText = t.gen; 
+        document.getElementById('btn-reset').innerText = t.reset;
+        document.getElementById('m-clear').innerText = t.mClear; 
+        document.getElementById('m-save').innerText = t.mSave;
+        document.getElementById('lbl-hist').innerText = t.hist; 
+        document.getElementById('opt-men').innerText = t.men;
+        document.getElementById('opt-women').innerText = t.women;
         
-        document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phAthlete;
-        document.getElementById('brand').placeholder = t.phBrand; document.getElementById('model').placeholder = t.phModel;
-        document.getElementById('inspName').placeholder = t.phInsp; document.getElementById('inspId').placeholder = t.phId;
+        document.getElementById('compName').placeholder = t.phComp; 
+        document.getElementById('athleteName').placeholder = t.phAthlete;
+        document.getElementById('brand').placeholder = t.phBrand; 
+        document.getElementById('model').placeholder = t.phModel;
+        document.getElementById('inspName').placeholder = t.phInsp; 
+        document.getElementById('inspId').placeholder = t.phId;
         
         for(let i=1; i<=6; i++) document.getElementById('p-side'+i).innerText = t['p'+i];
         renderHistory();
@@ -174,9 +433,11 @@
         activeType = type;
         document.getElementById('m-title').innerText = translations[currentLang][type === 'a' ? 'sigA' : 'sigI'];
         document.getElementById('sigModal').classList.add('active');
-        const r = window.devicePixelRatio || 1;
-        canvas.width = canvas.offsetWidth * r; canvas.height = canvas.offsetHeight * r;
-        canvas.getContext("2d").scale(r, r); activePad.clear();
+        const r = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * r;
+        canvas.height = canvas.offsetHeight * r;
+        canvas.getContext("2d").scale(r, r);
+        activePad.clear();
         if(sigData[type]) activePad.fromDataURL(sigData[type]);
     }
 
@@ -252,10 +513,10 @@
 
         const drawFooter = () => {
             doc.setFontSize(8).setTextColor(150);
-            doc.text(`Generated: ${now}`, 190, 285, {align: 'right'});
+            doc.text(`Generated: ${now} | David Lux Control System`, 190, 285, {align: 'right'});
         };
 
-        // PAGE 1
+        // --- PAGE 1: INFO ---
         doc.addImage(logo, 'PNG', 150, 10, 40, 20);
         doc.setFontSize(22).setFont("helvetica", "bold").text(eng.title, 20, 25);
         doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 35, 190, 35);
@@ -283,8 +544,6 @@
         doc.setDrawColor(180).line(20, sigY, 85, sigY);
         doc.line(125, sigY, 190, sigY);
         doc.setFontSize(9).setTextColor(100).text(eng.sigA, 52, sigY + 5, {align:'center'});
-        
-        // Jméno inspektora v PDF
         doc.text(`${inspName} (${inspId})`, 157, sigY + 5, {align:'center'});
         doc.text(eng.sigI, 157, sigY + 9, {align:'center'});
 
@@ -292,12 +551,13 @@
         if(sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
         drawFooter();
 
-        // PAGE 2
+        // --- PAGE 2: PHOTOS ---
         if (hasAnyPhoto) {
             doc.addPage();
             doc.addImage(logo, 'PNG', 150, 10, 40, 20);
             doc.setFontSize(18).setFont("helvetica", "bold").setTextColor(0).text(eng.photo, 20, 25);
             doc.setDrawColor(0, 122, 255).setLineWidth(0.5).line(20, 32, 190, 32);
+
             processedImages.forEach((data, i) => {
                 const x = 20 + (i % 2 * 90);
                 const y = 45 + (Math.floor(i / 2) * 75);
@@ -308,12 +568,15 @@
             drawFooter();
         }
 
-        doc.save(`${name || "Report"}_ShoeControl.pdf`);
+        doc.save(`${name.replace(/\s+/g, '_')}_Report.pdf`);
+        
         let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]');
         hist.unshift({name: nameRaw, comp: compRaw, time: now});
         localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
+        
         setTimeout(()=>location.reload(), 1000);
     };
+
     window.onload = () => setLang('cs');
 </script>
 </body>
