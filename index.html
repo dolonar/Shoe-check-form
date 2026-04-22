@@ -127,13 +127,13 @@
         <div class="db-update-info" id="txt-db-update">Offline Database Updated: April 2026</div>
 
         <div class="grid">
-            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" list="compOptions" placeholder="Závod..."></div>
+            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" list="compOptions" placeholder="Závod..." autocomplete="new-password"></div>
             <datalist id="compOptions"></datalist>
             <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
         </div>
 
         <div class="grid">
-            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" placeholder="Jan Novák..."></div>
+            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" placeholder="Jan Novák..." autocomplete="new-password"></div>
             <div>
                 <label id="lbl-sex">Category</label>
                 <select id="sex">
@@ -145,18 +145,18 @@
 
         <div>
             <label id="lbl-disc">Discipline</label>
-            <input type="text" id="discipline" placeholder="Např. 100m, Skok do dálky...">
+            <input type="text" id="discipline" placeholder="Např. 100m, Skok do dálky..." autocomplete="new-password">
         </div>
 
         <div class="grid">
             <div>
                 <label id="lbl-brand">Shoe Brand</label>
-                <input type="text" id="brand" list="brandList" placeholder="Značka..." oninput="handleBrandChange(this.value)">
+                <input type="text" id="brand" list="brandList" placeholder="Značka..." oninput="handleBrandChange(this.value)" autocomplete="new-password">
                 <datalist id="brandList"></datalist>
             </div>
             <div>
                 <label id="lbl-model">Shoe Model</label>
-                <input type="text" id="model" list="modelList" placeholder="Model..." oninput="checkShoeInfo()" onchange="checkShoeInfo()">
+                <input type="text" id="model" list="modelList" placeholder="Model..." oninput="checkShoeInfo()" onchange="checkShoeInfo()" autocomplete="new-password">
                 <datalist id="modelList"></datalist>
             </div>
         </div>
@@ -171,9 +171,9 @@
         </div>
 
         <div class="grid">
-            <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" list="inspOptions" oninput="autoFillId(this.value)"></div>
+            <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" list="inspOptions" oninput="autoFillId(this.value)" autocomplete="new-password"></div>
             <datalist id="inspOptions"></datalist>
-            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" placeholder="Průkaz..."></div>
+            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" placeholder="Průkaz..." autocomplete="new-password"></div>
         </div>
 
         <div class="photo-grid">
@@ -228,7 +228,6 @@
     // T = Track, J = Jump, H = Throw, R = Road
     const shoeDB = {"361 Degrees": {"Biospeed Future": "TJHR", "Biospeed pro": "R", "Flame": "R", "Flame 2": "R", "FLAME 5": "R", "FLAME 5 FUTURE": "R", "Furious": "R", "Furious 2": "R", "Furious Future": "R", "Furious Future 2": "R", "mironude": "R", "MIRONUDE2": "R"}, "Adidas": {"Adizero Adios 3": "R", "Adizero Adios 4": "R", "Adizero Adios 5": "R", "Adizero Adios 6": "R", "Adizero Adios 8": "R", "Adizero Adios 9": "R", "Adizero Adios Pro": "R", "Adizero Adios Pro 2": "R", "Adizero Adios Pro 3": "R", "Adizero Adios Pro 4": "R", "Adizero Adios Pro Evo 1": "R", "Adizero Adios Pro Evo 1 v2": "R", "Adizero Adios Pro Evo 2": "R", "ADIZERO ADIOS PRO EVO 3 DEV": "R", "ADIZERO ADIOS PRO EVO 3 DEV1": "R", "ADIZERO ADIOS PRO EVO2 DEV": "R", "Adizero Ambition": "THR", "Adizero Ambition 2": "THR", "Adizero Ambition 24": "THR", "ADIZERO AMBITION 26": "THR", "Adizero Ambition Boost": "THR", "Adizero Avanti": "TJHR", "Adizero Avanti 24": "TJHR", "ADIZERO AVANTI 26": "THR", "Adizero Avanti Boost": "TJHR", "Adizero Avanti LJ": "TJHR", "ADIZERO AVANTI LJ DEV": "TJHR", "Adizero Avanti TYO": "TJHR", "ADIZERO AVANTI XC": "TJHR", "Adizero Boston 10": "R", "Adizero Boston 8": "R", "Adizero Boston 9": "R", "Adizero Discus Hammer": "TJHR", "Adizero Finesse": "TJHR", "Adizero Finesse 24": "THR", "ADIZERO FINESSE 26": "THR", "Adizero High Jump": "TJHR", "Adizero HJ": "TJHR", "Adizero HJ FL": "TJHR", "Adizero Javelin": "TJHR", "Adizero Javelin (22)": "TJHR", "Adizero Javelin 24": "TJHR", "Adizero LJ": "TJHR", "Adizero LJ (3)": "TJHR", "Adizero Prime SP": "THR", "Adizero Prime SP 3 Strung": "THR", "ADIZERO PRIME SP 4": "THR", "Adizero Prime SP2": "THR", "Adizero Pro": "R", "Adizero RC 2": "R", "Adizero Sub 2": "R", "Adizero Takumi Ren 3": "R", "Adizero Takumi Sen 10": "R", "Adizero Takumi Sen 11": "R", "Adizero Takumi Sen 5": "R", "Adizero Takumi Sen 6": "R", "Adizero Takumi Sen 7": "R", "Adizero Takumi Sen 8": "R", "Adizero Takumi Sen 9": "R", "Adizero Throws": "TJHR", "Adizero TJ 2": "TJHR", "ADIZERO TJ/PV (2)": "TJHR", "Adizero TJ/PV (with orange sockliner)": "TJHR", "Rio Adizero MD": "TJHR", "Throwstar": "TJHR"}, "Anta": {"C10 PRO": "R", "C10 PRO 1.5": "R", "C10 PRO 2 CSP": "R", "C10 PRO 2 LCSP": "R", "C10 PRO 2.0": "R", "C202 5 GT": "R", "C202 5 GT PRO": "R", "C202 6": "R", "C202 6 PRO": "R", "C202 G9": "R", "C202 G9 2": "R", "Hai Lang": "R", "TRACKEDGE JV -Dev": "THR", "TRACKEDGE LD": "THR", "TRACKEDGE SP -Dev": "THR"}, "Asics": {"Cosmoracer LD 2": "TJHR", "Cosmoracer LD 3": "TJHR", "Cosmoracer MD 2": "TJHR", "COSMORACER MD 3": "THR", "CYBER THROW LONDON": "TJHR", "Cyberblade 16": "THR", "CYBERBLADE 17": "THR", "Cyberblade HF": "THR", "DSPURT FX": "TJHR", "Duo Japan": "TJHR", "Effort 13": "TJHR", "EFFORT 14": "TJHR", "Effort MK": "TJHR", "EvoRide": "R", "FREAKS JAPAN": "R", "GEL-DS TRAINER 25": "R", "GEL-FEATHER GLIDE 5": "R", "Gun Lap 2": "TJHR", "Gun Lap 3": "THR", "Heat Fly": "TJHR", "HEAT FLY 2": "TJHR", "HEAT THROW": "TJHR", "HEAT THROW 2": "TJHR", "Heatflat 12": "TJHR", "Heatflat FR 7": "TJHR", "Heatsprint 13": "TJHR", "Heatsprint FR 8": "TJHR", "HI JUMP PRO (L)": "TJHR", "HI JUMP PRO (R)": "TJHR", "High Jump Pro 2 (L)": "TJHR", "High Jump Pro 2 (R)": "TJHR", "High Jump Pro 3 (L)": "TJHR", "High Jump Pro 3 (R)": "TJHR", "HT-JAPAN": "TJHR", "Hyper LD 6": "TJHR", "Hyper MD 7": "TJHR", "Hyper MD 8": "TJHR", "HYPER RACER": "TJHR", "HYPER SPEED": "R", "HYPER SPEED 2": "R", "HYPER SPEED 3": "R", "HYPER SPEED 4": "R", "Hyper Throw 3": "TJHR", "Hypersprint 7": "TJHR", "Hypersprint 8": "TJHR", "Japan Arch": "TJHR", "JAPAN-AR": "TJHR", "Javelin Pro 2": "TJHR", "Javelin Pro 3": "TJHR", "Javelin Pro 4": "TJHR", "JETSPRINT": "TJHR", "JETSPRINT (KY)": "TJHR", "JETSPRINT 2": "TJHR", "JETSPRINT 3": "TJHR", "Long Jump Pro": "TJHR", "Long Jump Pro 2": "THR", "Long Jump Pro 3": "TJHR", "LYTERACER 2": "R", "MAGIC SPEED": "R", "MAGIC SPEED 2": "R", "MAGIC SPEED 3": "R", "MAGIC SPEED 5": "R", "MAGICSPEED 3": "R", "MARATHON EO JAPAN": "R", "MARATHON EO RP": "R", "MARATHON EO SEIHA": "R", "ME5 TYPE-1": "R", "ME5 TYPE-P": "R", "METARACER": "R", "METASPEED EDGE": "R", "METASPEED EDGE PARIS": "R", "METASPEED EDGE TOKYO": "R", "METASPEED EDGE+": "R", "Metaspeed LD 1.5": "TJHR", "METASPEED LD 2": "TJHR", "METASPEED LD 2 F": "TJHR", "METASPEED LD LE 2": "TJHR", "Metaspeed MD": "TJHR", "METASPEED RAY": "R", "METASPEED RW": "R", "METASPEED SKY": "R", "METASPEED SKY PARIS": "R", "METASPEED SKY TOKYO": "R", "METASPEED SKY+": "R", "Metaspeed SP": "THR", "Metaspeed SP 0": "THR", "Metaspeed SP 1.5": "THR", "METASPEED SP 1.5 F": "THR", "Metaspeed SP 2": "THR", "Metaspeed SP LE": "THR", "Metaspeed SP2 F": "THR", "Metasprint Tokyo": "TJHR", "MR2 TYPE-1": "R", "MR2 TYPE-2": "R", "MS SP 3-1": "THR", "MS SP 3F-1": "THR", "MS5 TYPE-1": "R", "MS5 TYPE-P": "R", "MX TYPE-A": "R", "MX TYPE-B": "R", "S4": "R", "SD-Japan": "TJHR", "SKYSENSOR JAPAN": "R", "Sonic Sky Pro": "TJHR", "Sonicsprint Elite": "THR", "Sonicsprint Elite 2": "THR", "Sonicsprint Elite 3": "THR", "SORTIE JAPAN": "R", "SORTIE JAPANSEIHA 2": "R", "SORTIEMAGIC LT": "R", "SORTIEMAGIC LT 2": "R", "SORTIEMAGIC LT 2 TENKA": "R", "SORTIEMAGIC RP 5": "R", "SORTIEMAGIC RP 5 TENKA": "R", "SORTIEMAGIC RP 6": "R", "SP BLADE 10": "THR", "SP Blade 9": "THR", "SP Blade SF 2": "THR", "TARTHER JAPAN": "R", "TARTHER RP": "R", "TARTHER RP 3": "R", "TARTHEREDGE 2": "R", "TARTHEREDGE 3": "R", "TARTHERZEAL 6": "R", "TF Spike SO (BD)": "THR", "TF Spike SO (JP)": "TJHR", "TF Spike SO (RY)": "THR", "Throw Pro 2": "TJHR", "Throw Pro 3": "TJHR", "THROW PRO 3 AG": "TJHR", "Triple Jump Pro": "TJHR", "Triple Jump Pro 2": "TJHR", "Windsprint 2": "TJHR", "Windsprint 3": "TJHR"}, "Brooks": {"Draft XC": "TJHR", "ELMN8 5": "TJHR", "ELMN8 6": "TJHR", "ELMN8 7-R2": "TJHR", "Hyperion 2": "R", "Hyperion Elite 2": "R", "Hyperion Elite 3": "R", "Hyperion Elite 4": "R", "Hyperion Elite 4 PB": "R", "Hyperion Elite 5": "R", "Hyperion Elite 6 R2": "R", "Hyperion Elite LD": "TJHR", "Hyperion Elite LD 2": "THR", "Hyperion Elite LD 2 R2": "THR", "Hyperion Elite MD": "TJHR", "Hyperion Elite MD 2": "TJHR", "Hyperion Elite MD 2 R2": "TJHR", "Hyperion Tempo 1": "R", "WIRE 6": "THR"}, "Hoka": {"Bondi 7": "R", "Carbon X": "R", "Carbon X2": "R", "Carbon X3": "R", "CIELO  X1 3.0": "R", "Cielo Fly X Elite": "THR", "Cielo Fly X Lite": "TJHR", "Cielo LD": "TJHR", "Cielo MD": "TJHR", "Cielo Road": "R", "Cielo X 2 MD": "TJHR", "Cielo X1": "R", "Cielo X1 2.0": "R", "Cielo X1 3.0 Dev": "R", "Clifton 7": "R", "Evo Carbon Rocket": "R", "Evo Rehi": "TJHR", "HOKA CLIFTON 10": "R", "Mach 3": "TJHR", "Mach 4": "R", "Rincon 2": "R", "Rincon 3": "R", "Rocket LD": "THR", "Rocket MD": "THR", "Rocket X": "R", "Rocket X 3": "R", "Rocket X2": "R", "Speed Evo R": "TJHR", "Tracer 2": "TJHR"}, "KIPRUN": {"AT CROSS": "TJHR", "AT LONG": "TJHR", "KD 500 2": "R", "KD 800": "R", "KD900": "R", "KD900LIGHT": "R", "KD900X": "R", "KD900X LD": "R", "KD900X.2": "R", "KD900XLD.2": "R", "KD900XLD+": "R", "KIPRUN AT LONG": "TJHR", "Kiprun Ultralight": "TJHR", "KIPSONIC  LONG": "TJHR", "KIPSTORM ELITE": "R", "KIPSTORM LAB": "R", "PR893049": "R", "RW500": "TJHR", "RW900 V 1": "TJHR", "RW900 V 2": "TJHR"}, "Li-Ning": {"FeiDian": "R", "FeiDian 2.0": "R", "FeiDian 2.0 Elite": "R", "FeiDian 3 Ultra": "R", "FEIDIAN 4 CHALLENGER": "R", "FEIDIAN 4 ELITE": "R", "FeiDian 4 Ultra": "R", "FEIDIAN 5 CHALLENGER": "R", "FEIDIAN 5 ELITE": "R", "FEIDIAN 6 CHALLENGER": "R", "FEIDIAN 6 ELITE": "R", "FeiDian Challenger": "R", "Spike-sample-1": "THR", "Spike-sample-2": "TJHR", "Sprint-Spikes": "THR", "ZHUIFENG 4": "TJHR", "ZHUIFENG 6": "TJHR"}, "Mizuno": {"ALL JUMP PRO SO1": "TJHR", "Brave Wing FX": "TJHR", "Break Sprint": "TJHR", "Chrono Break": "TJHR", "Chrono Break SO1": "TJHR", "Chrono Break_SO2": "TJHR", "Chrono Dist 7": "TJHR", "CHRONO DIST NEO": "THR", "CHRONO INX JAPAN": "TJHR", "CHRONO INX NEO": "THR", "CHRONO INX NEO JAPAN": "THR", "Chrono INX9": "TJHR", "Chrono INX9 SO1": "TJHR", "Chrono INX9 SO2": "TJHR", "Chrono INX9 SO3": "TJHR", "Chrono INX9 SO4": "THR", "Chrono Onyx 2": "TJHR", "Citius Wing Fx": "TJHR", "DEV-CINJP": "THR", "DEV-CRN": "TJHR", "DEV-HWE": "R", "DEV-HWEX1": "R", "DEV-HWP": "R", "DEV-HWPP": "R", "DEV-HWPR": "R", "DEV-HWPX1": "R", "DEV-WRP": "R", "DIST Special": "TJHR", "Duel Flash": "THR", "DUEL FLASH 2 / WIDE": "THR", "Duel Sonic": "R", "Duel Sonic 3": "R", "DUEL SONIC 4 / WIDE": "TJHR", "Ekiden Spirit": "TJHR", "Field Geo AJ-C": "TJHR", "Field Geo AJ-C, FIELD GEO AJ JAPAN": "TJHR", "Field Geo FT": "TJHR", "Field Geo HJ": "TJHR", "Field Geo HJ SO1": "TJHR", "Field Geo HJ-C": "TJHR", "Field Geo HJ-C, FIELD GEO HJ JAPAN": "TJHR", "Field Geo JT": "THR", "Field Geo JT So1": "THR", "Field Geo JT-C": "TJHR", "Field Geo JT-C, FIELD GEO JT JAPAN": "TJHR", "Field Geo LJ": "TJHR", "Field Geo LJ SO2": "TJHR", "Field Geo LJ SO3": "TJHR", "Field Geo LJ-C": "TJHR", "Field Geo LJ-C, FIELD GEO LJ JAPAN": "TJHR", "Field Geo RD So1": "TJHR", "Field Geo RD-C": "TJHR", "Field Geo RD-C, FIELD GEO RD JAPAN": "TJHR", "Field Geo Th": "TJHR", "Geo Cyclone": "TJHR", "Geo Silencer Fx": "TJHR", "Geo Sprint 4": "TJHR", "Geo Spurt Md": "TJHR", "Geo Versus Fx": "TJHR", "HIGH JUMP PRO SO2": "TJHR", "HYPERWARP ELITE": "R", "HYPERWARP PRO": "R", "HYPERWARP PURE": "R", "INX Break": "TJHR", "INX Silencer": "TJHR", "INX Sniper": "TJHR", "INX Sprint": "TJHR", "JAVELIN THROW PRO SO5": "TJHR", "JAVELIN THROW PRO SO6": "TJHR", "JAVELIN THROW PRO SO7": "TJHR", "JAVELIN THROW PRO SO8": "TJHR", "Javelin Throw Pro1 So1": "TJHR", "Javelin Throw Pro2 So2": "THR", "Javelin Throw Pro3 So3": "TJHR", "Javelin Throw Pro4 So4": "THR", "LONG JUMP PRO SO4": "TJHR", "LONG JUMP PRO SO5": "TJHR", "LONG JUMP PRO SO6": "TJHR", "Long Jump Pro1 SO1": "TJHR", "MIZUNO SPRINT": "THR", "MIZUNO SPRINT NEO": "THR", "Spectra Type  A": "TJHR", "Spectra Type  B (21SS Type B)": "TJHR", "Spectra Type  C": "TJHR", "Spectra Type  D": "TJHR", "Spectra Type  E": "TJHR", "Spectra Type  F": "TJHR", "Spectra Type A So1": "TJHR", "Spectra Type E So1": "TJHR", "SPRINT PRO SO1": "THR", "SPRINT PRO SO2": "THR", "SPRINT PRO SO3": "THR", "Sprint Pro Type A": "TJHR", "Sprint Pro Type A So1": "TJHR", "Sprint Pro Type A So2": "TJHR", "Sprint Pro Type B": "TJHR", "Sprint Pro Type B So1": "TJHR", "Sprint Pro Type B So2": "TJHR", "Wave Aero": "R", "Wave Amulet": "R", "WAVE AMULET SO1": "R", "Wave Cruise Japan": "R", "Wave Cruise Japan So1": "R", "Wave Cruise Pro": "R", "Wave Duel": "R", "Wave Duel 3": "R", "WAVE DUEL 4": "R", "Wave Duel Gtz": "R", "Wave Duel Gtz2": "R", "Wave Duel Neo": "R", "Wave Duel Neo 2": "R", "Wave Duel Neo 2 Elite": "R", "WAVE DUEL NEO SO1": "R", "Wave Duel Neo Sp": "R", "Wave Duel Pro": "R", "Wave Duel Pro Qtr": "R", "Wave Ekiden": "TJHR", "Wave Emperor": "R", "Wave Emperor Japan": "R", "Wave Idaten CB": "R", "Wave Rebellion": "R", "Wave Rebellion Flash 2": "R", "WAVE REBELLION FLASH 3": "R", "Wave Rebellion Pro": "R", "Wave Rebellion Pro 2": "R", "WAVE REBELLION PRO 3 / BETA": "R", "WAVE REBELLION PRO LOW": "R", "WAVE REBELLION PRO Natural": "R", "Wave Sonic": "R", "Wave Sonic 2": "R", "Wave Spacer Gl": "R", "Wave Spacer Gl So1": "R", "Wave Spacer Gl So2": "R", "Wave Spacer Gl So3": "R", "Wave Spacer Gl So4": "R", "WAVE SPACER GL SO5": "R", "Wave Zone Power": "TJHR", "X Blast Elite": "TJHR", "X BLAST ELITE 2": "THR", "X BLAST ELITE 3": "THR", "X Blast Neo": "TJHR", "X BLAST NEO 2": "TJHR", "X BLAST NEXT": "TJHR", "X BLAST NEXT 2": "THR", "X FIRST / WIDE": "TJHR", "X FIRST 2 / WIDE": "TJHR", "X FIRST 2, X FIRST 2 WIDE": "TJHR", "X FIRST 3 / WIDE": "TJHR", "X FIRST, X FIRST WIDE": "TJHR", "X Laser Elite": "TJHR", "X LASER ELITE 2": "THR", "X LASER NEXT": "TJHR", "X LASER NEXT 2": "THR", "X LASER NEXT 3": "THR", "X Sprint": "TJHR", "X Stream MD": "TJHR"}, "New Balance": {"1400v6": "R", "1500v4 w1500v4": "R", "1500v6": "R", "Development Shoe 6XFP": "THR", "Development Shoe E02": "R", "DynaSoft Flash v7": "TJHR", "FuelCell 5280": "R", "FuelCell Prism": "R", "FuelCell PVLSE": "TJHR", "FuelCell Racer TC": "R", "FuelCell Racer VIP": "R", "FuelCell RC Elite": "R", "FuelCell RC Elite v2": "R", "FuelCell SuperComp Elite v3": "R", "FuelCell SuperComp Elite v4": "R", "FuelCell SuperComp Elite v5": "R", "FuelCell SuperComp LD-X v3": "THR", "FuelCell SuperComp MD-X v2": "THR", "FuelCell SuperComp MD-X v3": "TJHR", "FuelCell Supercomp Pacer": "R", "FuelCell SuperComp Pacer v2": "R", "FuelCell SuperComp PWR-X": "THR", "FuelCell SuperComp PWR-X v2": "THR", "FuelCell SuperComp PWR-X v3": "THR", "FuelCell SuperComp SD-X": "THR", "FuelCell SuperComp Trainer v2": "R", "FuelCell SuperComp Trainer v3": "R", "FuelCell SuperComp XC-X": "TJHR", "Hanzo R v3": "R", "Hanzo R v4": "R", "Hanzo W v1": "R", "Hanzo W v2": "R", "LD5K": "TJHR", "MD500": "TJHR", "MD800": "TJHR", "SD100": "TJHR", "SD200": "THR", "SD400": "THR", "Sigma Aria": "THR", "Sigma Harmony": "THR", "Vazee Sigma": "THR", "Vazee Verge": "THR"}, "Nike": {"Air Zoom Alphafly Next %": "R", "Air Zoom Alphafly Next % 2": "R", "Air Zoom LJ Elite 1.5": "TJHR", "Air Zoom Maxfly": "THR", "Air Zoom Victory": "TJHR", "Air Zoom Victory Elite": "TJHR", "Alphafly 3": "R", "Dev 121052": "TJHR", "Dev 16141": "R", "Dev 164": "R", "Dev 611": "TJHR", "Dev1820": "TJHR", "Dev187": "TJHR", "Dev1945": "TJHR", "Dragonfly 2": "TJHR", "Dragonfly 2 Elite": "TJHR", "High Jump 3": "TJHR", "High Jump Elite": "TJHR", "Javelin Elite 2": "TJHR", "LJ 4": "TJHR", "LJ Elite": "TJHR", "Mamba V6": "TJHR", "Maxfly 2": "THR", "Pegasus Plus": "R", "Pegasus Turbo 2": "R", "Pole Vault Elite": "TJHR", "Rival Distance": "TJHR", "Rival Jump": "TJHR", "Rival Multi": "TJHR", "Rival Sprint": "TJHR", "Streakfly 2": "R", "Triple Jump  Elite 2015": "TJHR", "Triple Jump Elite": "TJHR", "Triple Jump Elite 3": "TJHR", "Vaporfly 4": "R", "Vaporfly 4%": "R", "Victory 2": "TJHR", "Zoom 400": "TJHR", "Zoom Fly 3": "R", "Zoom Gravity": "R", "Zoom Ja Fly": "TJHR", "Zoom Ja Fly 3": "TJHR", "Zoom Ja Fly 4": "THR", "Zoom Javelin Elite 3": "TJHR", "Zoom Mamba V": "TJHR", "Zoom Matumbo 3": "TJHR", "Zoom Rival D 10": "TJHR", "Zoom Rival M 9": "TJHR", "Zoom Rival S 9": "TJHR", "Zoom Rival SD": "TJHR", "Zoom Rotational": "TJHR", "Zoom SD 3": "TJHR", "Zoom SD 4": "TJHR", "Zoom Streak 6": "R", "Zoom Streak 7": "R", "Zoom Streak LT 3": "R", "Zoom Streak LT 4": "R", "Zoom Superfly Elite": "TJHR", "Zoom Superfly Elite 2": "TJHR", "Zoom Superfly R 3": "TJHR", "Zoom Victory 2": "TJHR", "Zoom Victory 3": "TJHR", "Zoom Victory Elite": "TJHR", "Zoom Victory Elite 2": "TJHR", "ZoomX Dragonfly": "TJHR", "ZoomX Dragonfly XC": "TJHR", "ZoomX Streakfly": "R", "ZoomX Vaporfly Next %": "R", "ZoomX Vaporfly Next % 2": "R", "ZoomX Vaporfly Next % 3": "R"}, "On": {"Cloudboom": "R", "Cloudboom 4": "R", "Cloudboom Dev 5": "R", "Cloudboom Echo": "R", "Cloudboom Echo 3.0": "R", "Cloudboom Strike": "R", "Cloudboom Strike LS": "R", "Cloudboom Strike LS Kuota": "R", "Cloudboom Volt": "R", "Cloudflash": "R", "Cloudspike 1500m": "THR", "Cloudspike Amplius 2": "TJHR", "Cloudspike Citius 2": "THR", "Cloudspike Citius 2 LS": "THR", "Cloudspike DEV10": "THR", "Cloudspike Sprint": "TJHR", "Cloudspike Sprint 2": "THR", "CLOUDSPIKE SPRINT V": "THR", "Cloudspike Steeple 2": "TJHR", "Cloudspike XC": "THR", "CloudTri 1": "R", "CloudTri 2": "R"}, "Puma": {"Berserker Nitro Elite 2": "THR", "Crossfox Nitro Elite": "TJHR", "Deviate Nitro": "R", "Deviate Nitro Elite": "R", "Deviate Nitro Elite 2": "R", "Deviate Nitro Elite 3": "R", "Deviate Nitro Elite 4": "R", "Eternity Nitro": "R", "evoSPEED Berserker Nitro Elite": "THR", "evoSPEED Complete TFX Jump": "TJHR", "evoSPEED Crossfox": "TJHR", "evoSPEED Distance": "TJHR", "evoSPEED Distance Nitro Elite+": "THR", "evoSPEED Electric": "THR", "evoSPEED Forte Nitro Elite": "TJHR", "evoSPEED FortePro Nitro Elite": "THR", "evoSPEED Haraka 2": "TJHR", "evoSPEED High Jump": "TJHR", "evoSPEED High Jump Elite": "TJHR", "evoSPEED High Jump Nitro Elite": "TJHR", "evoSPEED High Jump Power": "TJHR", "evoSPEED Javelin": "TJHR", "evoSPEED Javelin Elite": "TJHR", "evoSPEED Long Distance": "TJHR", "evoSPEED Long Distance Nitro Elite": "TJHR", "evoSPEED Long Jump": "TJHR", "evoSPEED Mid-Distance": "TJHR", "evoSPEED Naio Jump Nitro Elite": "TJHR", "evoSPEED Naio Nitro": "THR", "evoSPEED Naio Nitro Elite": "THR", "evoSPEED Naio Nitro Elite 2": "THR", "evoSPEED Prep Sprint": "THR", "evoSPEED Sprint": "THR", "evoSPEED Sprint Nitro 2 (evoSPEED Tokyo Nitro)": "THR", "evoSPEED Sprint TFX": "THR", "evoSPEED Star": "TJHR", "evoSpEED Throw": "TJHR", "evoSPEED Tokyo Brush": "TJHR", "evoSPEED Tokyo Brush Mid": "TJHR", "evoSPEED Tokyo Future": "TJHR", "evoSPEED Tokyo Future Faster+": "THR", "evoSPEED Tokyo Future Jump": "TJHR", "evoSPEED Tokyo Future Mid": "TJHR", "evoSPEED Tokyo Future Nitro Faster+": "THR", "evoSPEED Tokyo Nitro": "THR", "evoSPEED Tokyo Nitro 400": "TJHR", "evoSPEED Tokyo Nitro Long Jump": "TJHR", "evoSPEED Triple Jump Nitro Elite": "TJHR", "evoSPEED Triple Jump Power": "TJHR", "evoSPEED Triple Jump/PV": "TJHR", "FAST-FWD Nitro Elite": "R", "FAST-R Nitro Elite": "R", "FAST-R Nitro Elite 2": "R", "FAST-R Nitro Elite 3": "R", "FAST-R Nitro Elite 3.1S": "R", "FAST-R Nitro Elite 3.1W": "R", "Liberate Nitro": "R", "Long Distance Nitro Elite 3": "TJHR", "Mid Distance Nitro Elite": "TJHR", "Mid Distance Nitro Elite 3": "TJHR", "Propio Nitro": "TJHR", "Speed 100 R Ignite 2": "R", "Speed 300 Racer 2": "R", "Speed 500": "R", "Speed 600 2": "R", "Speed Sutamina": "R", "UltraRide": "R", "Velocity Nitro": "R"}, "Salomon": {"Glide Max": "R", "S/LAB 491616": "R", "S/LAB Phantasm": "TJHR", "S/LAB Phantasm 2": "R", "S/LAB PHANTASM 2 MADE IN FRANCE": "R", "S/LAB PHANTASM 3": "R", "S/LAB Phantasm CF": "R", "S/LAB STRATOS": "TJHR"}, "Saucony": {"Endorphin 3": "TJHR", "Endorphin Cheetah": "TJHR", "Endorphin DVP3": "R", "Endorphin Edge": "R", "Endorphin Elite": "R", "Endorphin Elite 2": "R", "Endorphin LD": "TJHR", "Endorphin Pro": "R", "Endorphin Pro 2": "R", "Endorphin Pro 3": "R", "Endorphin Pro 4": "R", "ENDORPHIN PRO 5": "R", "Endorphin Pro+": "R", "Endorphin Shift": "R", "Endorphin Shift 2": "R", "Endorphin Speed": "R", "Endorphin Speed 2": "R", "Endorphin Speed 3": "R", "Fastwitch 9": "TJHR", "Fastwitch 9 MH 2": "TJHR", "Freedom ISO": "R", "Havok XC3 Flat": "TJHR", "Havok XC3 Spike": "TJHR", "Kilkenny XC9 Flat": "TJHR", "Kilkenny XC9 Spike": "TJHR", "Kinvara 12": "R", "Kinvara 13": "R", "Kinvara 14": "R", "Lanzar Jav 2": "R", "Ride ISO": "R", "Soarin J2": "TJHR", "Spitfire": "TJHR", "Tempus": "R", "Terminal VT": "TJHR", "Type A8": "TJHR", "Type A9": "TJHR", "Unleash SD 2": "TJHR", "Uplift HJ 2": "TJHR"}, "Under Armour": {"Centric Grip": "TJHR", "Flow Velociti Elite 2022": "R", "Hovr Miler 3": "TJHR", "Hovr Shakedown": "TJHR", "Hovr Shakedown Elite": "TJHR", "Hovr Silencer": "TJHR", "Hovr Skyline HJ": "TJHR", "Hovr Skyline LJ": "TJHR", "Hovr Skyline TJ": "TJHR", "Hovr Smokerider": "TJHR", "Kick Distance 3": "TJHR", "Kick Sprint 3": "TJHR", "Shakedown Elite LD 3": "TJHR", "Speedform Miler 2": "TJHR", "Sprint Pro 2": "TJHR", "Sprint Pro 3": "TJHR", "U Velociti Elite 2.0": "R", "UA Shakedown Elite 3.5 MD": "THR", "UA Sprint Elite DEV": "THR", "UA U Silencer 2": "TJHR", "UA Velociti Elite SL DEV": "R", "UA Velociti Racer 2 DEV2": "R", "Unicorn Spike": "THR", "Velociti Elite 3": "R", "Velociti Racer": "TJHR", "Velociti Wind": "R"}, "Xtep": {"060 1.0": "TJHR", "060-Sprint": "THR", "160X": "R", "160X  JET": "R", "160X 3.0": "R", "160X 3.0 Pro": "R", "160X 3.5 Pro": "R", "160X 5.0": "R", "160X 5.0 Pro": "R", "160X 6.0": "R", "160X 6.0 Pro": "R", "160X 6.5": "R", "160X 6.5 Pro": "R", "160X 7.0": "R", "160X 7.0 Monxter": "R", "160X 7.0 Pro": "R", "160X Elite": "R", "160X JET": "R", "160X2": "R", "160X-8.0": "R", "160X-8.0Pro": "R", "160XJET": "R", "160XPro": "R", "TZ GLJ-1": "TJHR"}};
 
-    // ANGLIČTINA PRO PDF ZŮSTÁVÁ
     const pdfLabels = { p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" };
 
     const dictionary = {
@@ -250,7 +249,7 @@
             sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", hist: "HISTORIE", clear: "SMAZAT",
             p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", 
             phs: ["Zlatá tretra", "MČR Praha"], names: ["Jan Novák", "Jakub Vadlejch"], 
-            btn_yes: "✅ POVOLENO", btn_no: "❌ NEPOVOLENO", q: "Závodí atlet v povolené obuvi pro tuto disciplínu?",
+            btn_yes: "✅ POVOLENO", btn_no: "❌ NEPOVOLENO", q: "Závodí atlet v povolené obuvi pre túto disciplínu?",
             modalTitle: "Podpis", modalClear: "SMAZAT", modalSave: "ULOŽIT", otherBtn: "+ Přidat extra fotku",
             notFoundWA: "Model nenalezen. Zkontrolujte prosím model přímo na oficiálním webu WA."
         }
@@ -346,7 +345,7 @@
             if(rules.includes('H')) texts.push('Throw (Vrhy)');
             if(rules.includes('R')) texts.push('Road (Silnice)');
             
-            const msg = currentLang === 'cs' ? "Oficiálně schváleno pro:" : "Officially approved for:";
+            const msg = currentLang === 'cs' ? "Oficiálne povolené pre:" : "Officially approved for:";
             infoText.innerHTML = `${msg}<br><span style="color:var(--accent); font-size:16px;">${texts.join(', ')}</span>`;
             infoBox.style.display = 'block';
         } else if (brand && model) {
@@ -370,12 +369,11 @@
     }
 
     function autoFillId(val) {
+        // OPRAVA: Prehľadá čistú databázu a ID vloží len pri exaktnej zhode mena.
         const insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
         const exactMatch = insps.find(i => i.name.toLowerCase() === val.trim().toLowerCase());
         if(exactMatch && exactMatch.id) {
             document.getElementById('inspId').value = exactMatch.id;
-        } else {
-            document.getElementById('inspId').value = "";
         }
     }
 
@@ -424,7 +422,7 @@
     }
 
     function clearHistory() { 
-        if(confirm(currentLang === 'cs' ? "Smazat historii i uložené rozhodčí?" : "Clear history and saved inspectors?")) { 
+        if(confirm(currentLang === 'cs' ? "Zmazať históriu aj uložených rozhodcov?" : "Clear history and saved inspectors?")) { 
             localStorage.removeItem('h_logs');
             localStorage.removeItem('h_comps');
             localStorage.removeItem('h_insps');
@@ -465,7 +463,7 @@
             const discText = document.getElementById('discipline').value;
 
             if(!ath || !cmp || !brd) { 
-                alert(currentLang === 'cs' ? "Chybí údaje (Závod, Atlet, Značka)!" : "Missing details (Competition, Athlete, Brand)!"); 
+                alert(currentLang === 'cs' ? "Chýbajú údaje (Závod, Atlét, Značka)!" : "Missing details (Competition, Athlete, Brand)!"); 
                 return; 
             }
 
@@ -473,7 +471,6 @@
             const now = new Date().toLocaleString();
             const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
 
-            // Shromáždění fotek
             const validPhotos = [];
             for (let i = 1; i <= 6; i++) { 
                 const f = document.getElementById('p'+i).files[0]; 
@@ -483,12 +480,11 @@
                 validPhotos.push({ ...await processImg(otherPhotos[i]), label: "Extra Photo " + (i + 1) });
             }
 
-            // --- STRANA 1: PROFESIONÁLNÍ REPORT ---
+            // --- STRANA 1: PROFESIONÁLNY REPORT ---
             doc.addImage(logo, 'PNG', 140, 10, 50, 25);
             doc.setFontSize(24).setFont("helvetica", "bold").setTextColor(0);
             doc.text("SHOE CONTROL REPORT", 20, 25);
             
-            // Modrá linka posunuta dolů, aby neškrtala logo
             doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 38, 190, 38);
             
             const leftCol = 20;
@@ -522,10 +518,13 @@
             doc.setFontSize(14).setTextColor(0).setFont("helvetica", "normal").text(clean(discText) || "---", leftCol, y);
             y += 10;
 
-            // Zápis do protokolu pouze pokud je bota explicitně NEPOVOLENA
+            // STATUS V PROTOKOLE LEN AK JE ZAMIETNUTÉ ALEBO ZACHOVANÉ
             if (isShoeApproved === false) {
                 doc.setFontSize(14).setTextColor(255, 0, 0).setFont("helvetica", "bold");
                 doc.text("STATUS: SHOE NOT APPROVED FOR THIS DISCIPLINE", leftCol, y);
+            } else if (isShoeApproved === true) {
+                doc.setFontSize(12).setTextColor(0, 150, 0).setFont("helvetica", "bold");
+                doc.text("STATUS: APPROVED", leftCol, y);
             }
             y += 15;
 
@@ -557,7 +556,6 @@
             doc.line(20, sigY, 90, sigY); 
             doc.line(120, sigY, 190, sigY);
             
-            // Jména přímo pod čarou podpisu
             doc.setFontSize(10).setFont("helvetica", "bold").setTextColor(0);
             doc.text(clean(ath) || "---", 55, sigY + 5, {align:'center'});
             doc.text(clean(insp) || "---", 155, sigY + 5, {align:'center'});
@@ -571,7 +569,7 @@
 
             doc.setFontSize(8).setTextColor(180).setFont("helvetica", "normal").text(`Generated securely: ${now}`, 190, 285, {align:'right'});
 
-            // --- STRANA 2: FOTKY (Mřížka) ---
+            // --- STRANA 2: FOTKY ---
             if (validPhotos.length > 0) {
                 doc.addPage();
                 doc.setFontSize(22).setFont("helvetica", "bold").setTextColor(0).text("PHOTO DOCUMENTATION", 20, 25);
@@ -598,11 +596,13 @@
 
             doc.save(`${clean(ath).replace(/ /g, '_')}_${clean(cmp).replace(/ /g, '_')}.pdf`);
 
+            // Ukladanie historie
             let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]'); h_logs.unshift({ ath, cmp, time: now }); localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,15)));
             let h_comps = JSON.parse(localStorage.getItem('h_comps') || '[]'); if(!h_comps.includes(cmp)) h_comps.push(cmp); localStorage.setItem('h_comps', JSON.stringify(h_comps));
             
+            // OPRAVA Ukladania rozhodcu (Ulozi iba ak je Meno a ID vyplnene)
             let h_insps = JSON.parse(localStorage.getItem('h_insps') || '[]'); 
-            if(insp && iid) { 
+            if(insp && iid && insp.trim() !== "" && iid.trim() !== "") { 
                 const existingIdx = h_insps.findIndex(i => i.name === insp);
                 if(existingIdx >= 0) h_insps[existingIdx].id = iid;
                 else h_insps.push({name: insp, id: iid});
@@ -622,7 +622,15 @@
         }
     }
 
-    window.onload = () => { setLang('cs'); renderHistory(); };
+    window.onload = () => { 
+        // Automatický čistič zlej pamäte rozhodcov pri načítaní
+        let insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
+        insps = insps.filter(i => i && i.name && i.id && i.name.trim() !== "" && i.id.trim() !== "");
+        localStorage.setItem('h_insps', JSON.stringify(insps));
+
+        setLang('cs'); 
+        renderHistory(); 
+    };
 </script>
 </body>
 </html>
