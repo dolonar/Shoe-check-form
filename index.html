@@ -295,10 +295,10 @@
         if(val.toLowerCase() === 'atletika') {
             document.getElementById('app-lock').style.display = 'none';
             document.getElementById('app-content').style.display = 'block';
-            sessionStorage.setItem('unlocked', 'true');
+            localStorage.setItem('unlocked', 'true');
         }
     }
-    if(sessionStorage.getItem('unlocked') === 'true') {
+    if(localStorage.getItem('unlocked') === 'true') {
         document.getElementById('app-lock').style.display = 'none';
         document.getElementById('app-content').style.display = 'block';
     }
