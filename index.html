@@ -42,7 +42,6 @@
             --primary: #ffffff;
         }
 
-        /* GLOBAL RESET */
         * { 
             box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent; 
@@ -88,7 +87,6 @@
             display: flex; 
             align-items: center; 
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         /* MAIN CARD */
@@ -102,7 +100,6 @@
             width: 100%;
         }
 
-        /* LANGUAGE SWITCHER */
         .lang-switch { 
             display: flex; 
             gap: 12px; 
@@ -119,9 +116,7 @@
             font-weight: 800; 
             cursor: pointer;
             text-transform: uppercase; 
-            font-size: 12px;
-            letter-spacing: 0.5px;
-            transition: 0.2s;
+            font-size: 11px;
         }
 
         .lang-btn.active { 
@@ -130,23 +125,55 @@
             border-color: var(--primary); 
         }
 
-        /* FORM GRID */
+        /* OPRAVENÉ GRAFICKÉ TLAČÍTKO - LIST BOT */
+        .db-link {
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px;
+            background: #e8f5e9; /* Světle zelená jako pozadí */
+            color: #2e7d32; /* Tmavě zelená jako text */
+            text-decoration: none;
+            padding: 20px; 
+            border-radius: 18px; 
+            font-weight: 800; 
+            font-family: var(--font-heading);
+            font-size: 20px; 
+            margin-bottom: 30px; 
+            width: 100%; 
+            text-transform: uppercase; 
+            border: 2px solid #a5d6a7;
+            transition: 0.2s;
+            letter-spacing: 1px;
+        }
+
+        .db-link:active {
+            transform: scale(0.98);
+            background: #c8e6c9;
+        }
+
+        [data-theme="dark"] .db-link {
+            background: #1b5e20;
+            color: #ffffff;
+            border-color: #2e7d32;
+        }
+
+        /* GRID */
         .grid { 
             display: grid; 
             grid-template-columns: 1fr; 
-            gap: 18px; 
+            gap: 15px; 
         }
 
         @media (min-width: 600px) { 
             .grid { grid-template-columns: 1fr 1fr; } 
         }
 
-        /* LABELS AND INPUTS */
         label { 
             display: block; 
-            margin-top: 15px; 
+            margin-top: 12px; 
             font-weight: 800; 
-            font-size: 11px; 
+            font-size: 10px; 
             color: var(--text-gray); 
             text-transform: uppercase; 
             letter-spacing: 1.2px; 
@@ -155,7 +182,7 @@
         input, select { 
             width: 100%; 
             padding: 16px; 
-            margin-top: 8px; 
+            margin-top: 5px; 
             border: 1px solid var(--border); 
             border-radius: 14px; 
             font-size: 16px; 
@@ -163,15 +190,9 @@
             color: var(--text-main); 
             outline: none;
             font-family: var(--font-main);
-            transition: 0.2s;
         }
 
-        input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
-        }
-
-        /* PHOTO BUTTONS */
+        /* PHOTO GRID */
         .photo-grid { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -194,37 +215,25 @@
             font-size: 14px; 
             font-weight: 800; 
             text-transform: uppercase;
-            color: var(--text-main);
-            overflow: hidden;
         }
 
         .photo-item input[type="file"] {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-            z-index: 5;
-        }
-
-        .photo-item span:first-child { 
-            font-size: 36px; 
-            margin-bottom: 8px; 
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: pointer; z-index: 5;
         }
 
         .photo-item.has-file { 
             border-color: var(--success); 
-            background: rgba(52, 199, 89, 0.08); 
+            background: rgba(52, 199, 89, 0.1); 
         }
 
-        /* SIGNATURE BUTTONS */
+        /* SIGNATURES */
         .sig-trigger {
             width: 100%; 
-            padding: 20px; 
+            padding: 18px; 
             margin-top: 15px; 
-            border-radius: 16px; 
+            border-radius: 14px; 
             border: 2.5px dashed var(--accent);
             background: var(--input-bg); 
             color: var(--accent); 
@@ -233,33 +242,26 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            font-size: 15px; 
             text-transform: uppercase;
-            transition: 0.2s;
+            font-size: 14px;
         }
+        .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
-        .sig-trigger.signed { 
-            border-style: solid; 
-            border-color: var(--success); 
-            color: var(--success); 
-        }
-
-        /* ACTION BUTTONS */
+        /* BUTTONS */
         .btn-submit { 
             background: var(--primary); 
             color: var(--card-bg); 
             border: none; 
             width: 100%; 
-            padding: 24px; 
-            border-radius: 20px; 
-            font-size: 24px; 
+            padding: 22px; 
+            border-radius: 18px; 
+            font-size: 22px; 
             font-weight: 800; 
             cursor: pointer; 
             margin-top: 40px; 
             font-family: var(--font-heading); 
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .btn-reset { 
@@ -267,123 +269,53 @@
             color: var(--danger); 
             border: 2px solid var(--danger); 
             width: 100%; 
-            padding: 14px; 
-            border-radius: 14px; 
-            font-size: 12px; 
+            padding: 12px; 
+            border-radius: 12px; 
+            font-size: 11px; 
             font-weight: 800; 
             cursor: pointer; 
             margin-top: 20px; 
             text-transform: uppercase;
         }
 
-        /* HISTORY SECTION */
+        /* HISTORY */
         .history-section { 
-            margin-top: 50px; 
-            border-top: 3px solid var(--border); 
-            padding-top: 30px; 
+            margin-top: 40px; 
+            border-top: 2px solid var(--border); 
+            padding-top: 25px; 
         }
 
         .history-header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
         }
 
         .history-title { 
             font-family: var(--font-heading); 
-            font-size: 28px; 
+            font-size: 26px; 
             text-transform: uppercase; 
-            margin: 0;
-        }
-
-        .btn-clear-history {
-            background: none;
-            border: none;
-            color: var(--danger);
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .history-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
         }
 
         .history-item {
             background: var(--input-bg); 
-            padding: 18px 24px; 
-            border-radius: 18px; 
+            padding: 15px; 
+            border-radius: 16px; 
             border: 1px solid var(--border);
             display: flex; 
             justify-content: space-between; 
             align-items: center;
+            margin-bottom: 10px;
         }
 
-        .history-info b { font-size: 16px; display: block; }
-        .history-info span { font-size: 12px; color: var(--text-gray); text-transform: uppercase; font-weight: 700; }
-        .history-date { font-size: 11px; color: var(--text-gray); font-weight: 600; }
-
-        /* MODAL WINDOWS */
-        .modal { 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
-            background: var(--bg); 
-            z-index: 9999; 
-            display: none; 
-            flex-direction: column; 
-        }
-
+        /* MODALS */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
-
-        .modal-header { 
-            padding: 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid var(--border); 
-        }
-
-        .modal-header h3 { 
-            font-family: var(--font-heading); 
-            font-size: 26px; 
-            margin: 0; 
-            text-transform: uppercase; 
-        }
-
-        .modal-body { 
-            flex: 1; 
-            background: #ffffff; 
-            position: relative; 
-        }
-
-        canvas { 
-            width: 100%; 
-            height: 100%; 
-            touch-action: none; 
-            background: #fff;
-        }
-
-        .modal-footer {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .footer-btn {
-            padding: 18px;
-            border-radius: 14px;
-            font-weight: 800;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
+        .modal-body { flex: 1; background: #ffffff; position: relative; }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; background: #fff; }
+        .modal-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
+        .modal-header h3 { font-family: var(--font-heading); font-size: 26px; margin: 0; text-transform: uppercase; }
 
         .app-footer { 
             text-align: center; 
@@ -392,17 +324,14 @@
             color: var(--text-gray); 
             font-weight: 800; 
             text-transform: uppercase; 
-            letter-spacing: 1px;
         }
-
-        .app-footer a { color: var(--accent); text-decoration: none; }
     </style>
 </head>
 <body>
 
 <div id="app-content">
     <div class="app-header">
-        <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png" alt="World Athletics Logo">
+        <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png" alt="Logo">
         <div class="header-actions">
             <button class="icon-btn" onclick="toggleTheme()" id="theme-icon">🌙</button>
         </div>
@@ -414,30 +343,21 @@
             <button class="lang-btn" id="btn-cs" onclick="setLang('cs')">Čeština</button>
         </div>
 
-        <a href="https://certcheck.worldathletics.org/" target="_blank" class="db-link">
+        <a href="https://certcheck.worldathletics.org/" target="_blank" class="db-link" id="db-button">
             <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
-            <span id="txt-approved-list">LIST OF APPROVED ATHLETIC SHOES</span>
+            <span id="txt-list-link">LIST OF APPROVED ATHLETIC SHOES</span>
         </a>
 
         <div class="grid">
-            <div>
-                <label id="lbl-comp">Competition</label>
-                <input type="text" id="compName" list="compListOptions" autocomplete="off">
-                <datalist id="compListOptions"></datalist>
-            </div>
-            <div>
-                <label id="lbl-date">Date</label>
-                <input type="date" id="raceDate">
-            </div>
+            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" placeholder="Závod..." list="compOptions"></div>
+            <datalist id="compOptions"></datalist>
+            <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
         </div>
 
         <div class="grid">
+            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" placeholder="Jan Novák..."></div>
             <div>
-                <label id="lbl-athlete">Athlete Name</label>
-                <input type="text" id="athleteName" autocomplete="off">
-            </div>
-            <div>
-                <label id="lbl-category">Category</label>
+                <label id="lbl-sex">Category</label>
                 <select id="sex">
                     <option value="Men" id="opt-men">Men</option>
                     <option value="Women" id="opt-women">Women</option>
@@ -448,431 +368,220 @@
         <div class="grid">
             <div>
                 <label id="lbl-brand">Shoe Brand</label>
-                <input type="text" id="brand" list="brandListOptions" autocomplete="off" oninput="handleBrandInput(this.value)">
-                <datalist id="brandListOptions"></datalist>
+                <input type="text" id="brand" list="brandList" placeholder="Značka..." oninput="updateModelSuggestions(this.value)">
+                <datalist id="brandList"></datalist>
             </div>
             <div>
                 <label id="lbl-model">Shoe Model</label>
-                <input type="text" id="model" list="modelListOptions" autocomplete="off">
-                <datalist id="modelListOptions"></datalist>
+                <input type="text" id="model" list="modelList" placeholder="Model...">
+                <datalist id="modelList"></datalist>
             </div>
         </div>
 
         <div class="grid">
-            <div>
-                <label id="lbl-inspector">Inspector Name</label>
-                <input type="text" id="inspName" list="inspListOptions" autocomplete="off" oninput="handleInspectorInput(this.value)">
-                <datalist id="inspListOptions"></datalist>
-            </div>
-            <div>
-                <label id="lbl-id">ID Number</label>
-                <input type="text" id="inspId" list="idListOptions" autocomplete="off">
-                <datalist id="idListOptions"></datalist>
-            </div>
+            <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" list="inspOptions" oninput="autoFillId(this.value)"></div>
+            <datalist id="inspOptions"></datalist>
+            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" placeholder="Průkaz..."></div>
         </div>
 
         <div class="photo-grid">
-            <div class="photo-item" id="box-p1">
-                <span>📸</span><span id="txt-p1">BIB & Shoe</span>
-                <input type="file" accept="image/*" onchange="handleFileChange('p1', this)">
-            </div>
-            <div class="photo-item" id="box-p2">
-                <span>📸</span><span id="txt-p2">Side View</span>
-                <input type="file" accept="image/*" onchange="handleFileChange('p2', this)">
-            </div>
-            <div class="photo-item" id="box-p3">
-                <span>📸</span><span id="txt-p3">Outsole</span>
-                <input type="file" accept="image/*" onchange="handleFileChange('p3', this)">
-            </div>
-            <div class="photo-item" id="box-p4">
-                <span>📸</span><span id="txt-p4">Label</span>
-                <input type="file" accept="image/*" onchange="handleFileChange('p4', this)">
-            </div>
-            <div class="photo-item" id="box-p5">
-                <span>📸</span><span id="txt-p5">Insole Side</span>
-                <input type="file" accept="image/*" onchange="handleFileChange('p5', this)">
-            </div>
-            <div class="photo-item" id="box-p6">
-                <span>📸</span><span id="txt-p6">Insole Top</span>
-                <input type="file" accept="image/*" onchange="handleFileChange('p6', this)">
-            </div>
+            <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">BIB & Shoe</span><input type="file" accept="image/*" onchange="markFilled('p1', this)"></div>
+            <div class="photo-item" id="item-p2"><span>📸</span><span id="p-side2">Side View</span><input type="file" accept="image/*" onchange="markFilled('p2', this)"></div>
+            <div class="photo-item" id="item-p3"><span>📸</span><span id="p-side3">Outsole</span><input type="file" accept="image/*" onchange="markFilled('p3', this)"></div>
+            <div class="photo-item" id="item-p4"><span>📸</span><span id="p-side4">Label</span><input type="file" accept="image/*" onchange="markFilled('p4', this)"></div>
+            <div class="photo-item" id="item-p5"><span>📸</span><span id="p-side5">Insole Side</span><input type="file" accept="image/*" onchange="markFilled('p5', this)"></div>
+            <div class="photo-item" id="item-p6"><span>📸</span><span id="p-side6">Insole Top</span><input type="file" accept="image/*" onchange="markFilled('p6', this)"></div>
         </div>
 
-        <button class="sig-trigger" id="btn-sig-athlete" onclick="openSignatureModal('athlete')">
-            <span id="txt-sig-athlete">Athlete Signature</span>
-            <span id="status-athlete">❌</span>
+        <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')">
+            <span id="txt-sig-a">Athlete Signature</span><span id="stat-a">❌</span>
         </button>
-        <button class="sig-trigger" id="btn-sig-inspector" onclick="openSignatureModal('inspector')">
-            <span id="txt-sig-inspector">Inspector Signature</span>
-            <span id="status-inspector">❌</span>
+        <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')">
+            <span id="txt-sig-i">Inspector Signature</span><span id="stat-i">❌</span>
         </button>
 
-        <button class="btn-submit" id="btn-create" onclick="processReport()">CREATE REPORT</button>
-        <button class="btn-reset" onclick="hardResetForm()" id="txt-reset">RESET FORM</button>
+        <button class="btn-submit" id="btn-gen" onclick="generatePDF()">CREATE REPORT</button>
+        <button class="btn-reset" onclick="hardReset()">RESET FORM</button>
 
         <div class="history-section">
             <div class="history-header">
-                <h2 class="history-title" id="txt-history-title">HISTORY</h2>
-                <button class="btn-clear-history" onclick="clearAllHistory()" id="txt-clear-history">CLEAR</button>
+                <div class="history-title" id="lbl-hist">HISTORY</div>
+                <button onclick="clearHistory()" style="background:none; border:none; color:var(--danger); font-weight:800; cursor:pointer;">CLEAR</button>
             </div>
-            <div class="history-list" id="history-container">
-                </div>
+            <div id="history-container"></div>
         </div>
     </div>
-
-    <div class="app-footer">
-        Developed & Designed by <a href="https://www.instagram.com/doolonar/" target="_blank">David Lux</a> &copy; 2026
-    </div>
+    <div class="app-footer">Designed by <a href="https://www.instagram.com/doolonar/" target="_blank">David Lux</a> &copy; 2026</div>
 </div>
 
 <div id="sigModal" class="modal">
-    <div class="modal-header">
-        <h3 id="txt-modal-title">Signature</h3>
-        <button onclick="closeSignatureModal()" style="border:none; background:none; font-size:36px;">✕</button>
-    </div>
-    <div class="modal-body">
-        <canvas id="sigCanvas"></canvas>
-    </div>
-    <div class="modal-footer">
-        <button class="footer-btn" style="border:2px solid var(--danger); color:var(--danger); background:white;" onclick="clearSignatureCanvas()" id="txt-modal-clear">CLEAR</button>
-        <button class="footer-btn" style="background:var(--success); color:white;" onclick="saveSignatureCanvas()" id="txt-modal-save">SAVE</button>
+    <div class="modal-header"><h3 id="m-title-label">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:36px;">✕</button></div>
+    <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
+    <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+        <button onclick="clearCanvas()" style="padding:15px; border-radius:12px; border:2px solid var(--danger); background:white; color:var(--danger); font-weight:800;">CLEAR</button>
+        <button onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:800;">SAVE</button>
     </div>
 </div>
 
 <script>
-    /* -----------------------------------------------------------
-       1. DATA & DATABASE
-    ----------------------------------------------------------- */
     const { jsPDF } = window.jspdf;
-    let currentLang = 'cs';
-    let sigData = { athlete: null, inspector: null };
-    let activeSigType = null;
-    let signaturePadInstance = null;
+    let currentLang = 'cs', sigData = { a: null, i: null }, activePad, activeType;
 
-    // FULL SHOE DATABASE
     const shoeDatabase = {
-        "Adidas": [
-            "Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Ambition", "Adizero Takumi Sen 10",
-            "Adizero Adios 8", "Adizero Finesse", "Adizero High Jump", "Adizero Javelin", "Adizero LJ", "Rio Adizero MD"
-        ],
-        "Nike": [
-            "Air Zoom Victory", "ZoomX Dragonfly 2", "Air Zoom Maxfly 2", "Vaporfly 3", "Alphafly 3",
-            "ZoomX Streakfly", "Victory 2", "High Jump Elite", "Zoom Ja Fly 4", "Mamba V6"
-        ],
-        "Asics": [
-            "Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2", "Gun Lap 2", "Magic Speed 3",
-            "High Jump Pro 3", "Sonicsprint Elite 3", "Throw Pro 3"
-        ],
-        "Puma": [
-            "Berserker Nitro Elite 2", "evoSPEED Distance 9", "evoSPEED Tokyo Future", "FAST-R Nitro Elite 2",
-            "Deviate Nitro Elite 3"
-        ],
-        "New Balance": [
-            "FuelCell SuperComp Elite v4", "FuelCell MD-X v2", "FuelCell SD-X", "FuelCell LD-X", "Sigma Harmony"
-        ],
-        "Hoka": [
-            "Cielo X1", "Rocket X 2", "Cielo LD", "Bondi 8"
-        ],
-        "Saucony": [
-            "Endorphin Pro 4", "Endorphin Elite 2", "Endorphin Cheetah", "Terminal VT"
-        ],
-        "Mizuno": [
-            "Wave Rebellion Pro 2", "Chrono INX9", "Field Geo AJ-C", "Geo Sprint 4"
-        ]
+        "Adidas": ["Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Takumi Sen 10"],
+        "Nike": ["Air Zoom Victory", "ZoomX Dragonfly 2", "Vaporfly 3", "Alphafly 3", "Maxfly 2"],
+        "Asics": ["Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2"],
+        "Puma": ["evoSPEED Distance 9", "evoSPEED Tokyo Future", "Fast-R Nitro Elite 2"]
     };
 
     const dictionary = {
-        en: {
-            approvedList: "LIST OF APPROVED ATHLETIC SHOES",
-            comp: "Competition",
-            date: "Date",
-            athlete: "Athlete Name",
-            category: "Category",
-            brand: "Shoe Brand",
-            model: "Shoe Model",
-            inspector: "Inspector Name",
-            id: "ID Number",
-            sigAthlete: "Athlete Signature",
-            sigInspector: "Inspector Signature",
-            btnCreate: "CREATE REPORT",
-            btnReset: "RESET FORM",
-            historyTitle: "HISTORY",
-            clear: "CLEAR",
-            modalTitle: "Signature",
-            modalClear: "CLEAR",
-            modalSave: "SAVE",
-            warn: "Are you sure you want to send an incomplete form?",
-            p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top",
-            placeholders: {
-                comp: ["Diamond League", "World Indoor Tour", "Olympic Games"],
-                athlete: ["Noah Lyles", "Sydney McLaughlin", "Jakob Ingebrigtsen"],
-                insp: ["Official A", "Official B"],
-                id: ["WA-001", "CZE-99"]
-            }
-        },
-        cs: {
-            approvedList: "SEZNAM SCHVÁLENÉ OBUVI",
-            comp: "Závod",
-            date: "Datum",
-            athlete: "Jméno atleta",
-            category: "Kategorie",
-            brand: "Značka obuvi",
-            model: "Model obuvi",
-            inspector: "Jméno rozhodčího",
-            id: "Číslo průkazu",
-            sigAthlete: "Podpis atleta",
-            sigInspector: "Podpis rozhodčího",
-            btnCreate: "VYTVOŘIT PROTOKOL",
-            btnReset: "VYMAZAT FORMULÁŘ",
-            historyTitle: "HISTORIE",
-            clear: "SMAZAT",
-            modalTitle: "Podpis",
-            modalClear: "VYMAZAT",
-            modalSave: "ULOŽIT",
-            warn: "Opravdu chcete odeslat neúplný formulář?",
-            p1: "BIB a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora",
-            placeholders: {
-                comp: ["Zlatá tretra", "MČR Praha", "Memoriál Josefa Odložila"],
-                athlete: ["Jan Novák", "Jakub Vadlejch", "Nikola Ogrodníková"],
-                insp: ["Petr Svoboda", "Marie Černá"],
-                id: ["WA-CZE-01", "ROZ-552"]
-            }
-        }
+        en: { approved: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", name: "Athlete Name", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", hist: "HISTORY", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", phs: ["Diamond League", "Olympic Games"], names: ["Noah Lyles", "Jakob Ingebrigtsen"] },
+        cs: { approved: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", name: "Jméno atleta", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", hist: "HISTORIE", p1: "BIB a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", phs: ["Zlatá tretra", "MČR Praha"], names: ["Jan Novák", "Jakub Vadlejch"] }
     };
 
-    /* -----------------------------------------------------------
-       2. UI FUNCTIONS
-    ----------------------------------------------------------- */
+    function setLang(lang) {
+        currentLang = lang; const t = dictionary[lang];
+        document.getElementById('txt-list-link').innerText = t.approved;
+        document.getElementById('lbl-comp').innerText = t.comp;
+        document.getElementById('lbl-name').innerText = t.name;
+        document.getElementById('txt-sig-a').innerText = t.sigA;
+        document.getElementById('txt-sig-i').innerText = t.sigI;
+        document.getElementById('btn-gen').innerText = t.gen;
+        document.getElementById('lbl-hist').innerText = t.hist;
+        for(let i=1; i<=6; i++) document.getElementById('p-side'+i).innerText = t['p'+i];
+        
+        document.getElementById('compName').placeholder = t.phs[Math.floor(Math.random()*t.phs.length)];
+        document.getElementById('athleteName').placeholder = t.names[Math.floor(Math.random()*t.names.length)];
+        
+        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
+        updateDatalists();
+    }
+
     function toggleTheme() {
-        const doc = document.body;
-        const isDark = doc.getAttribute('data-theme') === 'dark';
-        doc.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
         document.getElementById('theme-icon').innerText = isDark ? '🌙' : '☀️';
     }
 
-    function setLang(lang) {
-        currentLang = lang;
-        const t = dictionary[lang];
-
-        // Update Buttons
-        document.getElementById('btn-en').classList.toggle('active', lang === 'en');
-        document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
-
-        // Update Labels
-        document.getElementById('txt-approved-list').innerText = t.approvedList;
-        document.getElementById('lbl-comp').innerText = t.comp;
-        document.getElementById('lbl-date').innerText = t.date;
-        document.getElementById('lbl-athlete').innerText = t.athlete;
-        document.getElementById('lbl-category').innerText = t.category;
-        document.getElementById('lbl-brand').innerText = t.brand;
-        document.getElementById('lbl-model').innerText = t.model;
-        document.getElementById('lbl-inspector').innerText = t.inspector;
-        document.getElementById('lbl-id').innerText = t.id;
-        document.getElementById('txt-sig-athlete').innerText = t.sigAthlete;
-        document.getElementById('txt-sig-inspector').innerText = t.sigInspector;
-        document.getElementById('btn-create').innerText = t.btnCreate;
-        document.getElementById('txt-reset').innerText = t.btnReset;
-        document.getElementById('txt-history-title').innerText = t.historyTitle;
-        document.getElementById('txt-clear-history').innerText = t.clear;
-        
-        document.getElementById('txt-modal-title').innerText = t.modalTitle;
-        document.getElementById('txt-modal-clear').innerText = t.modalClear;
-        document.getElementById('txt-modal-save').innerText = t.modalSave;
-
-        // Update Photos
-        for(let i=1; i<=6; i++) document.getElementById('txt-p'+i).innerText = t['p'+i];
-
-        // Random Placeholders
-        document.getElementById('compName').placeholder = t.placeholders.comp[Math.floor(Math.random() * t.placeholders.comp.length)];
-        document.getElementById('athleteName').placeholder = t.placeholders.athlete[Math.floor(Math.random() * t.placeholders.athlete.length)];
-        document.getElementById('inspName').placeholder = t.placeholders.insp[Math.floor(Math.random() * t.placeholders.insp.length)];
-        document.getElementById('inspId').placeholder = t.placeholders.id[Math.floor(Math.random() * t.placeholders.id.length)];
-
-        updateAllSuggestions();
-    }
-
-    /* -----------------------------------------------------------
-       3. SUGGESTIONS & SMART LOGIC
-    ----------------------------------------------------------- */
-    function updateAllSuggestions() {
-        // Brands
-        const brandList = document.getElementById('brandListOptions');
+    function updateDatalists() {
+        const brandList = document.getElementById('brandList');
         brandList.innerHTML = Object.keys(shoeDatabase).map(b => `<option value="${b}">`).join('');
-
-        // History-based suggestions
-        const history = JSON.parse(localStorage.getItem('formHistory') || '{}');
-        if(history.comps) document.getElementById('compListOptions').innerHTML = history.comps.map(c => `<option value="${c}">`).join('');
-        if(history.insps) {
-            document.getElementById('inspListOptions').innerHTML = history.insps.map(i => `<option value="${i.name}">`).join('');
-            document.getElementById('idListOptions').innerHTML = history.insps.map(i => `<option value="${i.id}">`).join('');
-        }
+        
+        const comps = JSON.parse(localStorage.getItem('h_comps') || '[]');
+        document.getElementById('compOptions').innerHTML = comps.map(c => `<option value="${c}">`).join('');
+        
+        const insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
+        document.getElementById('inspOptions').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
     }
 
-    function handleBrandInput(val) {
+    function updateModelSuggestions(val) {
+        const modelList = document.getElementById('modelList');
         const modelInput = document.getElementById('model');
-        const modelList = document.getElementById('modelListOptions');
         modelList.innerHTML = "";
-        
         const brandKey = Object.keys(shoeDatabase).find(k => k.toLowerCase() === val.toLowerCase().trim());
         if(brandKey) {
             const models = shoeDatabase[brandKey];
             modelList.innerHTML = models.map(m => `<option value="${m}">`).join('');
-            // Suggest random model in placeholder
-            const random = models[Math.floor(Math.random() * models.length)];
-            modelInput.placeholder = (currentLang === 'cs' ? "Např. " : "E.g. ") + random;
+            modelInput.placeholder = (currentLang === 'cs' ? "Zkus např. " : "Try e.g. ") + models[Math.floor(Math.random()*models.length)];
         }
     }
 
-    function handleInspectorInput(val) {
-        const history = JSON.parse(localStorage.getItem('formHistory') || '{}');
-        if(history.insps) {
-            const found = history.insps.find(i => i.name.trim() === val.trim());
-            if(found) document.getElementById('inspId').value = found.id;
-        }
+    function autoFillId(val) {
+        const insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
+        const found = insps.find(i => i.name === val.trim());
+        if(found) document.getElementById('inspId').value = found.id;
     }
 
-    /* -----------------------------------------------------------
-       4. FILE & SIGNATURE HANDLING
-    ----------------------------------------------------------- */
-    function handleFileChange(id, input) {
-        const box = document.getElementById('box-' + id);
-        if(input.files.length > 0) box.classList.add('has-file');
-        else box.classList.remove('has-file');
-    }
-
-    function openSignatureModal(type) {
-        activeSigType = type;
-        const modal = document.getElementById('sigModal');
-        modal.classList.add('active');
-
-        // Delay initialization to ensure canvas size is correct
+    // SIGNATURE LOGIC
+    const canvas = document.getElementById('sigCanvas');
+    function openSig(type) {
+        activeType = type;
+        document.getElementById('sigModal').classList.add('active');
         setTimeout(() => {
-            const canvas = document.getElementById('sigCanvas');
             const ratio = Math.max(window.devicePixelRatio || 1, 1);
             canvas.width = canvas.offsetWidth * ratio;
             canvas.height = canvas.offsetHeight * ratio;
             canvas.getContext("2d").scale(ratio, ratio);
-            
-            if(!signaturePadInstance) {
-                signaturePadInstance = new SignaturePad(canvas, { backgroundColor: 'white' });
-            }
-            signaturePadInstance.clear();
-            if(sigData[type]) signaturePadInstance.fromDataURL(sigData[type]);
-        }, 100);
+            if(!activePad) activePad = new SignaturePad(canvas, { backgroundColor: 'white' });
+            activePad.clear();
+            if(sigData[type]) activePad.fromDataURL(sigData[type]);
+        }, 50);
     }
-
-    function closeSignatureModal() {
-        document.getElementById('sigModal').classList.remove('active');
-    }
-
-    function clearSignatureCanvas() {
-        signaturePadInstance.clear();
-    }
-
-    function saveSignatureCanvas() {
-        if(!signaturePadInstance.isEmpty()) {
-            sigData[activeSigType] = signaturePadInstance.toDataURL();
-            document.getElementById('status-' + activeSigType).innerText = '✅';
-            document.getElementById('btn-sig-' + (activeSigType === 'athlete' ? 'athlete' : 'inspector')).classList.add('signed');
+    function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
+    function clearCanvas() { activePad.clear(); }
+    function saveSig() {
+        if(!activePad.isEmpty()) {
+            sigData[activeType] = activePad.toDataURL();
+            document.getElementById('stat-'+activeType).innerText = '✅';
+            document.getElementById('btn-sig-'+(activeType === 'a' ? 'a' : 'i')).classList.add('signed');
         }
-        closeSignatureModal();
+        closeSig();
     }
 
-    /* -----------------------------------------------------------
-       5. HISTORY & PDF PROCESSING
-    ----------------------------------------------------------- */
-    function renderHistoryList() {
-        const container = document.getElementById('history-container');
-        const logs = JSON.parse(localStorage.getItem('shoeCheckLogs') || '[]');
-        container.innerHTML = logs.map(log => `
+    function markFilled(id, input) {
+        if(input.files.length > 0) document.getElementById('item-'+id).classList.add('has-file');
+    }
+
+    function renderHistory() {
+        const hist = JSON.parse(localStorage.getItem('h_logs') || '[]');
+        document.getElementById('history-container').innerHTML = hist.map(h => `
             <div class="history-item">
-                <div class="history-info">
-                    <b>${log.athlete}</b>
-                    <span>${log.comp}</span>
-                </div>
-                <div class="history-date">${log.timestamp}</div>
+                <div><b>${h.ath}</b><br><small>${h.cmp}</small></div>
+                <div style="font-size:11px; color:var(--text-gray);">${h.time}</div>
             </div>
         `).join('');
     }
 
-    function clearAllHistory() {
-        if(confirm("Smazat veškerou historii?")) {
-            localStorage.removeItem('shoeCheckLogs');
-            localStorage.removeItem('formHistory');
-            renderHistoryList();
-            updateAllSuggestions();
-        }
-    }
+    function clearHistory() { if(confirm("Clear history?")) { localStorage.clear(); location.reload(); } }
+    function hardReset() { if(confirm("Reset form?")) location.reload(); }
 
-    function hardResetForm() {
-        if(confirm("Opravdu vymazat celý formulář?")) location.reload();
-    }
+    const clean = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-    const cleanStr = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-    async function processReport() {
-        const athlete = document.getElementById('athleteName').value;
-        const competition = document.getElementById('compName').value;
+    async function generatePDF() {
+        const ath = document.getElementById('athleteName').value;
+        const cmp = document.getElementById('compName').value;
         const brand = document.getElementById('brand').value;
         const model = document.getElementById('model').value;
-        const date = document.getElementById('raceDate').value;
-        const inspector = document.getElementById('inspName').value;
+        const insp = document.getElementById('inspName').value;
         const inspId = document.getElementById('inspId').value;
+        const date = document.getElementById('raceDate').value;
 
-        if(!athlete || !competition || !brand) {
-            if(!confirm(dictionary[currentLang].warn)) return;
-        }
+        if(!ath || !cmp || !brand) { alert("Zadej atleta, závod a značku!"); return; }
 
-        // SAVE TO PERSISTENT STORAGE
-        const now = new Date().toLocaleString();
-        let logs = JSON.parse(localStorage.getItem('shoeCheckLogs') || '[]');
-        logs.unshift({ athlete, comp: competition, timestamp: now });
-        localStorage.setItem('shoeCheckLogs', JSON.stringify(logs.slice(0, 20)));
-
-        let formHist = JSON.parse(localStorage.getItem('formHistory') || '{"comps":[], "insps":[]}');
-        if(competition && !formHist.comps.includes(competition)) formHist.comps.push(competition);
-        if(inspector && !formHist.insps.some(i => i.name === inspector)) formHist.insps.push({name: inspector, id: inspId});
-        localStorage.setItem('formHistory', JSON.stringify(formHist));
-
-        // PDF GENERATION
-        const doc = new jsPDF();
+        const doc = new jsPDF(), now = new Date().toLocaleString();
         doc.setFontSize(22).text("SHOE CONTROL REPORT", 20, 25);
-        doc.setLineWidth(0.5).line(20, 32, 190, 32);
-        
-        doc.setFontSize(10).text("COMPETITION", 20, 45);
-        doc.setFontSize(14).text(cleanStr(competition) || "---", 20, 52);
-        
-        doc.setFontSize(10).text("ATHLETE", 20, 65);
-        doc.setFontSize(14).text(cleanStr(athlete) || "---", 20, 72);
-        
-        doc.setFontSize(10).text("SHOE", 20, 85);
-        doc.setFontSize(14).text(`${cleanStr(brand)} - ${cleanStr(model)}`, 20, 92);
+        doc.setFontSize(14).text(`Athlete: ${clean(ath)}`, 20, 45);
+        doc.text(`Competition: ${clean(cmp)}`, 20, 55);
+        doc.text(`Shoe: ${clean(brand)} ${clean(model)}`, 20, 65);
+        if(sigData.a) doc.addImage(sigData.a, 'PNG', 20, 240, 50, 20);
+        if(sigData.i) doc.addImage(sigData.i, 'PNG', 130, 240, 50, 20);
+        doc.save(`${clean(ath)}_${clean(cmp)}_${date}.pdf`);
 
-        if(sigData.athlete) doc.addImage(sigData.athlete, 'PNG', 20, 240, 50, 20);
-        if(sigData.inspector) doc.addImage(sigData.inspector, 'PNG', 130, 240, 50, 20);
+        // Save history
+        let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]');
+        h_logs.unshift({ ath, cmp, time: now });
+        localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,10)));
+        
+        let h_comps = JSON.parse(localStorage.getItem('h_comps') || '[]');
+        if(!h_comps.includes(cmp)) h_comps.push(cmp);
+        localStorage.setItem('h_comps', JSON.stringify(h_comps));
 
-        doc.save(`${cleanStr(athlete).replace(/ /g, '_')}_${cleanStr(competition).replace(/ /g, '_')}_${date}.pdf`);
+        let h_insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
+        if(!h_insps.some(i => i.name === insp)) h_insps.push({name: insp, id: inspId});
+        localStorage.setItem('h_insps', JSON.stringify(h_insps));
 
-        // SMART RESET (Keep competition and inspector)
+        // Smart reset
         document.getElementById('athleteName').value = "";
         document.getElementById('brand').value = "";
         document.getElementById('model').value = "";
-        sigData.athlete = null;
-        document.getElementById('status-athlete').innerText = '❌';
-        document.getElementById('btn-sig-athlete').classList.remove('signed');
-        
-        // Reset photos
-        for(let i=1; i<=6; i++) {
-            const input = document.querySelectorAll('input[type="file"]')[i-1];
-            if(input) input.value = "";
-            document.getElementById('box-p'+i).classList.remove('has-file');
-        }
-
-        renderHistoryList();
-        updateAllSuggestions();
-        window.scrollTo(0, 0);
+        sigData = { a: null, i: null };
+        document.getElementById('stat-a').innerText = '❌';
+        document.getElementById('stat-i').innerText = '❌';
+        renderHistory();
     }
 
-    /* STARTUP */
-    window.onload = () => {
-        setLang('cs
+    window.onload = () => { setLang('cs'); renderHistory(); };
+</script>
+</body>
+</html>
