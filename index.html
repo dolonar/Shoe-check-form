@@ -12,7 +12,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
@@ -45,7 +45,7 @@
 
         * { 
             box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent; 
             font-family: var(--font-main);
         }
 
@@ -57,101 +57,354 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        .app-header { display: flex; justify-content: center; align-items: center; width: 100%; padding: 25px 0; position: relative; }
-        .app-header img { max-width: 180px; height: auto; }
+        .app-header { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            width: 100%; 
+            padding: 25px 0; 
+            position: relative; 
+        }
 
-        .header-actions { position: absolute; right: 10px; }
+        .app-header img { 
+            max-width: 190px; 
+            height: auto; 
+        }
+
+        .header-actions { 
+            position: absolute; 
+            right: 10px; 
+        }
+
         .icon-btn {
-            background: var(--card-bg); border: 1px solid var(--border); padding: 10px;
-            border-radius: 14px; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            padding: 10px;
+            border-radius: 14px; 
+            cursor: pointer; 
+            font-size: 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
         }
 
         .card {
-            background: var(--card-bg); padding: 25px; border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto 20px auto; width: 100%;
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05); 
+            max-width: 850px; 
+            margin: 0 auto 20px auto; 
+            width: 100%;
         }
 
-        .lang-switch { display: flex; gap: 8px; margin-bottom: 25px; justify-content: center; }
-        .lang-btn {
-            padding: 10px 20px; border-radius: 12px; border: 2px solid var(--border);
-            background: transparent; color: var(--text-main); font-weight: 800; cursor: pointer;
-            text-transform: uppercase; font-size: 12px;
+        .lang-switch { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 25px; 
+            justify-content: center; 
         }
-        .lang-btn.active { background: var(--primary); color: var(--card-bg); border-color: var(--primary); }
+
+        .lang-btn {
+            padding: 12px 24px; 
+            border-radius: 12px; 
+            border: 2px solid var(--border);
+            background: transparent; 
+            color: var(--text-main); 
+            font-weight: 800; 
+            cursor: pointer;
+            text-transform: uppercase; 
+            font-size: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .lang-btn.active { 
+            background: var(--primary); 
+            color: var(--card-bg); 
+            border-color: var(--primary); 
+        }
 
         .db-link {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            background: rgba(52, 199, 89, 0.1); color: #1a7a33; text-decoration: none;
-            padding: 16px; border-radius: 15px; font-weight: 800; font-family: var(--font-heading);
-            font-size: 18px; margin-bottom: 25px; width: 100%; text-transform: uppercase; border: 1px solid rgba(52, 199, 89, 0.2);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px;
+            background: rgba(52, 199, 89, 0.1); 
+            color: #1a7a33; 
+            text-decoration: none;
+            padding: 18px; 
+            border-radius: 16px; 
+            font-weight: 800; 
+            font-family: var(--font-heading);
+            font-size: 19px; 
+            margin-bottom: 25px; 
+            width: 100%; 
+            text-transform: uppercase; 
+            border: 1.5px solid rgba(52, 199, 89, 0.2);
         }
 
-        .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
+        .grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 15px; 
+        }
 
-        label { display: block; margin-top: 15px; font-weight: 800; font-size: 11px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
+        @media (min-width: 600px) { 
+            .grid { grid-template-columns: 1fr 1fr; } 
+        }
+
+        label { 
+            display: block; 
+            margin-top: 15px; 
+            font-weight: 800; 
+            font-size: 11px; 
+            color: var(--text-gray); 
+            text-transform: uppercase; 
+            letter-spacing: 1.2px; 
+        }
+
         input, select { 
-            width: 100%; padding: 14px; margin-top: 6px; border: 1px solid var(--border); 
-            border-radius: 12px; font-size: 16px; background: var(--input-bg); color: var(--text-main); 
+            width: 100%; 
+            padding: 15px; 
+            margin-top: 6px; 
+            border: 1px solid var(--border); 
+            border-radius: 14px; 
+            font-size: 16px; 
+            background: var(--input-bg); 
+            color: var(--text-main); 
             outline: none;
+            transition: border-color 0.2s;
         }
 
-        .section-title { font-family: var(--font-heading); font-size: 22px; margin-top: 25px; text-transform: uppercase; color: var(--primary); }
+        input:focus {
+            border-color: var(--accent);
+        }
 
-        /* Foto mřížka a tlačítka - ZVĚTŠENO */
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px; }
+        .section-title { 
+            font-family: var(--font-heading); 
+            font-size: 26px; 
+            margin-top: 30px; 
+            text-transform: uppercase; 
+            color: var(--primary); 
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        /* FOTO TLAČÍTKA - ZVĚTŠENO */
+        .photo-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+            margin-top: 10px; 
+        }
+
         .photo-item {
-            background: var(--input-bg); border: 2px solid var(--border); border-radius: 16px; padding: 20px 10px;
-            text-align: center; position: relative; min-height: 120px; display: flex;
-            flex-direction: column; align-items: center; justify-content: center; 
-            font-size: 14px; font-weight: 800; /* Zvětšen font v tlačítku */
+            background: var(--input-bg); 
+            border: 2px solid var(--border); 
+            border-radius: 18px; 
+            padding: 25px 10px;
+            text-align: center; 
+            position: relative; 
+            min-height: 130px; 
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 15px; 
+            font-weight: 800; 
             text-transform: uppercase;
+            color: var(--text-main);
+            transition: 0.2s;
         }
-        .photo-item span:first-child { font-size: 28px; margin-bottom: 8px; } /* Zvětšená ikona 📸 */
-        .photo-item.has-file { border-color: var(--success); background: rgba(52, 199, 89, 0.1); }
+
+        .photo-item span:first-child { 
+            font-size: 32px; 
+            margin-bottom: 10px; 
+        }
+
+        .photo-item.has-file { 
+            border-color: var(--success); 
+            background: rgba(52, 199, 89, 0.05); 
+        }
 
         .add-photo-btn {
-            width: 100%; padding: 22px; border-radius: 16px; border: 2px dashed var(--border);
-            background: var(--input-bg); color: var(--text-gray); font-weight: 800; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px;
-            font-size: 14px; text-transform: uppercase;
+            width: 100%; 
+            padding: 24px; 
+            border-radius: 18px; 
+            border: 2px dashed var(--border);
+            background: var(--input-bg); 
+            color: var(--text-gray); 
+            font-weight: 800; 
+            cursor: pointer;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
+            margin-top: 20px;
+            font-size: 15px; 
+            text-transform: uppercase;
         }
 
-        .other-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; justify-content: center; }
-        .other-tag { background: var(--accent); color: white; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .other-list { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+            margin-top: 15px; 
+            justify-content: center; 
+        }
 
+        .other-tag { 
+            background: var(--accent); 
+            color: white; 
+            padding: 12px 18px; 
+            border-radius: 14px; 
+            font-size: 13px; 
+            font-weight: 800; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+
+        /* AUTH BUTTONS */
         .sig-trigger {
-            width: 100%; padding: 16px; margin-top: 10px; border-radius: 12px; border: 1.5px dashed var(--accent);
-            background: var(--input-bg); color: var(--accent); font-weight: 800; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center; font-size: 15px; text-transform: uppercase;
+            width: 100%; 
+            padding: 18px; 
+            margin-top: 12px; 
+            border-radius: 16px; 
+            border: 2.5px dashed var(--accent);
+            background: var(--input-bg); 
+            color: var(--accent); 
+            font-weight: 800; 
+            cursor: pointer;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 16px; 
+            text-transform: uppercase;
         }
-        .sig-icon { width: 22px; height: 22px; fill: var(--accent); margin-right: 8px; }
-        .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
+        .sig-icon { 
+            width: 24px; 
+            height: 24px; 
+            fill: var(--accent); 
+        }
+
+        .sig-trigger.signed { 
+            border-style: solid; 
+            border-color: var(--success); 
+            color: var(--success); 
+        }
+
+        .sig-trigger.signed .sig-icon { 
+            fill: var(--success); 
+        }
+
+        /* MAIN ACTIONS */
         .btn-submit { 
-            background: var(--primary); color: var(--card-bg); border: none; width: 100%; padding: 20px; 
-            border-radius: 18px; font-size: 22px; font-weight: 800; cursor: pointer; margin-top: 35px; 
-            font-family: var(--font-heading); letter-spacing: 1px;
+            background: var(--primary); 
+            color: var(--card-bg); 
+            border: none; 
+            width: 100%; 
+            padding: 24px; 
+            border-radius: 20px; 
+            font-size: 24px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            margin-top: 40px; 
+            font-family: var(--font-heading); 
+            letter-spacing: 1.5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-transform: uppercase;
         }
+
         .btn-reset { 
-            background: transparent; color: var(--danger); border: 2px solid var(--danger); width: 100%; 
-            padding: 12px; border-radius: 12px; font-size: 12px; font-weight: 800; cursor: pointer; 
-            margin-top: 15px; text-transform: uppercase;
+            background: transparent; 
+            color: var(--danger); 
+            border: 2px solid var(--danger); 
+            width: 100%; 
+            padding: 14px; 
+            border-radius: 14px; 
+            font-size: 12px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            margin-top: 20px; 
+            text-transform: uppercase;
         }
 
-        .history-section { margin-top: 40px; border-top: 2px solid var(--border); padding-top: 20px; }
-        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .history-title { font-family: var(--font-heading); font-size: 24px; text-transform: uppercase; }
+        /* HISTORY */
+        .history-section { 
+            margin-top: 50px; 
+            border-top: 2px solid var(--border); 
+            padding-top: 25px; 
+        }
 
-        .app-footer { text-align: center; padding: 30px 20px; font-size: 11px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; }
-        .app-footer a { color: var(--accent); text-decoration: none; }
+        .history-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+        }
 
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: none; flex-direction: column; }
+        .history-title { 
+            font-family: var(--font-heading); 
+            font-size: 26px; 
+            text-transform: uppercase; 
+        }
+
+        .history-item {
+            background: var(--input-bg); 
+            padding: 18px 22px; 
+            border-radius: 18px; 
+            border: 1px solid var(--border);
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-size: 14px; 
+            margin-bottom: 12px; 
+        }
+
+        .app-footer { 
+            text-align: center; 
+            padding: 40px 20px; 
+            font-size: 11px; 
+            color: var(--text-gray); 
+            font-weight: 800; 
+            text-transform: uppercase; 
+        }
+
+        .app-footer a { 
+            color: var(--accent); 
+            text-decoration: none; 
+        }
+
+        /* MODAL */
+        .modal { 
+            position: fixed; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: var(--bg); 
+            z-index: 9999; 
+            display: none; 
+            flex-direction: column; 
+        }
+
         .modal.active { display: flex; }
         .modal-body { flex: 1; background: #ffffff; position: relative; }
         canvas { width: 100%; height: 100%; touch-action: none; }
-        .modal-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        .modal-header h3 { font-family: var(--font-heading); font-size: 24px; text-transform: uppercase; }
+        .modal-header { 
+            padding: 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid var(--border); 
+        }
+        .modal-header h3 { 
+            font-family: var(--font-heading); 
+            font-size: 26px; 
+            margin: 0; 
+            text-transform: uppercase; 
+        }
     </style>
 </head>
 <body>
@@ -171,19 +424,30 @@
         </div>
 
         <a href="https://certcheck.worldathletics.org/" target="_blank" class="db-link" id="btn-list">
-            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
             <span id="txt-list">LIST OF APPROVED ATHLETIC SHOES</span>
         </a>
 
         <div class="grid">
-            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" list="compListOptions" autocomplete="off"><datalist id="compListOptions"></datalist></div>
-            <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
+            <div>
+                <label id="lbl-comp">Competition</label>
+                <input type="text" id="compName" list="compListOptions" autocomplete="off">
+                <datalist id="compListOptions"></datalist>
+            </div>
+            <div>
+                <label id="lbl-date">Date</label>
+                <input type="date" id="raceDate">
+            </div>
         </div>
 
         <div class="section-title" id="lbl-sec-athlete">Athlete</div>
         <div class="grid">
-            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" autocomplete="off"></div>
-            <div><label id="lbl-sex">Category</label>
+            <div>
+                <label id="lbl-name">Athlete Name</label>
+                <input type="text" id="athleteName" autocomplete="off">
+            </div>
+            <div>
+                <label id="lbl-sex">Category</label>
                 <select id="sex">
                     <option value="Men" id="opt-men">Men</option>
                     <option value="Women" id="opt-women">Women</option>
@@ -207,51 +471,91 @@
 
         <div class="section-title" id="lbl-sec-insp">Inspector</div>
         <div class="grid">
-            <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" list="inspHistory" oninput="autoFillId(this.value)" autocomplete="off"><datalist id="inspHistory"></datalist></div>
-            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" list="idListOptions" autocomplete="off"><datalist id="idListOptions"></datalist></div>
+            <div>
+                <label id="lbl-insp-name">Inspector Name</label>
+                <input type="text" id="inspName" list="inspHistory" oninput="autoFillId(this.value)" autocomplete="off">
+                <datalist id="inspHistory"></datalist>
+            </div>
+            <div>
+                <label id="lbl-insp-id">ID Number</label>
+                <input type="text" id="inspId" list="idListOptions" autocomplete="off">
+                <datalist id="idListOptions"></datalist>
+            </div>
         </div>
 
         <div class="section-title" id="lbl-sec-photo">Photos</div>
         <div class="photo-grid">
-            <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">BIB & Shoe</span><input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p2"><span>📸</span><span id="p-side2">Side View</span><input type="file" id="p2" accept="image/*" capture="environment" onchange="markFilled('p2')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p3"><span>📸</span><span id="p-side3">Outsole</span><input type="file" id="p3" accept="image/*" capture="environment" onchange="markFilled('p3')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p4"><span>📸</span><span id="p-side4">Label</span><input type="file" id="p4" accept="image/*" capture="environment" onchange="markFilled('p4')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p5"><span>📸</span><span id="p-side5">Insole Side</span><input type="file" id="p5" accept="image/*" capture="environment" onchange="markFilled('p5')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p6"><span>📸</span><span id="p-side6">Insole Top</span><input type="file" id="p6" accept="image/*" capture="environment" onchange="markFilled('p6')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
+            <div class="photo-item" id="item-p1">
+                <span>📸</span><span id="p-side1">BIB & Shoe</span>
+                <input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;">
+            </div>
+            <div class="photo-item" id="item-p2">
+                <span>📸</span><span id="p-side2">Side View</span>
+                <input type="file" id="p2" accept="image/*" capture="environment" onchange="markFilled('p2')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;">
+            </div>
+            <div class="photo-item" id="item-p3">
+                <span>📸</span><span id="p-side3">Outsole</span>
+                <input type="file" id="p3" accept="image/*" capture="environment" onchange="markFilled('p3')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;">
+            </div>
+            <div class="photo-item" id="item-p4">
+                <span>📸</span><span id="p-side4">Label</span>
+                <input type="file" id="p4" accept="image/*" capture="environment" onchange="markFilled('p4')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;">
+            </div>
+            <div class="photo-item" id="item-p5">
+                <span>📸</span><span id="p-side5">Insole Side</span>
+                <input type="file" id="p5" accept="image/*" capture="environment" onchange="markFilled('p5')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;">
+            </div>
+            <div class="photo-item" id="item-p6">
+                <span>📸</span><span id="p-side6">Insole Top</span>
+                <input type="file" id="p6" accept="image/*" capture="environment" onchange="markFilled('p6')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;">
+            </div>
         </div>
 
         <div class="add-photo-btn">
-            <span id="txt-add-other">+ Add Photo</span>
+            <span id="txt-add-other">+ Add Extra Photo</span>
             <input type="file" accept="image/*" capture="environment" onchange="handleOtherPhoto(this)" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;">
         </div>
         <div id="otherFileList" class="other-list"></div>
 
         <div class="section-title" id="lbl-sec-auth">Authentication</div>
         <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')">
-            <span style="display:flex; align-items:center;"><svg class="sig-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span id="txt-sig-a">Athlete's Signature</span></span><span id="stat-a">❌</span>
+            <span style="display:flex; align-items:center;">
+                <svg class="sig-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                <span id="txt-sig-a">Athlete Signature</span>
+            </span>
+            <span id="stat-a">❌</span>
         </button>
         <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')">
-            <span style="display:flex; align-items:center;"><svg class="sig-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg><span id="txt-sig-i">Inspector's Signature</span></span><span id="stat-i">❌</span>
+            <span style="display:flex; align-items:center;">
+                <svg class="sig-icon" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                <span id="txt-sig-i">Inspector Signature</span>
+            </span>
+            <span id="stat-i">❌</span>
         </button>
 
         <button class="btn-submit" id="btn-gen">CREATE REPORT</button>
-        <div style="text-align:center;"><button class="btn-reset" onclick="confirmFullReset()" id="btn-reset">RESET FORM</button></div>
+        <div style="text-align:center;">
+            <button class="btn-reset" onclick="confirmFullReset()" id="btn-reset">RESET FORM</button>
+        </div>
 
         <div class="history-section">
-            <div class="history-header"><div class="history-title" id="lbl-hist">HISTORY</div><button onclick="clearHistory()" id="btn-clear-txt" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:12px; font-weight:800;">CLEAR</button></div>
+            <div class="history-header">
+                <div class="history-title" id="lbl-hist">HISTORY</div>
+                <button onclick="clearHistory()" id="btn-clear-txt" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:12px; font-weight:800; text-transform:uppercase;">Clear</button>
+            </div>
             <div id="history-list"></div>
         </div>
     </div>
-    <div class="app-footer">Developed by <a href="https://www.instagram.com/doolonar/" target="_blank">David Lux</a> &copy; 2026</div>
+    
+    <div class="app-footer">Developed & Designed by <a href="https://www.instagram.com/doolonar/" target="_blank">David Lux</a> &copy; 2026</div>
 </div>
 
 <div id="sigModal" class="modal">
-    <div class="modal-header"><h3 id="m-title-label">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:32px; color:var(--text-main);">✕</button></div>
+    <div class="modal-header"><h3 id="m-title-label">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:36px; color:var(--text-main);">✕</button></div>
     <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
     <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-        <button onclick="activePad.clear()" style="padding:18px; border-radius:14px; border:2px solid var(--danger); color:var(--danger); background:none; font-weight:800; text-transform:uppercase;">Clear</button>
-        <button onclick="saveSig()" style="padding:18px; border-radius:14px; border:none; background:var(--success); color:white; font-weight:800; text-transform:uppercase;">Save</button>
+        <button onclick="activePad.clear()" id="btn-sig-clear" style="padding:20px; border-radius:14px; border:2px solid var(--danger); color:var(--danger); background:none; font-weight:800; text-transform:uppercase;">Clear</button>
+        <button onclick="saveSig()" id="btn-sig-save" style="padding:20px; border-radius:14px; border:none; background:var(--success); color:white; font-weight:800; text-transform:uppercase;">Save</button>
     </div>
 </div>
 
@@ -259,27 +563,208 @@
     const { jsPDF } = window.jspdf;
     let currentLang = 'cs', sigData = { a: null, i: null }, otherPhotos = [], activePad, activeType;
 
-    // --- OBŘÍ DATABÁZE BOT ---
+    // --- FULL DATABASE START ---
     const shoeDatabase = {
-        "Adidas": ["Adizero Adios 3", "Adizero Adios 4", "Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Takumi Sen 10", "Adizero Ambition"],
-        "Nike": ["Air Zoom Alphafly Next% 2", "Air Zoom Maxfly 2", "Air Zoom Victory", "Alphafly 3", "ZoomX Dragonfly 2", "Vaporfly 3", "Pegasus Turbo"],
-        "Asics": ["Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2", "Gun Lap 2", "Magic Speed 3"],
-        "Puma": ["evoSPEED Distance 9", "evoSPEED Tokyo Future", "Fast-R Nitro Elite 2", "Deviate Nitro Elite 3"],
-        "New Balance": ["FuelCell SuperComp Elite v4", "FuelCell MD-X v2", "FuelCell SD-X", "LD5K"],
-        "Hoka": ["Cielo X1", "Rocket X 2", "Cielo LD"],
-        "Saucony": ["Endorphin Pro 4", "Endorphin Elite", "Terminal VT"],
-        "Mizuno": ["Wave Rebellion Pro 2", "Chrono INX9", "Geo Sprint 4"]
+        "Adidas": [
+            "Adizero Adios 3",
+            "Adizero Adios 4",
+            "Adizero Adios 5",
+            "Adizero Adios 6",
+            "Adizero Adios 8",
+            "Adizero Adios 9",
+            "Adizero Adios Pro",
+            "Adizero Adios Pro 2",
+            "Adizero Adios Pro 3",
+            "Adizero Adios Pro 4",
+            "Adizero Adios Pro Evo 1",
+            "Adizero Adios Pro Evo 2",
+            "Adizero Ambition",
+            "Adizero Ambition 2",
+            "Adizero Ambition Boost",
+            "Adizero Avanti Boost",
+            "Adizero Avanti LJ",
+            "Adizero Avanti TYO",
+            "Adizero Boston 10",
+            "Adizero Boston 9",
+            "Adizero Finesse 24",
+            "Adizero High Jump",
+            "Adizero Javelin",
+            "Adizero LJ",
+            "Adizero Prime SP 3 Strung",
+            "Adizero Prime SP2",
+            "Adizero Takumi Sen 10",
+            "Adizero Takumi Sen 9",
+            "Adizero Throws",
+            "Adizero TJ 2"
+        ],
+        "Nike": [
+            "Air Zoom Alphafly Next %",
+            "Air Zoom Alphafly Next % 2",
+            "Air Zoom LJ Elite 1.5",
+            "Air Zoom Maxfly",
+            "Air Zoom Maxfly 2",
+            "Air Zoom Victory",
+            "Alphafly 3",
+            "Dragonfly 2",
+            "Dragonfly 2 Elite",
+            "High Jump Elite",
+            "Mamba V6",
+            "Pegasus Plus",
+            "Pegasus Turbo 2",
+            "Streakfly 2",
+            "Triple Jump Elite 3",
+            "Vaporfly 3",
+            "Vaporfly 4%",
+            "Victory 2",
+            "Zoom Ja Fly 4",
+            "ZoomX Dragonfly",
+            "ZoomX Streakfly",
+            "ZoomX Vaporfly Next % 3"
+        ],
+        "Asics": [
+            "Cosmoracer LD 2",
+            "Cosmoracer LD 3",
+            "Cosmoracer MD 2",
+            "Cyberblade 16",
+            "Gun Lap 2",
+            "Gun Lap 3",
+            "Heat Fly",
+            "Heat Throw",
+            "High Jump Pro 3",
+            "Hyper LD 6",
+            "Hyper MD 8",
+            "Hypersprint 8",
+            "Javelin Pro 4",
+            "JETSPRINT 3",
+            "Long Jump Pro 3",
+            "Magic Speed 3",
+            "Magic Speed 5",
+            "METASPEED EDGE PARIS",
+            "METASPEED SKY PARIS",
+            "METASPEED SKY+",
+            "Metasprint Tokyo",
+            "Sonicsprint Elite 3",
+            "Throw Pro 3"
+        ],
+        "Puma": [
+            "Berserker Nitro Elite 2",
+            "Deviate Nitro Elite 3",
+            "evoSPEED Distance",
+            "evoSPEED Electric",
+            "evoSPEED High Jump Elite",
+            "evoSPEED Javelin",
+            "evoSPEED Long Jump",
+            "evoSPEED Sprint",
+            "evoSPEED Tokyo Future",
+            "FAST-R Nitro Elite 2",
+            "Long Distance Nitro Elite 3",
+            "Mid Distance Nitro Elite 3"
+        ],
+        "New Balance": [
+            "FuelCell 5280",
+            "FuelCell PVLSE",
+            "FuelCell RC Elite v2",
+            "FuelCell SuperComp Elite v4",
+            "FuelCell SuperComp MD-X v3",
+            "FuelCell SuperComp PWR-X v3",
+            "FuelCell SuperComp SD-X",
+            "LD5K",
+            "SD400",
+            "Sigma Harmony"
+        ],
+        "Hoka": [
+            "Cielo Fly X Elite",
+            "Cielo LD",
+            "Cielo MD",
+            "Cielo Road",
+            "Cielo X1",
+            "Rocket LD",
+            "Rocket X 2",
+            "Rocket X 3"
+        ],
+        "Saucony": [
+            "Endorphin Cheetah",
+            "Endorphin Elite 2",
+            "Endorphin LD",
+            "Endorphin Pro 4",
+            "Terminal VT",
+            "Type A9",
+            "Unleash SD 2"
+        ],
+        "Mizuno": [
+            "Chrono Break",
+            "Chrono Dist 7",
+            "Chrono INX9",
+            "Field Geo AJ-C",
+            "Field Geo HJ-C",
+            "Field Geo LJ-C",
+            "Field Geo RD-C",
+            "Geo Sprint 4",
+            "Geo Spurt Md",
+            "Wave Duel Pro",
+            "Wave Rebellion Pro 2"
+        ],
+        "Brooks": [
+            "Hyperion Elite 4",
+            "Hyperion Elite LD 2",
+            "Hyperion Elite MD 2",
+            "WIRE 6"
+        ],
+        "On": [
+            "Cloudboom Echo 3.0",
+            "Cloudboom Strike",
+            "Cloudspike 1500m",
+            "Cloudspike Sprint"
+        ],
+        "Xtep": [
+            "160X 6.0 Pro",
+            "160X Elite"
+        ],
+        "Decathlon": [
+            "KD900X LD",
+            "RW900 V 2"
+        ],
+        "Under Armour": [
+            "Hovr Shakedown Elite",
+            "Velociti Elite 3"
+        ]
     };
+    // --- FULL DATABASE END ---
 
     const translations = {
-        en: { title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Date", athlete: "Athlete Name", sex: "Category", men: "Men", women: "Women", brand: "Shoe Brand", model: "Shoe Model", photo: "Photos", addOther: "+ Add Photo", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", hist: "HISTORY", warnMsg: "Are you sure you want to send an incomplete form?", sigModalTitle: "Signature", secAthlete: "Athlete", secShoe: "Shoe Details", secInsp: "Inspector", secPhoto: "Photos", secAuth: "Authentication", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" },
-        cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", athlete: "Jméno atleta", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka obuvi", model: "Model obuvi", photo: "Fotky", addOther: "+ Přidat fotku", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", hist: "HISTORIE", warnMsg: "vášně chceš odeslat nedokončený formulář", sigModalTitle: "Podpis", secAthlete: "Atlet", secShoe: "Detaily obuvi", secInsp: "Rozhodčí", secPhoto: "Fotky", secAuth: "Ověření", p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)" }
+        en: { 
+            title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", 
+            comp: "Competition", date: "Date", athlete: "Athlete Name", sex: "Category", men: "Men", women: "Women", 
+            brand: "Shoe Brand", model: "Shoe Model", photo: "Photos", addOther: "+ Add Extra Photo", 
+            sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", 
+            hist: "HISTORY", clearConfirm: "Delete entire history?", warnMsg: "Are you sure you want to send an incomplete form?", 
+            sigModalTitle: "Signature", sigClear: "Clear", sigSave: "Save",
+            secAthlete: "Athlete", secShoe: "Shoe Details", secInsp: "Inspector", secPhoto: "Photos", secAuth: "Authentication",
+            p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" 
+        },
+        cs: { 
+            title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", 
+            comp: "Závod", date: "Datum", athlete: "Jméno atleta", sex: "Kategorie", men: "Muži", women: "Ženy", 
+            brand: "Značka obuvi", model: "Model obuvi", photo: "Fotky", addOther: "+ Přidat fotku", 
+            sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", 
+            hist: "HISTORIE", clearConfirm: "Smazat celou historii?", warnMsg: "vášně chceš odeslat nedokončený formulář", 
+            sigModalTitle: "Podpis", sigClear: "Smazat", sigSave: "Uložit",
+            secAthlete: "Atlet", secShoe: "Detaily obuvi", secInsp: "Rozhodčí", secPhoto: "Fotky", secAuth: "Ověření",
+            p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)" 
+        }
     };
 
     function toggleTheme() {
-        const isDark = document.body.getAttribute('data-theme') === 'dark';
-        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        document.getElementById('theme-icon').innerText = isDark ? '🌙' : '☀️';
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        body.setAttribute('data-theme', newTheme);
+        document.getElementById('theme-icon').innerText = newTheme === 'light' ? '🌙' : '☀️';
+        localStorage.setItem('appTheme', newTheme);
+    }
+    if (localStorage.getItem('appTheme') === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('theme-icon').innerText = '☀️';
     }
 
     function setLang(lang) {
@@ -291,10 +776,15 @@
         document.getElementById('lbl-name').innerText = t.athlete; document.getElementById('lbl-sex').innerText = t.sex;
         document.getElementById('opt-men').innerText = t.men; document.getElementById('opt-women').innerText = t.women;
         document.getElementById('lbl-brand').innerText = t.brand; document.getElementById('lbl-model').innerText = t.model;
+        document.getElementById('lbl-insp-name').innerText = lang === 'cs' ? "Jméno rozhodčího" : "Inspector Name";
+        document.getElementById('lbl-insp-id').innerText = lang === 'cs' ? "Číslo průkazu" : "ID Number";
         document.getElementById('txt-add-other').innerText = t.addOther;
         document.getElementById('txt-sig-a').innerText = t.sigA; document.getElementById('txt-sig-i').innerText = t.sigI;
         document.getElementById('btn-gen').innerText = t.gen; document.getElementById('btn-reset').innerText = t.reset;
-        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('m-title-label').innerText = t.sigModalTitle;
+        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('btn-clear-txt').innerText = lang === 'cs' ? "SMAZAT" : "CLEAR";
+        document.getElementById('m-title-label').innerText = t.sigModalTitle; 
+        document.getElementById('btn-sig-clear').innerText = lang === 'cs' ? "Smazat" : "Clear";
+        document.getElementById('btn-sig-save').innerText = lang === 'cs' ? "Uložit" : "Save";
         document.getElementById('lbl-sec-athlete').innerText = t.secAthlete;
         document.getElementById('lbl-sec-shoe').innerText = t.secShoe;
         document.getElementById('lbl-sec-insp').innerText = t.secInsp;
@@ -304,10 +794,13 @@
         updateDatalists(); renderHistory();
     }
 
-    // --- NAŠEPTÁVAČ S NÁHODNOU NÁPOVĚDOU ---
+    // --- NAŠEPTÁVAČ LOGIKA ---
     function updateDatalists() {
         const comps = JSON.parse(localStorage.getItem('compList') || '[]');
+        const insps = JSON.parse(localStorage.getItem('inspList') || '[]');
         document.getElementById('compListOptions').innerHTML = comps.map(c => `<option value="${c}">`).join('');
+        document.getElementById('inspHistory').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
+        document.getElementById('idListOptions').innerHTML = insps.map(i => `<option value="${i.id}">`).join('');
         const brands = Object.keys(shoeDatabase).sort();
         document.getElementById('brandListOptions').innerHTML = brands.map(b => `<option value="${b}">`).join('');
     }
@@ -316,17 +809,13 @@
         const modelInput = document.getElementById('model');
         const modelList = document.getElementById('modelListOptions');
         modelList.innerHTML = "";
-        modelInput.value = ""; // Vyčistíme model při změně značky
-        
+        modelInput.value = "";
         const brandKey = Object.keys(shoeDatabase).find(k => k.toLowerCase() === selectedBrand.toLowerCase().trim());
-        
         if (brandKey) {
             const models = shoeDatabase[brandKey].sort();
             modelList.innerHTML = models.map(m => `<option value="${m}">`).join('');
-            
-            // NÁHODNÝ MODEL JAKO NÁPOVĚDA (PLACEHOLDER)
             const randomModel = models[Math.floor(Math.random() * models.length)];
-            modelInput.placeholder = "Např. " + randomModel;
+            modelInput.placeholder = (currentLang === 'cs' ? "Např. " : "E.g. ") + randomModel;
         } else {
             modelInput.placeholder = "Vaporfly 3...";
         }
@@ -346,7 +835,7 @@
         otherPhotos = []; document.getElementById('otherFileList').innerHTML = "";
     }
 
-    function confirmFullReset() { if(confirm("Reset form?")) location.reload(); }
+    function confirmFullReset() { if (confirm(currentLang === 'cs' ? "Opravdu vymazat vše?" : "Clear all?")) location.reload(); }
     function handleOtherPhoto(input) { if (input.files[0]) { otherPhotos.push(input.files[0]); renderOtherList(); input.value = ""; } }
     function renderOtherList() { document.getElementById('otherFileList').innerHTML = otherPhotos.map((f, i) => `<div class="other-tag">Photo ${i + 1} <span onclick="otherPhotos.splice(${i}, 1); renderOtherList();" style="cursor:pointer;">✕</span></div>`).join(''); }
     function markFilled(id) { document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0); }
@@ -358,7 +847,7 @@
     function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
 
     function renderHistory() { const list = document.getElementById('history-list'); const hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]'); list.innerHTML = hist.map(h => `<div class="history-item"><div><b>${h.name}</b><br><small>${h.comp}</small></div><div style="font-size:11px; color:var(--text-gray);">${h.time}</div></div>`).join(''); }
-    function clearHistory() { if (confirm("Clear history?")) { localStorage.removeItem('shoeHistory'); renderHistory(); } }
+    function clearHistory() { if (confirm(translations[currentLang].clearConfirm)) { localStorage.removeItem('shoeHistory'); localStorage.removeItem('compList'); localStorage.removeItem('inspList'); updateDatalists(); renderHistory(); } }
 
     const clean = (str) => str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
     async function processImg(file) { if (!file) return null; return new Promise(resolve => { const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); const ctx = c.getContext('2d'); c.width = img.width; c.height = img.height; ctx.drawImage(img, 0, 0); resolve({ data: c.toDataURL('image/jpeg', 0.8), w: img.width, h: img.height }); }; img.src = e.target.result; }; reader.readAsDataURL(file); }); }
@@ -366,17 +855,29 @@
     document.getElementById('btn-gen').onclick = async () => {
         const ath = document.getElementById('athleteName').value, cmp = document.getElementById('compName').value, brd = document.getElementById('brand').value, dt = document.getElementById('raceDate').value, inspN = document.getElementById('inspName').value, inspI = document.getElementById('inspId').value;
         if (!cmp || !ath || !brd) { if (!confirm(translations[currentLang].warnMsg)) return; }
+        
+        let comps = JSON.parse(localStorage.getItem('compList') || '[]');
+        let insps = JSON.parse(localStorage.getItem('inspList') || '[]');
+        if (cmp && !comps.includes(cmp.trim())) comps.push(cmp.trim());
+        if (inspN && !insps.some(i => i.name.trim() === inspN.trim())) insps.push({name: inspN.trim(), id: inspI.trim()});
+        localStorage.setItem('compList', JSON.stringify(comps.slice(-20)));
+        localStorage.setItem('inspList', JSON.stringify(insps.slice(-20)));
+
         const doc = new jsPDF(), now = new Date().toLocaleString('en-GB'), logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png", t = translations.en;
         const validPhotos = [];
         for (let i = 1; i <= 6; i++) { const f = document.getElementById('p'+i).files[0]; if (f) validPhotos.push({ ...await processImg(f), label: t['p'+i] }); }
-        for (let i = 0; i < otherPhotos.length; i++) validPhotos.push({ ...await processImg(otherPhotos[i]), label: "Other Photo " + (i + 1) });
+        for (let i = 0; i < otherPhotos.length; i++) validPhotos.push({ ...await processImg(otherPhotos[i]), label: "Extra Photo " + (i + 1) });
+        
         doc.addImage(logo, 'PNG', 150, 10, 40, 20); doc.setFontSize(22).setFont("helvetica", "bold").text(t.title, 20, 25); doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 35, 190, 35);
         doc.setFontSize(10).setTextColor(120).text("COMPETITION", 20, 50); doc.setFontSize(14).setTextColor(0).text(clean(cmp) || "---", 20, 58);
         doc.setFontSize(10).setTextColor(120).text("ATHLETE", 20, 75); doc.setFontSize(14).text(`${clean(ath)} (${document.getElementById('sex').value})`, 20, 83);
         doc.setFontSize(10).setTextColor(120).text("SHOE DETAILS", 20, 100); doc.setFontSize(14).text(`${clean(brd)} - ${clean(document.getElementById('model').value)}`, 20, 108);
+        
         const sigY = 240; doc.setDrawColor(180).line(20, sigY, 85, sigY); doc.line(125, sigY, 190, sigY); doc.setFontSize(9); doc.text(clean(ath) || "---", 52, sigY + 5, {align:'center'}); doc.text(t.sigA, 52, sigY + 9, {align:'center'}); doc.text(`${clean(inspN)} (${clean(inspI)})`, 157, sigY + 5, {align:'center'}); doc.text(t.sigI, 157, sigY + 9, {align:'center'});
         if (sigData.a) doc.addImage(sigData.a, 'PNG', 27, sigY - 25, 45, 20); if (sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
+        
         if (validPhotos.length > 0) { doc.addPage(); doc.setFontSize(18).text("PHOTO DOCUMENTATION", 20, 25); validPhotos.forEach((item, i) => { const col = i % 2, row = Math.floor(i / 2), maxWidth = 80, maxHeight = 45; let finalW = maxWidth, finalH = (item.h * maxWidth) / item.w; if (finalH > maxHeight) { finalH = maxHeight; finalW = (item.w * maxHeight) / item.h; } doc.addImage(item.data, 'JPEG', 20 + (col * 90) + (maxWidth - finalW) / 2, 40 + (row * 55) + (maxHeight - finalH) / 2, finalW, finalH); doc.setFontSize(8).text(item.label, 20 + (col * 90), 40 + (row * 55) + 48); }); }
+        
         doc.save(`${clean(ath).replace(/\s+/g, '_')}_${clean(cmp).replace(/\s+/g, '_')}_${dt || "NoDate"}.pdf`);
         let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]'); hist.unshift({ name: ath || "N/A", comp: cmp || "N/A", time: now }); localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
         partialReset(); updateDatalists(); renderHistory(); window.scrollTo(0, 0);
