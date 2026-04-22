@@ -216,8 +216,6 @@
 <script>
     const { jsPDF } = window.jspdf;
     let currentLang = 'cs', sigData = { a: null, i: null }, activePad, activeType;
-    
-    // Návrat proměnné pro extra fotky!
     let otherPhotos = [];
 
     // T = Track, J = Jump, H = Throw, R = Road
@@ -392,7 +390,7 @@
             const date = document.getElementById('raceDate').value;
             const sex = document.getElementById('sex').value;
             const discSelect = document.getElementById('discipline');
-            const discText = discSelect.selectedIndex > 0 ? discSelect.options[discSelect.selectedIndex].text : "N/A";
+            const discText = discSelect.selectedIndex > 0 ? discSelect.options[discSelect.selectedIndex].text : "---";
 
             if(!ath || !cmp || !brd) { 
                 alert(currentLang === 'cs' ? "Chybí údaje (Závod, Atlet, Značka)!" : "Missing details (Competition, Athlete, Brand)!"); 
@@ -407,6 +405,7 @@
             const doc = new jsPDF();
             const now = new Date().toLocaleString();
             const t = dictionary[currentLang];
+            const logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png";
 
             // Shromáždění fotek
             const validPhotos = [];
@@ -420,17 +419,20 @@
 
             // --- STRANA 1: PROFESIONÁLNÍ REPORT ---
             
-            // Hlavička
+            // Hlavička a WA Logo
+            doc.addImage(logo, 'PNG', 140, 10, 50, 25);
             doc.setFontSize(24).setFont("helvetica", "bold").setTextColor(0);
-            doc.text("WORLD ATHLETICS SHOE CONTROL", 20, 25);
-            doc.setLineWidth(0.5).setDrawColor(180).line(20, 32, 190, 32);
+            doc.text("SHOE CONTROL REPORT", 20, 25);
+            
+            // Modrá linka
+            doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 32, 190, 32);
             
             const leftCol = 20;
             const rightCol = 115;
             let y = 45;
 
             // Závod a Datum
-            doc.setFontSize(10).setTextColor(120).text("COMPETITION", leftCol, y);
+            doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("COMPETITION", leftCol, y);
             doc.setFontSize(10).setTextColor(120).text("DATE", rightCol, y);
             y += 6;
             doc.setFontSize(14).setTextColor(0).setFont("helvetica", "normal").text(clean(cmp), leftCol, y);
@@ -470,44 +472,48 @@
             doc.setFontSize(14).setTextColor(0).text(clean(iid) || "---", rightCol, y);
             y += 15;
 
-            // Zaškrtávací pole dokumentace
+            // Zaškrtávací pole dokumentace (POD SEBE)
             doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("ATTACHED PHOTO DOCUMENTATION", leftCol, y);
             y += 8;
             doc.setFontSize(11).setTextColor(0).setFont("helvetica", "normal");
             
             let photoY = y;
-            for(let i=1; i<=3; i++) {
+            for(let i=1; i<=6; i++) {
                 const has = document.getElementById('p'+i).files.length > 0;
-                doc.text(`${has ? "[ X ]" : "[   ]"}  ${t['p'+i]}`, leftCol, photoY); photoY += 8;
-            }
-            photoY = y;
-            for(let i=4; i<=6; i++) {
-                const has = document.getElementById('p'+i).files.length > 0;
-                doc.text(`${has ? "[ X ]" : "[   ]"}  ${t['p'+i]}`, rightCol, photoY); photoY += 8;
+                doc.text(`${has ? "[ X ]" : "[   ]"}  ${t['p'+i]}`, leftCol, photoY); 
+                photoY += 8;
             }
             if (otherPhotos.length > 0) {
-                doc.text(`[ X ]  Extra Photos: ${otherPhotos.length}`, leftCol, photoY + 2);
+                doc.text(`[ X ]  Extra Photos: ${otherPhotos.length}`, leftCol, photoY);
             }
 
-            // Podpisy (Úplně dole)
+            // Podpisy
             const sigY = 250;
             doc.setDrawColor(150).setLineWidth(0.5);
             doc.line(20, sigY, 90, sigY); 
             doc.line(120, sigY, 190, sigY);
             
-            doc.setFontSize(10).setFont("helvetica", "bold").setTextColor(100).text("ATHLETE SIGNATURE", 55, sigY + 6, {align:'center'});
-            doc.text("INSPECTOR SIGNATURE", 155, sigY + 6, {align:'center'});
+            // Jména pod podpisem
+            doc.setFontSize(10).setFont("helvetica", "bold").setTextColor(0);
+            doc.text(clean(ath) || "---", 55, sigY + 5, {align:'center'});
+            doc.text(clean(insp) || "---", 155, sigY + 5, {align:'center'});
 
+            // Titulek pod jménem
+            doc.setFontSize(8).setTextColor(120).setFont("helvetica", "normal");
+            doc.text("ATHLETE SIGNATURE", 55, sigY + 10, {align:'center'});
+            doc.text("INSPECTOR SIGNATURE", 155, sigY + 10, {align:'center'});
+
+            // Obrázky podpisů
             if(sigData.a) doc.addImage(sigData.a, 'PNG', 25, sigY - 25, 60, 20);
             if(sigData.i) doc.addImage(sigData.i, 'PNG', 125, sigY - 25, 60, 20);
 
-            doc.setFontSize(8).setTextColor(180).setFont("helvetica", "normal").text(`Generated securely: ${now}`, 190, 285, {align:'right'});
+            doc.setFontSize(8).setTextColor(180).setFont("helvetica", "normal").text(`Generated: ${now}`, 190, 285, {align:'right'});
 
             // --- STRANA 2: FOTKY (Mřížka) ---
             if (validPhotos.length > 0) {
                 doc.addPage();
-                doc.setFontSize(20).setFont("helvetica", "bold").setTextColor(0).text("PHOTO DOCUMENTATION", 20, 25);
-                doc.setDrawColor(200).setLineWidth(0.5).line(20, 32, 190, 32);
+                doc.setFontSize(22).setFont("helvetica", "bold").setTextColor(0).text("PHOTO DOCUMENTATION", 20, 25);
+                doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 32, 190, 32); // Modrá linka i zde
 
                 let row = 0, col = 0;
                 validPhotos.forEach((item, i) => {
@@ -520,7 +526,7 @@
                     const xP = 25 + (col * 85), yP = 45 + (row * 75);
                     const xO = (maxW - fW) / 2;
                     
-                    doc.setDrawColor(200).rect(xP, yP, maxW, maxH);
+                    doc.setDrawColor(200).setLineWidth(0.5).rect(xP, yP, maxW, maxH);
                     doc.addImage(item.data, 'JPEG', xP + xO, yP + (maxH - fH) / 2, fW, fH);
                     doc.setFontSize(10).setFont("helvetica", "bold").setTextColor(0).text(item.label, xP + (maxW/2), yP + maxH + 7, {align:'center'});
 
