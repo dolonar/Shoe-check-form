@@ -54,9 +54,7 @@
 
         .lang-switch { display: flex; gap: 12px; margin-bottom: 25px; justify-content: center; }
         .lang-btn { padding: 12px 24px; border-radius: 14px; border: 2px solid var(--border); background: transparent; color: var(--text-main); font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 11px; }
-        
-        /* OPRAVA: Text se dynamicky zbarví podle tématu, aby byl vždy čitelný */
-        .lang-btn.active { background: var(--primary); color: var(--bg); border-color: var(--primary); }
+        .lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
         .db-link { display: flex; align-items: center; justify-content: center; gap: 12px; background: #e8f5e9; color: #2e7d32; text-decoration: none; padding: 20px; border-radius: 18px; font-weight: 800; font-family: var(--font-heading); font-size: 20px; margin-bottom: 8px; width: 100%; text-transform: uppercase; border: 2px solid #a5d6a7; transition: 0.2s; letter-spacing: 1px; }
         .db-update-info { text-align: center; font-size: 11px; color: var(--text-gray); margin-bottom: 25px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -67,6 +65,7 @@
         label { display: block; margin-top: 12px; font-weight: 800; font-size: 10px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1.2px; }
         input, select { width: 100%; padding: 16px; margin-top: 5px; border: 1px solid var(--border); border-radius: 14px; font-size: 16px; background: var(--input-bg); color: var(--text-main); outline: none; }
 
+        /* MANUAL APPROVAL BOX */
         .info-box { display: none; margin-top: 15px; padding: 20px; border-radius: 16px; background: rgba(0, 122, 255, 0.05); border: 1px solid rgba(0, 122, 255, 0.2); }
         .info-text { font-size: 13px; font-weight: 600; margin-bottom: 15px; }
         .approval-btns { display: flex; gap: 10px; }
@@ -89,8 +88,7 @@
         .sig-trigger { width: 100%; padding: 20px; margin-top: 15px; border-radius: 14px; border: 2.5px dashed var(--accent); background: var(--input-bg); color: var(--accent); font-weight: 800; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; font-size: 15px; }
         .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
-        /* OPRAVA: Text u hlavního tlačítka se dynamicky zbarví podle tématu, aby byl vždy čitelný */
-        .btn-submit { background: var(--primary); color: var(--bg); border: none; width: 100%; padding: 24px; border-radius: 20px; font-size: 24px; font-weight: 800; cursor: pointer; margin-top: 40px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px; }
+        .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 24px; border-radius: 20px; font-size: 24px; font-weight: 800; cursor: pointer; margin-top: 40px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px; }
 
         .history-section { margin-top: 40px; border-top: 3px solid var(--border); padding-top: 25px; }
         .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
@@ -212,7 +210,10 @@
 </div>
 
 <div id="sigModal" class="modal">
-    <div class="modal-header"><h3 id="m-title-label">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:36px;">✕</button></div>
+    <div class="modal-header">
+        <h3 id="m-title-label">Signature</h3>
+        <button onclick="closeSig()" style="border:none; background:none; font-size:36px; color:var(--text-main); cursor:pointer; padding:0; line-height:1;">✕</button>
+    </div>
     <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
     <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
         <button onclick="clearCanvas()" id="btn-sig-clear" style="padding:15px; border-radius:12px; border:2px solid var(--danger); background:var(--input-bg); color:var(--danger); font-weight:800;">CLEAR</button>
@@ -293,8 +294,7 @@
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
         
-        updateDatalists(); 
-        checkShoeInfo();
+        updateDatalists(); checkShoeInfo();
     }
 
     function toggleTheme() {
@@ -364,6 +364,10 @@
         
         if(status === true) btnY.classList.add('active');
         if(status === false) btnN.classList.add('active');
+    }
+
+    function autoFillId(val) {
+        // FUNKCE ODSTRANĚNA: ID se už automaticky nedoplňuje, vše je čistě manuální.
     }
 
     const canvas = document.getElementById('sigCanvas');
