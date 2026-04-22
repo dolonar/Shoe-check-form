@@ -46,10 +46,10 @@
         * { 
             box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent; 
-            font-family: var(--font-main);
         }
 
         body {
+            font-family: var(--font-main);
             background: var(--bg);
             margin: 0;
             padding: 10px;
@@ -57,240 +57,95 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        .app-header { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            width: 100%; 
-            padding: 20px 0; 
-            position: relative; 
-        }
+        .app-header { display: flex; justify-content: center; align-items: center; width: 100%; padding: 25px 0; position: relative; }
+        .app-header img { max-width: 170px; height: auto; }
 
-        .app-header img { 
-            max-width: 170px; 
-            height: auto; 
-        }
-
-        .header-actions { 
-            position: absolute; 
-            right: 10px; 
-        }
-
+        .header-actions { position: absolute; right: 10px; }
         .icon-btn {
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            padding: 10px;
-            border-radius: 14px; 
-            cursor: pointer; 
-            font-size: 20px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
+            background: var(--card-bg); border: 1px solid var(--border); padding: 10px;
+            border-radius: 14px; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;
         }
 
         .card {
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 24px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05); 
-            max-width: 850px; 
-            margin: 0 auto 20px auto; 
-            width: 100%;
+            background: var(--card-bg); padding: 25px; border-radius: 24px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05); max-width: 850px; margin: 0 auto 20px auto; width: 100%;
         }
 
-        .lang-switch { 
-            display: flex; 
-            gap: 10px; 
-            margin-bottom: 25px; 
-            justify-content: center; 
-        }
-
+        .lang-switch { display: flex; gap: 10px; margin-bottom: 25px; justify-content: center; }
         .lang-btn {
-            padding: 10px 20px; 
-            border-radius: 12px; 
-            border: 2px solid var(--border);
-            background: transparent; 
-            color: var(--text-main); 
-            font-weight: 800; 
-            cursor: pointer;
-            text-transform: uppercase; 
-            font-size: 11px;
+            padding: 10px 20px; border-radius: 12px; border: 2px solid var(--border);
+            background: transparent; color: var(--text-main); font-weight: 800; cursor: pointer;
+            text-transform: uppercase; font-size: 11px;
         }
-
-        .lang-btn.active { 
-            background: var(--primary); 
-            color: var(--card-bg); 
-            border-color: var(--primary); 
-        }
+        .lang-btn.active { background: var(--primary); color: var(--card-bg); border-color: var(--primary); }
 
         .db-link {
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px;
-            background: rgba(52, 199, 89, 0.1); 
-            color: #1a7a33; 
-            text-decoration: none;
-            padding: 16px; 
-            border-radius: 16px; 
-            font-weight: 800; 
-            font-family: var(--font-heading);
-            font-size: 18px; 
-            margin-bottom: 25px; 
-            width: 100%; 
-            text-transform: uppercase; 
-            border: 1.5px solid rgba(52, 199, 89, 0.2);
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            background: rgba(52, 199, 89, 0.1); color: #1a7a33; text-decoration: none;
+            padding: 18px; border-radius: 16px; font-weight: 800; font-family: var(--font-heading);
+            font-size: 18px; margin-bottom: 25px; width: 100%; text-transform: uppercase; border: 1.5px solid rgba(52, 199, 89, 0.2);
         }
 
-        .grid { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 15px; 
-        }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
 
-        @media (min-width: 600px) { 
-            .grid { grid-template-columns: 1fr 1fr; } 
-        }
-
-        label { 
-            display: block; 
-            margin-top: 12px; 
-            font-weight: 800; 
-            font-size: 10px; 
-            color: var(--text-gray); 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-        }
-
+        label { display: block; margin-top: 15px; font-weight: 800; font-size: 10px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
         input, select { 
-            width: 100%; 
-            padding: 15px; 
-            margin-top: 5px; 
-            border: 1px solid var(--border); 
-            border-radius: 14px; 
-            font-size: 16px; 
-            background: var(--input-bg); 
-            color: var(--text-main); 
-            outline: none;
+            width: 100%; padding: 16px; margin-top: 5px; border: 1px solid var(--border); 
+            border-radius: 14px; font-size: 16px; background: var(--input-bg); color: var(--text-main); 
+            outline: none; font-family: var(--font-main);
         }
 
-        /* FOTO TLAČÍTKA */
-        .photo-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 15px; 
-            margin-top: 20px; 
-        }
-
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
         .photo-item {
-            background: var(--input-bg); 
-            border: 2px solid var(--border); 
-            border-radius: 18px; 
-            padding: 25px 10px;
-            text-align: center; 
-            position: relative; 
-            min-height: 130px; 
-            display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 14px; 
-            font-weight: 800; 
-            text-transform: uppercase;
+            background: var(--input-bg); border: 2px solid var(--border); border-radius: 18px; padding: 25px 10px;
+            text-align: center; position: relative; min-height: 130px; display: flex;
+            flex-direction: column; align-items: center; justify-content: center; 
+            font-size: 14px; font-weight: 800; text-transform: uppercase;
         }
-
         .photo-item span:first-child { font-size: 32px; margin-bottom: 8px; }
-
-        .photo-item.has-file { 
-            border-color: var(--success); 
-            background: rgba(52, 199, 89, 0.05); 
-        }
+        .photo-item.has-file { border-color: var(--success); background: rgba(52, 199, 89, 0.05); }
 
         .add-photo-btn {
-            width: 100%; 
-            padding: 22px; 
-            border-radius: 18px; 
-            border: 2px dashed var(--border);
-            background: var(--input-bg); 
-            color: var(--text-gray); 
-            font-weight: 800; 
-            cursor: pointer;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px; 
-            margin-top: 15px;
-            font-size: 14px; 
-            text-transform: uppercase;
+            width: 100%; padding: 22px; border-radius: 18px; border: 2px dashed var(--border);
+            background: var(--input-bg); color: var(--text-gray); font-weight: 800; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 15px;
+            font-size: 14px; text-transform: uppercase;
         }
 
-        .other-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-        .other-tag { background: var(--accent); color: white; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-
-        /* SIG */
         .sig-trigger {
-            width: 100%; 
-            padding: 16px; 
-            margin-top: 12px; 
-            border-radius: 14px; 
-            border: 2.5px dashed var(--accent);
-            background: var(--input-bg); 
-            color: var(--accent); 
-            font-weight: 800; 
-            cursor: pointer;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            font-size: 14px; 
-            text-transform: uppercase;
+            width: 100%; padding: 18px; margin-top: 12px; border-radius: 14px; 
+            border: 2.5px dashed var(--accent); background: var(--input-bg); 
+            color: var(--accent); font-weight: 800; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; 
+            font-size: 14px; text-transform: uppercase;
         }
-        .sig-icon { width: 22px; height: 22px; fill: var(--accent); }
         .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
-        /* BUTTONS */
         .btn-submit { 
-            background: var(--primary); 
-            color: var(--card-bg); 
-            border: none; 
-            width: 100%; 
-            padding: 22px; 
-            border-radius: 20px; 
-            font-size: 24px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            margin-top: 40px; 
-            font-family: var(--font-heading); 
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            background: var(--primary); color: var(--card-bg); border: none; width: 100%; padding: 22px; 
+            border-radius: 20px; font-size: 24px; font-weight: 800; cursor: pointer; margin-top: 40px; 
+            font-family: var(--font-heading); letter-spacing: 1.5px; text-transform: uppercase;
         }
-
         .btn-reset { 
-            background: transparent; 
-            color: var(--danger); 
-            border: 2px solid var(--danger); 
-            width: 100%; 
-            padding: 12px; 
-            border-radius: 12px; 
-            font-size: 11px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            margin-top: 15px; 
-            text-transform: uppercase;
+            background: transparent; color: var(--danger); border: 2px solid var(--danger); width: 100%; 
+            padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; 
+            margin-top: 15px; text-transform: uppercase;
         }
 
         .history-section { margin-top: 40px; border-top: 2px solid var(--border); padding-top: 20px; }
         .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .history-title { font-family: var(--font-heading); font-size: 24px; text-transform: uppercase; }
 
-        .app-footer { text-align: center; padding: 40px 20px; font-size: 10px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; }
-        .app-footer a { color: var(--accent); text-decoration: none; }
-
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
         .modal-body { flex: 1; background: #ffffff; position: relative; }
-        canvas { width: 100%; height: 100%; touch-action: none; }
+        canvas { width: 100%; height: 100%; touch-action: none; background: #fff; }
         .modal-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
         .modal-header h3 { font-family: var(--font-heading); font-size: 26px; margin: 0; text-transform: uppercase; }
+
+        .other-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .other-tag { background: var(--accent); color: white; padding: 10px 14px; border-radius: 12px; font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
 <body>
@@ -317,14 +172,14 @@
         <div class="grid">
             <div>
                 <label id="lbl-comp">Competition</label>
-                <input type="text" id="compName" list="compListOptions" autocomplete="off" onmousedown="showDatalist(this)">
+                <input type="text" id="compName" list="compListOptions" autocomplete="off" placeholder="Závod...">
                 <datalist id="compListOptions"></datalist>
             </div>
             <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
         </div>
 
         <div class="grid">
-            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" autocomplete="off"></div>
+            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" autocomplete="off" placeholder="Jméno atleta..."></div>
             <div>
                 <label id="lbl-sex">Category</label>
                 <select id="sex">
@@ -337,12 +192,12 @@
         <div class="grid">
             <div>
                 <label id="lbl-brand">Shoe Brand</label>
-                <input type="text" id="brand" list="brandListOptions" autocomplete="off" onmousedown="showDatalist(this)" oninput="updateModelSuggestions(this.value)">
+                <input type="text" id="brand" list="brandListOptions" autocomplete="off" oninput="updateModelSuggestions(this.value)" placeholder="Značka...">
                 <datalist id="brandListOptions"></datalist>
             </div>
             <div>
                 <label id="lbl-model">Shoe Model</label>
-                <input type="text" id="model" list="modelListOptions" autocomplete="off" onmousedown="showDatalist(this)">
+                <input type="text" id="model" list="modelListOptions" autocomplete="off" placeholder="Model...">
                 <datalist id="modelListOptions"></datalist>
             </div>
         </div>
@@ -350,12 +205,12 @@
         <div class="grid">
             <div>
                 <label id="lbl-insp-name">Inspector Name</label>
-                <input type="text" id="inspName" list="inspHistory" autocomplete="off" onmousedown="showDatalist(this)" oninput="autoFillId(this.value)">
+                <input type="text" id="inspName" list="inspHistory" oninput="autoFillId(this.value)" autocomplete="off" placeholder="Jméno rozhodčího...">
                 <datalist id="inspHistory"></datalist>
             </div>
             <div>
                 <label id="lbl-insp-id">ID Number</label>
-                <input type="text" id="inspId" list="idListOptions" autocomplete="off" onmousedown="showDatalist(this)">
+                <input type="text" id="inspId" list="idListOptions" autocomplete="off" placeholder="Číslo průkazu...">
                 <datalist id="idListOptions"></datalist>
             </div>
         </div>
@@ -376,10 +231,10 @@
         <div id="otherFileList" class="other-list"></div>
 
         <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')">
-            <span>Athlete Signature</span><span id="stat-a">❌</span>
+            <span id="txt-sig-a">Athlete Signature</span><span id="stat-a">❌</span>
         </button>
         <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')">
-            <span>Inspector Signature</span><span id="stat-i">❌</span>
+            <span id="txt-sig-i">Inspector Signature</span><span id="stat-i">❌</span>
         </button>
 
         <button class="btn-submit" id="btn-gen">CREATE REPORT</button>
@@ -407,22 +262,23 @@
     let currentLang = 'cs', sigData = { a: null, i: null }, otherPhotos = [], activePad, activeType;
 
     const shoeDatabase = {
-        "Adidas": ["Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Ambition"],
-        "Nike": ["Air Zoom Victory", "ZoomX Dragonfly 2", "Maxfly 2", "Alphafly 3", "Vaporfly 3"],
-        "Asics": ["Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2"],
+        "Adidas": ["Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Takumi Sen 10", "Adizero Ambition"],
+        "Nike": ["Air Zoom Victory", "Air Zoom Maxfly 2", "ZoomX Dragonfly 2", "Alphafly 3", "Vaporfly 3"],
+        "Asics": ["Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2", "Gun Lap 2"],
         "Puma": ["Berserker Nitro Elite 2", "evoSPEED Sprint", "evoSPEED Tokyo Future"],
         "New Balance": ["FuelCell MD-X v2", "FuelCell SuperComp Elite v4"],
         "Hoka": ["Cielo X1", "Rocket X2"]
     };
 
     const translations = {
-        en: { title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Date", athlete: "Athlete Name", sex: "Category", men: "Men", women: "Women", brand: "Shoe Brand", model: "Shoe Model", photo: "Photos", addOther: "+ Add Photo", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", hist: "HISTORY", warnMsg: "vášně chceš odeslat nedokončený formulář", sigModalTitle: "Signature", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" },
-        cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", athlete: "Jméno atleta", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka obuvi", model: "Model obuvi", photo: "Fotky", addOther: "+ Přidat fotku", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", hist: "HISTORIE", warnMsg: "vášně chceš odeslat nedokončený formulář", sigModalTitle: "Podpis", p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)" }
+        en: { title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", athlete: "Athlete Name", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", hist: "HISTORY", sigModalTitle: "Signature", warnMsg: "Are you sure you want to send an incomplete form?", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" },
+        cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", athlete: "Jméno atleta", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", hist: "HISTORIE", sigModalTitle: "Podpis", warnMsg: "vášně chceš odeslat nedokončený formulář", p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)" }
     };
 
     function toggleTheme() {
-        const isDark = document.body.getAttribute('data-theme') === 'dark';
-        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        const doc = document.body;
+        const isDark = doc.getAttribute('data-theme') === 'dark';
+        doc.setAttribute('data-theme', isDark ? 'light' : 'dark');
         document.getElementById('theme-icon').innerText = isDark ? '🌙' : '☀️';
     }
 
@@ -431,24 +287,16 @@
         document.getElementById('btn-en').classList.toggle('active', lang === 'en');
         document.getElementById('btn-cs').classList.toggle('active', lang === 'cs');
         document.getElementById('txt-list').innerText = t.btnList;
-        document.getElementById('lbl-comp').innerText = t.comp; document.getElementById('lbl-date').innerText = t.date;
-        document.getElementById('lbl-name').innerText = t.athlete; document.getElementById('lbl-sex').innerText = t.sex;
-        document.getElementById('opt-men').innerText = t.men; document.getElementById('opt-women').innerText = t.women;
-        document.getElementById('lbl-brand').innerText = t.brand; document.getElementById('lbl-model').innerText = t.model;
-        document.getElementById('txt-add-other').innerText = t.addOther;
-        document.getElementById('btn-gen').innerText = t.gen; document.getElementById('btn-reset').innerText = t.reset;
-        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('m-title-label').innerText = t.sigModalTitle;
+        document.getElementById('lbl-comp').innerText = t.comp;
+        document.getElementById('lbl-name').innerText = t.athlete;
+        document.getElementById('txt-sig-a').innerText = t.sigA;
+        document.getElementById('txt-sig-i').innerText = t.sigI;
+        document.getElementById('btn-gen').innerText = t.gen;
+        document.getElementById('btn-reset').innerText = t.reset;
+        document.getElementById('lbl-hist').innerText = t.hist;
+        document.getElementById('m-title-label').innerText = t.sigModalTitle;
         for(let i=1; i<=6; i++) document.getElementById('p-side'+i).innerText = t['p'+i];
         updateDatalists(); renderHistory();
-    }
-
-    // --- LOGIKA PRO OKAMŽITÉ ZOBRAZENÍ NÁPOVĚDY ---
-    function showDatalist(input) {
-        input.value = ''; // Vymaže text pro zobrazení všech možností
-        const listId = input.getAttribute('list');
-        const datalist = document.getElementById(listId);
-        // Na PC simulujeme změnu pro vynucení zobrazení
-        setTimeout(() => { input.focus(); }, 10);
     }
 
     function updateDatalists() {
@@ -480,25 +328,36 @@
         if (found) document.getElementById('inspId').value = found.id;
     }
 
-    function partialReset() {
-        document.getElementById('athleteName').value = ""; document.getElementById('brand').value = ""; document.getElementById('model').value = "";
-        sigData = { a: null, i: null }; document.getElementById('stat-a').innerText = '❌'; document.getElementById('stat-i').innerText = '❌';
-        for(let i=1; i<=6; i++) { document.getElementById('p'+i).value = ""; document.getElementById('item-p'+i).classList.remove('has-file'); }
-        otherPhotos = []; document.getElementById('otherFileList').innerHTML = "";
-    }
-
-    function confirmFullReset() { if (confirm("Reset?")) location.reload(); }
-    function handleOtherPhoto(input) { if (input.files[0]) { otherPhotos.push(input.files[0]); renderOtherList(); input.value = ""; } }
-    function renderOtherList() { document.getElementById('otherFileList').innerHTML = otherPhotos.map((f, i) => `<div class="other-tag">Photo ${i + 1} <span onclick="otherPhotos.splice(${i}, 1); renderOtherList();" style="cursor:pointer;">✕</span></div>`).join(''); }
-    function markFilled(id) { document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0); }
-
     const canvas = document.getElementById('sigCanvas');
     activePad = new SignaturePad(canvas, { backgroundColor: 'white' });
-    function openSig(type) { activeType = type; document.getElementById('sigModal').classList.add('active'); const r = Math.max(window.devicePixelRatio || 1, 1); canvas.width = canvas.offsetWidth * r; canvas.height = canvas.offsetHeight * r; canvas.getContext("2d").scale(r, r); activePad.clear(); if (sigData[type]) activePad.fromDataURL(sigData[type]); }
-    function saveSig() { if (!activePad.isEmpty()) { sigData[activeType] = activePad.toDataURL(); document.getElementById('stat-' + activeType).innerText = '✅'; } closeSig(); }
+
+    function openSig(type) {
+        activeType = type;
+        document.getElementById('sigModal').classList.add('active');
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+        activePad.clear();
+        if (sigData[type]) activePad.fromDataURL(sigData[type]);
+    }
+
+    function saveSig() {
+        if (!activePad.isEmpty()) {
+            sigData[activeType] = activePad.toDataURL();
+            document.getElementById('stat-' + activeType).innerText = '✅';
+        }
+        closeSig();
+    }
+
     function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
 
-    function renderHistory() { const list = document.getElementById('history-list'); const hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]'); list.innerHTML = hist.map(h => `<div class="history-item"><b>${h.name}</b><small>${h.comp}</small></div>`).join(''); }
+    function markFilled(id) { document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0); }
+    function handleOtherPhoto(input) { if (input.files[0]) { otherPhotos.push(input.files[0]); renderOtherList(); } }
+    function renderOtherList() { document.getElementById('otherFileList').innerHTML = otherPhotos.map((f, i) => `<div class="other-tag">Photo ${i + 1}</div>`).join(''); }
+
+    function confirmFullReset() { if(confirm("Reset form?")) location.reload(); }
+    function renderHistory() { const hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]'); document.getElementById('history-list').innerHTML = hist.map(h => `<div class="history-item"><b>${h.name}</b><small>${h.comp}</small></div>`).join(''); }
     function clearHistory() { if (confirm("Clear history?")) { localStorage.removeItem('shoeHistory'); renderHistory(); } }
 
     const clean = (str) => str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
@@ -508,6 +367,7 @@
         const ath = document.getElementById('athleteName').value, cmp = document.getElementById('compName').value, brd = document.getElementById('brand').value, dt = document.getElementById('raceDate').value, inspN = document.getElementById('inspName').value, inspI = document.getElementById('inspId').value;
         if (!cmp || !ath || !brd) { if (!confirm(translations[currentLang].warnMsg)) return; }
         
+        // Save to memory
         let comps = JSON.parse(localStorage.getItem('compList') || '[]');
         let insps = JSON.parse(localStorage.getItem('inspList') || '[]');
         if (cmp && !comps.includes(cmp.trim())) comps.push(cmp.trim());
@@ -529,7 +389,7 @@
         if (validPhotos.length > 0) { doc.addPage(); doc.setFontSize(18).text("PHOTO DOCUMENTATION", 20, 25); validPhotos.forEach((item, i) => { const col = i % 2, row = Math.floor(i / 2), maxWidth = 80, maxHeight = 45; let finalW = maxWidth, finalH = (item.h * maxWidth) / item.w; if (finalH > maxHeight) { finalH = maxHeight; finalW = (item.w * maxHeight) / item.h; } doc.addImage(item.data, 'JPEG', 20 + (col * 90) + (maxWidth - finalW) / 2, 40 + (row * 55) + (maxHeight - finalH) / 2, finalW, finalH); doc.setFontSize(8).text(item.label, 20 + (col * 90), 40 + (row * 55) + 48); }); }
         doc.save(`${clean(ath).replace(/\s+/g, '_')}_${clean(cmp).replace(/\s+/g, '_')}_${dt || "NoDate"}.pdf`);
         let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]'); hist.unshift({ name: ath || "N/A", comp: cmp || "N/A", time: now }); localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
-        partialReset(); updateDatalists(); renderHistory(); window.scrollTo(0, 0);
+        location.reload(); // Smart reset
     };
 
     window.onload = () => setLang('cs');
