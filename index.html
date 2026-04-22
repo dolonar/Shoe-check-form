@@ -2,17 +2,15 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Shoe check form</title>
     
     <link rel="icon" type="image/png" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
@@ -43,41 +41,37 @@
             --primary: #ffffff;
         }
 
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: var(--font-main);
             background: var(--bg);
-            margin: 0;
-            padding: 10px;
+            margin: 0; padding: 10px;
             color: var(--text-main);
-            transition: background 0.3s, color 0.3s;
+            transition: 0.3s;
         }
 
-        .app-header { display: flex; justify-content: center; align-items: center; width: 100%; padding: 25px 0; position: relative; }
-        .app-header img { max-width: 170px; height: auto; }
-
+        .app-header { display: flex; justify-content: center; align-items: center; padding: 20px; position: relative; }
+        .app-header img { max-width: 160px; }
         .header-actions { position: absolute; right: 10px; }
+
         .icon-btn {
             background: var(--card-bg); border: 1px solid var(--border); padding: 10px;
-            border-radius: 14px; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; cursor: pointer; font-size: 20px;
         }
 
         .card {
             background: var(--card-bg); padding: 25px; border-radius: 24px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05); max-width: 850px; margin: 0 auto 20px auto; width: 100%;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto;
         }
 
-        .lang-switch { display: flex; gap: 10px; margin-bottom: 25px; justify-content: center; }
+        .lang-switch { display: flex; gap: 10px; margin-bottom: 20px; justify-content: center; }
         .lang-btn {
             padding: 10px 20px; border-radius: 12px; border: 2px solid var(--border);
             background: transparent; color: var(--text-main); font-weight: 800; cursor: pointer;
             text-transform: uppercase; font-size: 11px;
         }
-        .lang-btn.active { background: var(--primary); color: var(--card-bg); border-color: var(--primary); }
+        .lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
         .grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
@@ -90,138 +84,111 @@
             outline: none; font-family: var(--font-main);
         }
 
-        /* FOTO TLAČÍTKA - MASIVNÍ */
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        /* FOTO TLAČÍTKA - OPRAVENO ABY NEBLOKOVALA OKOLÍ */
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
         .photo-item {
-            background: var(--input-bg); border: 2px solid var(--border); border-radius: 18px; padding: 30px 10px;
-            text-align: center; position: relative; min-height: 140px; display: flex;
-            flex-direction: column; align-items: center; justify-content: center; 
-            font-size: 15px; font-weight: 800; text-transform: uppercase;
+            background: var(--input-bg); border: 2px solid var(--border); border-radius: 16px; 
+            padding: 20px 10px; text-align: center; position: relative; 
+            min-height: 120px; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; font-size: 13px; font-weight: 800;
+            overflow: hidden;
         }
-        .photo-item span:first-child { font-size: 36px; margin-bottom: 10px; }
-        .photo-item.has-file { border-color: var(--success); background: rgba(52, 199, 89, 0.05); }
-
-        .add-photo-btn {
-            width: 100%; padding: 25px; border-radius: 18px; border: 2px dashed var(--border);
-            background: var(--input-bg); color: var(--text-gray); font-weight: 800; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 15px;
-            font-size: 15px; text-transform: uppercase;
+        .photo-item input[type="file"] {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; cursor: pointer; z-index: 2;
         }
+        .photo-item.has-file { border-color: var(--success); background: rgba(52, 199, 89, 0.1); }
+        .photo-item span:first-child { font-size: 30px; margin-bottom: 5px; }
 
-        /* SIGNATURE BUTTONS */
         .sig-trigger {
-            width: 100%; padding: 20px; margin-top: 12px; border-radius: 14px; 
-            border: 2.5px dashed var(--accent); background: var(--input-bg); 
+            width: 100%; padding: 18px; margin-top: 10px; border-radius: 14px; 
+            border: 2px dashed var(--accent); background: var(--input-bg); 
             color: var(--accent); font-weight: 800; cursor: pointer;
             display: flex; justify-content: space-between; align-items: center; 
-            font-size: 15px; text-transform: uppercase;
+            text-transform: uppercase; font-size: 14px;
         }
         .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
-        /* MAIN ACTIONS */
         .btn-submit { 
-            background: var(--primary); color: var(--card-bg); border: none; width: 100%; padding: 24px; 
-            border-radius: 20px; font-size: 24px; font-weight: 800; cursor: pointer; margin-top: 40px; 
-            font-family: var(--font-heading); letter-spacing: 1.5px; text-transform: uppercase;
+            background: var(--primary); color: white; border: none; width: 100%; padding: 20px; 
+            border-radius: 18px; font-size: 22px; font-weight: 800; cursor: pointer; margin-top: 30px; 
+            font-family: var(--font-heading); text-transform: uppercase;
         }
 
-        .btn-reset { 
-            background: transparent; color: var(--danger); border: 2px solid var(--danger); width: 100%; 
-            padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; 
-            margin-top: 20px; text-transform: uppercase;
-        }
-
-        /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
-        .modal-body { flex: 1; background: #ffffff; position: relative; }
-        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; background: #fff; }
+        .modal-body { flex: 1; background: #fff; position: relative; }
+        canvas { width: 100%; height: 100%; touch-action: none; }
         .modal-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
-        .modal-header h3 { font-family: var(--font-heading); font-size: 26px; margin: 0; text-transform: uppercase; }
-
-        .history-section { margin-top: 40px; border-top: 2px solid var(--border); padding-top: 20px; }
-        .history-item { padding: 15px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; font-size: 14px; }
+        .modal-header h3 { font-family: var(--font-heading); font-size: 24px; margin: 0; }
     </style>
 </head>
 <body>
 
-<div id="app-content">
-    <div class="app-header">
-        <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png" alt="Logo">
-        <div class="header-actions">
-            <div class="icon-btn" onclick="toggleTheme()" id="theme-icon">🌙</div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="lang-switch">
-            <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
-            <button class="lang-btn" id="btn-cs" onclick="setLang('cs')">Čeština</button>
-        </div>
-
-        <div class="grid">
-            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" placeholder="Závod..."></div>
-            <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
-        </div>
-
-        <div class="grid">
-            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" placeholder="Jméno atleta..."></div>
-            <div>
-                <label id="lbl-sex">Category</label>
-                <select id="sex">
-                    <option value="Men">Men</option>
-                    <option value="Women">Women</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="grid">
-            <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand" placeholder="Značka..." oninput="suggestModel(this.value)"></div>
-            <div><label id="lbl-model">Shoe Model</label><input type="text" id="model" placeholder="Model..."></div>
-        </div>
-
-        <div class="grid">
-            <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" placeholder="Jméno rozhodčího..."></div>
-            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" placeholder="Číslo průkazu..."></div>
-        </div>
-
-        <div class="photo-grid">
-            <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">BIB & Shoe</span><input type="file" id="p1" accept="image/*" capture="environment" onchange="markFilled('p1')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p2"><span>📸</span><span id="p-side2">Side View</span><input type="file" id="p2" accept="image/*" capture="environment" onchange="markFilled('p2')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p3"><span>📸</span><span id="p-side3">Outsole</span><input type="file" id="p3" accept="image/*" capture="environment" onchange="markFilled('p3')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p4"><span>📸</span><span id="p-side4">Label</span><input type="file" id="p4" accept="image/*" capture="environment" onchange="markFilled('p4')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p5"><span>📸</span><span id="p-side5">Insole Side</span><input type="file" id="p5" accept="image/*" capture="environment" onchange="markFilled('p5')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-            <div class="photo-item" id="item-p6"><span>📸</span><span id="p-side6">Insole Top</span><input type="file" id="p6" accept="image/*" capture="environment" onchange="markFilled('p6')" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;"></div>
-        </div>
-
-        <div class="add-photo-btn">
-            <span id="txt-add-other">+ Add Extra Photo</span>
-            <input type="file" accept="image/*" capture="environment" onchange="handleOtherPhoto(this)" style="position:absolute; opacity:0; width:100%; height:100%; cursor:pointer;">
-        </div>
-
-        <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')">
-            <span id="txt-sig-a">Athlete Signature</span><span id="stat-a">❌</span>
-        </button>
-        <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')">
-            <span id="txt-sig-i">Inspector Signature</span><span id="stat-i">❌</span>
-        </button>
-
-        <button class="btn-submit" id="btn-gen">CREATE REPORT</button>
-        <button class="btn-reset" onclick="confirmFullReset()">RESET ALL</button>
-
-        <div class="history-section">
-            <div class="history-header"><div class="history-title">HISTORY</div></div>
-            <div id="history-list"></div>
-        </div>
+<div class="app-header">
+    <img src="https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png" alt="Logo">
+    <div class="header-actions">
+        <button class="icon-btn" onclick="toggleTheme()">🌙</button>
     </div>
 </div>
 
+<div class="card">
+    <div class="lang-switch">
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
+        <button class="lang-btn" id="btn-cs" onclick="setLang('cs')">Čeština</button>
+    </div>
+
+    <div class="grid">
+        <div><label id="lbl-comp">Competition</label><input type="text" id="compName" placeholder="Závod..."></div>
+        <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
+    </div>
+
+    <div class="grid">
+        <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" placeholder="Jméno..."></div>
+        <div>
+            <label id="lbl-sex">Category</label>
+            <select id="sex">
+                <option value="Men" id="opt-men">Men</option>
+                <option value="Women" id="opt-women">Women</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand" placeholder="Nike, Adidas..." oninput="suggestModel(this.value)"></div>
+        <div><label id="lbl-model">Shoe Model</label><input type="text" id="model" placeholder="Vaporfly 3..."></div>
+    </div>
+
+    <div class="grid">
+        <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" placeholder="Rozhodčí..."></div>
+        <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" placeholder="Průkaz..."></div>
+    </div>
+
+    <div class="photo-grid">
+        <div class="photo-item" id="item-p1"><span>📸</span><span id="p-side1">BIB & Shoe</span><input type="file" accept="image/*" onchange="markFilled('p1', this)"></div>
+        <div class="photo-item" id="item-p2"><span>📸</span><span id="p-side2">Side View</span><input type="file" accept="image/*" onchange="markFilled('p2', this)"></div>
+        <div class="photo-item" id="item-p3"><span>📸</span><span id="p-side3">Outsole</span><input type="file" accept="image/*" onchange="markFilled('p3', this)"></div>
+        <div class="photo-item" id="item-p4"><span>📸</span><span id="p-side4">Label</span><input type="file" accept="image/*" onchange="markFilled('p4', this)"></div>
+        <div class="photo-item" id="item-p5"><span>📸</span><span id="p-side5">Insole Side</span><input type="file" accept="image/*" onchange="markFilled('p5', this)"></div>
+        <div class="photo-item" id="item-p6"><span>📸</span><span id="p-side6">Insole Top</span><input type="file" accept="image/*" onchange="markFilled('p6', this)"></div>
+    </div>
+
+    <button class="sig-trigger" id="btn-sig-a" onclick="openSig('a')">
+        <span id="txt-sig-a">Athlete Signature</span><span id="stat-a">❌</span>
+    </button>
+    <button class="sig-trigger" id="btn-sig-i" onclick="openSig('i')">
+        <span id="txt-sig-i">Inspector Signature</span><span id="stat-i">❌</span>
+    </button>
+
+    <button class="btn-submit" id="btn-gen" onclick="generatePDF()">CREATE REPORT</button>
+</div>
+
 <div id="sigModal" class="modal">
-    <div class="modal-header"><h3 id="m-title">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:36px;">✕</button></div>
+    <div class="modal-header"><h3 id="m-title">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:30px;">✕</button></div>
     <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
-    <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-        <button onclick="activePad.clear()" style="padding:20px; border-radius:14px; border:2px solid var(--danger); color:var(--danger); font-weight:800; background:#fff;">CLEAR</button>
-        <button onclick="saveSig()" style="padding:20px; border-radius:14px; border:none; background:var(--success); color:white; font-weight:800;">SAVE</button>
+    <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <button onclick="clearSig()" style="padding:15px; border-radius:12px; border:2px solid var(--danger); color:var(--danger); font-weight:800; background:white;">CLEAR</button>
+        <button onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:800;">SAVE</button>
     </div>
 </div>
 
@@ -230,16 +197,30 @@
     let currentLang = 'cs', sigData = { a: null, i: null }, activePad, activeType;
 
     const shoeDatabase = {
-        "Adidas": ["Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Ambition"],
-        "Nike": ["Air Zoom Victory", "Air Zoom Maxfly 2", "ZoomX Dragonfly 2", "Vaporfly 3", "Alphafly 3"],
-        "Asics": ["Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2"],
-        "Puma": ["Berserker Nitro Elite 2", "evoSPEED Sprint", "evoSPEED Tokyo Future"]
+        "Adidas": ["Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2"],
+        "Nike": ["Air Zoom Victory", "ZoomX Dragonfly 2", "Maxfly 2", "Vaporfly 3", "Alphafly 3"]
+    };
+
+    const translations = {
+        en: { title: "REPORT", comp: "Competition", athlete: "Athlete Name", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" },
+        cs: { title: "PROTOKOL", comp: "Závod", athlete: "Jméno atleta", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", p1: "BIB a bota", p2: "Bok", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora" }
     };
 
     function toggleTheme() {
         const isDark = document.body.getAttribute('data-theme') === 'dark';
         document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
-        document.getElementById('theme-icon').innerText = isDark ? '🌙' : '☀️';
+    }
+
+    function setLang(lang) {
+        currentLang = lang; const t = translations[lang];
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        document.getElementById('lbl-comp').innerText = t.comp;
+        document.getElementById('lbl-name').innerText = t.athlete;
+        document.getElementById('txt-sig-a').innerText = t.sigA;
+        document.getElementById('txt-sig-i').innerText = t.sigI;
+        document.getElementById('btn-gen').innerText = t.gen;
+        for(let i=1; i<=6; i++) document.getElementById('p-side'+i).innerText = t['p'+i];
     }
 
     function suggestModel(brand) {
@@ -247,34 +228,30 @@
         const brandKey = Object.keys(shoeDatabase).find(k => k.toLowerCase() === brand.toLowerCase().trim());
         if (brandKey) {
             const models = shoeDatabase[brandKey];
-            const random = models[Math.floor(Math.random() * models.length)];
-            modelInput.placeholder = (currentLang === 'cs' ? "Zkus např. " : "Try e.g. ") + random;
+            modelInput.placeholder = "E.g. " + models[Math.floor(Math.random()*models.length)];
         }
     }
 
-    // --- SIGNATURES (FIXED) ---
-    function openSig(type) {
-        activeType = type;
-        document.getElementById('sigModal').classList.add('active');
-        
-        const canvas = document.getElementById('sigCanvas');
-        // Musíme počkat na vykreslení modalu, než nastavíme velikost canvasu
-        setTimeout(() => {
-            const ratio = Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            
-            if (!activePad) {
-                activePad = new SignaturePad(canvas, { backgroundColor: 'rgb(255, 255, 255)' });
-            }
-            activePad.clear();
-            if (sigData[type]) activePad.fromDataURL(sigData[type]);
-        }, 100);
+    function markFilled(id, input) {
+        if(input.files.length > 0) document.getElementById('item-'+id).classList.add('has-file');
     }
 
+    // PODPISY - OPRAVA
+    const canvas = document.getElementById('sigCanvas');
+    function openSig(type) {
+        activeType = type;
+        document.getElementById('sigModal').style.display = 'flex';
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+        if (!activePad) activePad = new SignaturePad(canvas, { backgroundColor: 'white' });
+        activePad.clear();
+    }
+    function closeSig() { document.getElementById('sigModal').style.display = 'none'; }
+    function clearSig() { activePad.clear(); }
     function saveSig() {
-        if (activePad && !activePad.isEmpty()) {
+        if (!activePad.isEmpty()) {
             sigData[activeType] = activePad.toDataURL();
             document.getElementById('stat-' + activeType).innerText = '✅';
             document.getElementById('btn-sig-' + activeType).classList.add('signed');
@@ -282,45 +259,34 @@
         closeSig();
     }
 
-    function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
-
-    function markFilled(id) { document.getElementById('item-' + id).classList.add('has-file'); }
-    function confirmFullReset() { if(confirm("Smazat vše?")) location.reload(); }
-
-    const clean = (str) => str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
-    
-    document.getElementById('btn-gen').onclick = async () => {
+    // PDF GEN - OPRAVA
+    async function generatePDF() {
         const ath = document.getElementById('athleteName').value;
         const cmp = document.getElementById('compName').value;
-        const brand = document.getElementById('brand').value;
-        if (!ath || !cmp || !brand) { alert("Doplň Závod, Atleta a Značku!"); return; }
+        if (!ath || !cmp) { alert("Zadej závod a atleta!"); return; }
 
-        const doc = new jsPDF(), now = new Date().toLocaleString('en-GB');
+        const doc = new jsPDF();
         doc.setFontSize(22).text("SHOE CONTROL REPORT", 20, 25);
-        doc.setFontSize(14).text(`Competition: ${clean(cmp)}`, 20, 45);
-        doc.text(`Athlete: ${clean(ath)}`, 20, 55);
-        doc.text(`Shoe: ${clean(brand)} - ${clean(document.getElementById('model').value)}`, 20, 65);
+        doc.setFontSize(14).text(`Athlete: ${ath}`, 20, 45);
+        doc.text(`Competition: ${cmp}`, 20, 55);
+        doc.text(`Shoe: ${document.getElementById('brand').value} ${document.getElementById('model').value}`, 20, 65);
 
-        if (sigData.a) doc.addImage(sigData.a, 'PNG', 20, 200, 50, 25);
-        if (sigData.i) doc.addImage(sigData.i, 'PNG', 130, 200, 50, 25);
+        if (sigData.a) doc.addImage(sigData.a, 'PNG', 20, 200, 50, 20);
+        if (sigData.i) doc.addImage(sigData.i, 'PNG', 130, 200, 50, 20);
 
-        doc.save(`${clean(ath)}_${clean(cmp)}.pdf`);
+        doc.save(`${ath}_${cmp}.pdf`);
         
-        // Reset atleta a bot
+        // Smart reset
         document.getElementById('athleteName').value = "";
         document.getElementById('brand').value = "";
         document.getElementById('model').value = "";
-        sigData = { a: null, i: null };
+        sigData = {a:null, i:null};
+        document.querySelectorAll('.sig-trigger').forEach(b => { b.classList.remove('signed'); });
         document.getElementById('stat-a').innerText = '❌';
         document.getElementById('stat-i').innerText = '❌';
-        document.getElementById('btn-sig-a').classList.remove('signed');
-        document.getElementById('btn-sig-i').classList.remove('signed');
-    };
-
-    function setLang(l) {
-        currentLang = l;
-        // Zde si můžeš dopisovat překlady labelů podle potřeby
     }
+
+    window.onload = () => setLang('cs');
 </script>
 </body>
 </html>
