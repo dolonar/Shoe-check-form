@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shoe check form - World Athletics Style</title>
+    <title>Shoe check form - World Athletics Official Style</title>
     
     <link rel="icon" type="image/png" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
@@ -16,7 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     
     <style>
-        /* CSS VARIABLES */
         :root {
             --primary: #000000;
             --accent: #007AFF;
@@ -42,274 +41,97 @@
             --primary: #ffffff;
         }
 
-        * { 
-            box-sizing: border-box; 
-            -webkit-tap-highlight-color: transparent; 
-        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: var(--font-main);
             background: var(--bg);
-            margin: 0;
-            padding: 10px;
+            margin: 0; padding: 10px;
             color: var(--text-main);
-            transition: background 0.3s, color 0.3s;
+            transition: 0.3s;
             line-height: 1.5;
         }
 
-        /* APP HEADER */
-        .app-header { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            width: 100%; 
-            padding: 30px 0; 
-            position: relative; 
-        }
-
-        .app-header img { 
-            max-width: 180px; 
-            height: auto; 
-        }
-
-        .header-actions { 
-            position: absolute; 
-            right: 10px; 
-        }
+        .app-header { display: flex; justify-content: center; align-items: center; width: 100%; padding: 30px 0; position: relative; }
+        .app-header img { max-width: 180px; height: auto; }
+        .header-actions { position: absolute; right: 10px; }
 
         .icon-btn {
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            padding: 12px;
-            border-radius: 14px; 
-            cursor: pointer; 
-            font-size: 22px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
+            background: var(--card-bg); border: 1px solid var(--border); padding: 12px;
+            border-radius: 14px; cursor: pointer; font-size: 22px; display: flex; align-items: center; justify-content: center;
         }
 
-        /* MAIN CARD */
         .card {
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 28px;
-            box-shadow: 0 12px 45px rgba(0,0,0,0.06); 
-            max-width: 850px; 
-            margin: 0 auto 30px auto; 
-            width: 100%;
+            background: var(--card-bg); padding: 25px; border-radius: 28px;
+            box-shadow: 0 12px 45px rgba(0,0,0,0.06); max-width: 850px; margin: 0 auto 30px auto; width: 100%;
         }
 
-        .lang-switch { 
-            display: flex; 
-            gap: 12px; 
-            margin-bottom: 25px; 
-            justify-content: center; 
-        }
-
+        .lang-switch { display: flex; gap: 12px; margin-bottom: 25px; justify-content: center; }
         .lang-btn {
-            padding: 12px 24px; 
-            border-radius: 14px; 
-            border: 2px solid var(--border);
-            background: transparent; 
-            color: var(--text-main); 
-            font-weight: 800; 
-            cursor: pointer;
-            text-transform: uppercase; 
-            font-size: 11px;
+            padding: 12px 24px; border-radius: 14px; border: 2px solid var(--border);
+            background: transparent; color: var(--text-main); font-weight: 800; cursor: pointer;
+            text-transform: uppercase; font-size: 11px;
         }
+        .lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        .lang-btn.active { 
-            background: var(--primary); 
-            color: var(--card-bg); 
-            border-color: var(--primary); 
-        }
-
-        /* OPRAVENÉ GRAFICKÉ TLAČÍTKO - LIST BOT */
         .db-link {
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 12px;
-            background: #e8f5e9; /* Světle zelená jako pozadí */
-            color: #2e7d32; /* Tmavě zelená jako text */
-            text-decoration: none;
-            padding: 20px; 
-            border-radius: 18px; 
-            font-weight: 800; 
-            font-family: var(--font-heading);
-            font-size: 20px; 
-            margin-bottom: 30px; 
-            width: 100%; 
-            text-transform: uppercase; 
-            border: 2px solid #a5d6a7;
-            transition: 0.2s;
-            letter-spacing: 1px;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            background: #e8f5e9; color: #2e7d32; text-decoration: none;
+            padding: 20px; border-radius: 18px; font-weight: 800; font-family: var(--font-heading);
+            font-size: 20px; margin-bottom: 30px; width: 100%; text-transform: uppercase; 
+            border: 2px solid #a5d6a7; transition: 0.2s; letter-spacing: 1px;
         }
 
-        .db-link:active {
-            transform: scale(0.98);
-            background: #c8e6c9;
-        }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
 
-        [data-theme="dark"] .db-link {
-            background: #1b5e20;
-            color: #ffffff;
-            border-color: #2e7d32;
-        }
-
-        /* GRID */
-        .grid { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 15px; 
-        }
-
-        @media (min-width: 600px) { 
-            .grid { grid-template-columns: 1fr 1fr; } 
-        }
-
-        label { 
-            display: block; 
-            margin-top: 12px; 
-            font-weight: 800; 
-            font-size: 10px; 
-            color: var(--text-gray); 
-            text-transform: uppercase; 
-            letter-spacing: 1.2px; 
-        }
-
+        label { display: block; margin-top: 12px; font-weight: 800; font-size: 10px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1.2px; }
         input, select { 
-            width: 100%; 
-            padding: 16px; 
-            margin-top: 5px; 
-            border: 1px solid var(--border); 
-            border-radius: 14px; 
-            font-size: 16px; 
-            background: var(--input-bg); 
-            color: var(--text-main); 
-            outline: none;
-            font-family: var(--font-main);
+            width: 100%; padding: 16px; margin-top: 5px; border: 1px solid var(--border); 
+            border-radius: 14px; font-size: 16px; background: var(--input-bg); color: var(--text-main); 
+            outline: none; font-family: var(--font-main);
         }
 
-        /* PHOTO GRID */
-        .photo-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-            margin-top: 25px; 
-        }
-
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
         .photo-item {
-            background: var(--input-bg); 
-            border: 2px solid var(--border); 
-            border-radius: 20px; 
-            padding: 25px 10px;
-            text-align: center; 
-            position: relative; 
-            min-height: 130px; 
-            display: flex;
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 14px; 
-            font-weight: 800; 
-            text-transform: uppercase;
+            background: var(--input-bg); border: 2px solid var(--border); border-radius: 20px; 
+            padding: 25px 10px; text-align: center; position: relative; min-height: 130px; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            font-size: 14px; font-weight: 800; text-transform: uppercase;
         }
+        .photo-item input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 5; }
+        .photo-item.has-file { border-color: var(--success); background: rgba(52, 199, 89, 0.1); }
+        .photo-item span:first-child { font-size: 36px; margin-bottom: 8px; }
 
-        .photo-item input[type="file"] {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0; cursor: pointer; z-index: 5;
-        }
-
-        .photo-item.has-file { 
-            border-color: var(--success); 
-            background: rgba(52, 199, 89, 0.1); 
-        }
-
-        /* SIGNATURES */
         .sig-trigger {
-            width: 100%; 
-            padding: 18px; 
-            margin-top: 15px; 
-            border-radius: 14px; 
-            border: 2.5px dashed var(--accent);
-            background: var(--input-bg); 
-            color: var(--accent); 
-            font-weight: 800; 
-            cursor: pointer;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            text-transform: uppercase;
-            font-size: 14px;
+            width: 100%; padding: 18px; margin-top: 15px; border-radius: 14px; 
+            border: 2.5px dashed var(--accent); background: var(--input-bg); 
+            color: var(--accent); font-weight: 800; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; font-size: 14px;
         }
         .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
-        /* BUTTONS */
         .btn-submit { 
-            background: var(--primary); 
-            color: var(--card-bg); 
-            border: none; 
-            width: 100%; 
-            padding: 22px; 
-            border-radius: 18px; 
-            font-size: 22px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            margin-top: 40px; 
-            font-family: var(--font-heading); 
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
+            background: var(--primary); color: white; border: none; width: 100%; padding: 22px; 
+            border-radius: 18px; font-size: 22px; font-weight: 800; cursor: pointer; margin-top: 40px; 
+            font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px;
         }
 
         .btn-reset { 
-            background: transparent; 
-            color: var(--danger); 
-            border: 2px solid var(--danger); 
-            width: 100%; 
-            padding: 12px; 
-            border-radius: 12px; 
-            font-size: 11px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            margin-top: 20px; 
-            text-transform: uppercase;
+            background: transparent; color: var(--danger); border: 2px solid var(--danger); width: 100%; 
+            padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; 
+            margin-top: 20px; text-transform: uppercase;
         }
 
-        /* HISTORY */
-        .history-section { 
-            margin-top: 40px; 
-            border-top: 2px solid var(--border); 
-            padding-top: 25px; 
-        }
-
-        .history-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 20px; 
-        }
-
-        .history-title { 
-            font-family: var(--font-heading); 
-            font-size: 26px; 
-            text-transform: uppercase; 
-        }
+        .history-section { margin-top: 40px; border-top: 2px solid var(--border); padding-top: 25px; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .history-title { font-family: var(--font-heading); font-size: 26px; text-transform: uppercase; }
 
         .history-item {
-            background: var(--input-bg); 
-            padding: 15px; 
-            border-radius: 16px; 
-            border: 1px solid var(--border);
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            margin-bottom: 10px;
+            background: var(--input-bg); padding: 15px; border-radius: 16px; border: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
         }
 
-        /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
         .modal-body { flex: 1; background: #ffffff; position: relative; }
@@ -317,14 +139,7 @@
         .modal-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
         .modal-header h3 { font-family: var(--font-heading); font-size: 26px; margin: 0; text-transform: uppercase; }
 
-        .app-footer { 
-            text-align: center; 
-            padding: 40px 20px; 
-            font-size: 10px; 
-            color: var(--text-gray); 
-            font-weight: 800; 
-            text-transform: uppercase; 
-        }
+        .app-footer { text-align: center; padding: 40px 20px; font-size: 10px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -349,13 +164,13 @@
         </a>
 
         <div class="grid">
-            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" placeholder="Závod..." list="compOptions"></div>
+            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" list="compOptions"></div>
             <datalist id="compOptions"></datalist>
             <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
         </div>
 
         <div class="grid">
-            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" placeholder="Jan Novák..."></div>
+            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName"></div>
             <div>
                 <label id="lbl-sex">Category</label>
                 <select id="sex">
@@ -368,12 +183,12 @@
         <div class="grid">
             <div>
                 <label id="lbl-brand">Shoe Brand</label>
-                <input type="text" id="brand" list="brandList" placeholder="Značka..." oninput="updateModelSuggestions(this.value)">
+                <input type="text" id="brand" list="brandList" oninput="updateModelSuggestions(this.value)">
                 <datalist id="brandList"></datalist>
             </div>
             <div>
                 <label id="lbl-model">Shoe Model</label>
-                <input type="text" id="model" list="modelList" placeholder="Model...">
+                <input type="text" id="model" list="modelList">
                 <datalist id="modelList"></datalist>
             </div>
         </div>
@@ -381,7 +196,7 @@
         <div class="grid">
             <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" list="inspOptions" oninput="autoFillId(this.value)"></div>
             <datalist id="inspOptions"></datalist>
-            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" placeholder="Průkaz..."></div>
+            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId"></div>
         </div>
 
         <div class="photo-grid">
@@ -406,20 +221,20 @@
         <div class="history-section">
             <div class="history-header">
                 <div class="history-title" id="lbl-hist">HISTORY</div>
-                <button onclick="clearHistory()" style="background:none; border:none; color:var(--danger); font-weight:800; cursor:pointer;">CLEAR</button>
+                <button onclick="clearHistory()" style="background:none; border:none; color:var(--danger); font-weight:800; cursor:pointer; text-transform:uppercase; font-size:12px;">CLEAR</button>
             </div>
             <div id="history-container"></div>
         </div>
     </div>
-    <div class="app-footer">Designed by <a href="https://www.instagram.com/doolonar/" target="_blank">David Lux</a> &copy; 2026</div>
+    <div class="app-footer">Developed by <a href="https://www.instagram.com/doolonar/" target="_blank">David Lux</a> &copy; 2026</div>
 </div>
 
 <div id="sigModal" class="modal">
     <div class="modal-header"><h3 id="m-title-label">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:36px;">✕</button></div>
     <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
     <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-        <button onclick="clearCanvas()" style="padding:15px; border-radius:12px; border:2px solid var(--danger); background:white; color:var(--danger); font-weight:800;">CLEAR</button>
-        <button onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:800;">SAVE</button>
+        <button onclick="clearCanvas()" style="padding:15px; border-radius:12px; border:2px solid var(--danger); background:white; color:var(--danger); font-weight:800; text-transform:uppercase;">Clear</button>
+        <button onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:800; text-transform:uppercase;">Save</button>
     </div>
 </div>
 
@@ -427,11 +242,52 @@
     const { jsPDF } = window.jspdf;
     let currentLang = 'cs', sigData = { a: null, i: null }, activePad, activeType;
 
+    // --- KOMPLETNÍ DATABÁZE BOT (Z TVÉHO JSONU) ---
     const shoeDatabase = {
-        "Adidas": ["Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Takumi Sen 10"],
-        "Nike": ["Air Zoom Victory", "ZoomX Dragonfly 2", "Vaporfly 3", "Alphafly 3", "Maxfly 2"],
-        "Asics": ["Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2"],
-        "Puma": ["evoSPEED Distance 9", "evoSPEED Tokyo Future", "Fast-R Nitro Elite 2"]
+        "Adidas": [
+            "Adizero Adios 3", "Adizero Adios 4", "Adizero Adios 5", "Adizero Adios 6", "Adizero Adios 8", "Adizero Adios 9",
+            "Adizero Adios Pro", "Adizero Adios Pro 2", "Adizero Adios Pro 3", "Adizero Adios Pro 4", "Adizero Adios Pro Evo 1",
+            "Adizero Ambition", "Adizero Avanti", "Adizero Avanti TYO", "Adizero Boston 10", "Adizero Finesse",
+            "Adizero Prime SP", "Adizero Prime SP2", "Adizero Takumi Sen 10", "Adizero Takumi Sen 9", "Adizero TJ 2", "Throwstar"
+        ],
+        "Nike": [
+            "Air Zoom Alphafly Next %", "Air Zoom Alphafly Next % 2", "Alphafly 3", "Air Zoom LJ Elite 1.5", "Air Zoom Maxfly",
+            "Air Zoom Maxfly 2", "Air Zoom Victory", "Dragonfly 2", "Dragonfly 2 Elite", "High Jump Elite", "LJ Elite",
+            "Mamba V6", "Maxfly 2", "Pegasus Plus", "Pegasus Turbo 2", "Streakfly 2", "Triple Jump Elite 3", "Vaporfly 3",
+            "Zoom Ja Fly 4", "ZoomX Dragonfly", "ZoomX Streakfly", "ZoomX Vaporfly Next % 3"
+        ],
+        "Asics": [
+            "Cosmoracer LD 2", "Cosmoracer LD 3", "Cosmoracer MD 2", "COSMORACER MD 3", "Cyberblade 16", "Gun Lap 2",
+            "Gun Lap 3", "Heat Fly", "HEAT FLY 2", "HEAT THROW", "Heatflat 12", "Heatsprint 13", "High Jump Pro 3",
+            "Hyper LD 6", "Hyper MD 8", "Hypersprint 8", "Javelin Pro 4", "JETSPRINT 3", "Long Jump Pro 3", "Magic Speed 3",
+            "METASPEED EDGE PARIS", "METASPEED SKY PARIS", "METASPEED SKY+", "Metasprint Tokyo", "Sonicsprint Elite 3", "Throw Pro 3"
+        ],
+        "Puma": [
+            "Berserker Nitro Elite 2", "Deviate Nitro Elite 3", "evoSPEED Distance", "evoSPEED Electric", "evoSPEED High Jump Elite",
+            "evoSPEED Javelin", "evoSPEED Long Jump", "evoSPEED Sprint", "evoSPEED Tokyo Future", "FAST-R Nitro Elite 2",
+            "Long Distance Nitro Elite 3", "Mid Distance Nitro Elite 3"
+        ],
+        "New Balance": [
+            "FuelCell 5280", "FuelCell PVLSE", "FuelCell RC Elite v2", "FuelCell SuperComp Elite v4", "FuelCell SuperComp MD-X v3",
+            "FuelCell SuperComp PWR-X v3", "FuelCell SuperComp SD-X", "LD5K", "SD400", "Sigma Harmony"
+        ],
+        "Hoka": [
+            "Cielo Fly X Elite", "Cielo LD", "Cielo MD", "Cielo Road", "Cielo X1", "Rocket LD", "Rocket X 2", "Rocket X 3"
+        ],
+        "Saucony": [
+            "Endorphin Cheetah", "Endorphin Elite 2", "Endorphin LD", "Endorphin Pro 4", "Havok XC3 Spike", "Kilkenny XC9 Spike",
+            "Terminal VT", "Type A9", "Unleash SD 2"
+        ],
+        "Mizuno": [
+            "Chrono Break", "Chrono Dist 7", "Chrono INX9", "Field Geo AJ-C", "Field Geo HJ-C", "Field Geo LJ-C", "Field Geo RD-C",
+            "Geo Sprint 4", "Geo Spurt Md", "Wave Duel Pro", "Wave Rebellion Pro 2", "X Blast Elite 3"
+        ],
+        "Brooks": ["Hyperion Elite 4", "Hyperion Elite LD 2", "Hyperion Elite MD 2", "WIRE 6"],
+        "On": ["Cloudboom Echo 3.0", "Cloudboom Strike", "Cloudspike 1500m", "Cloudspike Sprint"],
+        "Anta": ["C10 PRO 2.0", "C202 6 PRO"],
+        "Xtep": ["160X 6.0 Pro", "160X Elite"],
+        "Decathlon": ["KD900X LD", "RW900 V 2"],
+        "Under Armour": ["Hovr Shakedown Elite", "Velociti Elite 3"]
     };
 
     const dictionary = {
@@ -459,18 +315,22 @@
     }
 
     function toggleTheme() {
-        const isDark = document.body.getAttribute('data-theme') === 'dark';
-        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        const doc = document.body;
+        const isDark = doc.getAttribute('data-theme') === 'dark';
+        doc.setAttribute('data-theme', isDark ? 'light' : 'dark');
         document.getElementById('theme-icon').innerText = isDark ? '🌙' : '☀️';
     }
 
     function updateDatalists() {
+        // Brands
         const brandList = document.getElementById('brandList');
-        brandList.innerHTML = Object.keys(shoeDatabase).map(b => `<option value="${b}">`).join('');
+        brandList.innerHTML = Object.keys(shoeDatabase).sort().map(b => `<option value="${b}">`).join('');
         
+        // Comps History
         const comps = JSON.parse(localStorage.getItem('h_comps') || '[]');
         document.getElementById('compOptions').innerHTML = comps.map(c => `<option value="${c}">`).join('');
         
+        // Inspectors History
         const insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
         document.getElementById('inspOptions').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
     }
@@ -479,21 +339,25 @@
         const modelList = document.getElementById('modelList');
         const modelInput = document.getElementById('model');
         modelList.innerHTML = "";
+        
         const brandKey = Object.keys(shoeDatabase).find(k => k.toLowerCase() === val.toLowerCase().trim());
         if(brandKey) {
-            const models = shoeDatabase[brandKey];
+            const models = shoeDatabase[brandKey].sort();
             modelList.innerHTML = models.map(m => `<option value="${m}">`).join('');
-            modelInput.placeholder = (currentLang === 'cs' ? "Zkus např. " : "Try e.g. ") + models[Math.floor(Math.random()*models.length)];
+            // Smart random tip
+            const randomTip = models[Math.floor(Math.random()*models.length)];
+            modelInput.placeholder = (currentLang === 'cs' ? "Např. " : "E.g. ") + randomTip;
+        } else {
+            modelInput.placeholder = "Model...";
         }
     }
 
     function autoFillId(val) {
         const insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
-        const found = insps.find(i => i.name === val.trim());
+        const found = insps.find(i => i.name.toLowerCase() === val.trim().toLowerCase());
         if(found) document.getElementById('inspId').value = found.id;
     }
 
-    // SIGNATURE LOGIC
     const canvas = document.getElementById('sigCanvas');
     function openSig(type) {
         activeType = type;
@@ -506,7 +370,7 @@
             if(!activePad) activePad = new SignaturePad(canvas, { backgroundColor: 'white' });
             activePad.clear();
             if(sigData[type]) activePad.fromDataURL(sigData[type]);
-        }, 50);
+        }, 100);
     }
     function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
     function clearCanvas() { activePad.clear(); }
@@ -533,10 +397,10 @@
         `).join('');
     }
 
-    function clearHistory() { if(confirm("Clear history?")) { localStorage.clear(); location.reload(); } }
-    function hardReset() { if(confirm("Reset form?")) location.reload(); }
+    function clearHistory() { if(confirm("Smazat historii?")) { localStorage.clear(); location.reload(); } }
+    function hardReset() { if(confirm("Reset formuláře?")) location.reload(); }
 
-    const clean = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const clean = (s) => s ? s.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
 
     async function generatePDF() {
         const ath = document.getElementById('athleteName').value;
@@ -547,18 +411,27 @@
         const inspId = document.getElementById('inspId').value;
         const date = document.getElementById('raceDate').value;
 
-        if(!ath || !cmp || !brand) { alert("Zadej atleta, závod a značku!"); return; }
+        if(!ath || !cmp || !brand) { alert("Zadej aspoň atleta, závod a značku!"); return; }
 
         const doc = new jsPDF(), now = new Date().toLocaleString();
-        doc.setFontSize(22).text("SHOE CONTROL REPORT", 20, 25);
-        doc.setFontSize(14).text(`Athlete: ${clean(ath)}`, 20, 45);
-        doc.text(`Competition: ${clean(cmp)}`, 20, 55);
-        doc.text(`Shoe: ${clean(brand)} ${clean(model)}`, 20, 65);
-        if(sigData.a) doc.addImage(sigData.a, 'PNG', 20, 240, 50, 20);
-        if(sigData.i) doc.addImage(sigData.i, 'PNG', 130, 240, 50, 20);
-        doc.save(`${clean(ath)}_${clean(cmp)}_${date}.pdf`);
+        doc.setFontSize(22).setFont("helvetica", "bold").text("SHOE CONTROL REPORT", 20, 25);
+        doc.setLineWidth(0.5).line(20, 32, 190, 32);
+        
+        doc.setFontSize(10).setTextColor(100).text("COMPETITION", 20, 45);
+        doc.setFontSize(14).setTextColor(0).text(clean(cmp), 20, 52);
+        
+        doc.setFontSize(10).setTextColor(100).text("ATHLETE", 20, 65);
+        doc.setFontSize(14).text(clean(ath), 20, 72);
+        
+        doc.setFontSize(10).setTextColor(100).text("SHOE", 20, 85);
+        doc.setFontSize(14).text(`${clean(brand)} ${clean(model)}`, 20, 92);
 
-        // Save history
+        if(sigData.a) doc.addImage(sigData.a, 'PNG', 20, 240, 45, 20);
+        if(sigData.i) doc.addImage(sigData.i, 'PNG', 130, 240, 45, 20);
+
+        doc.save(`${clean(ath).replace(/ /g, '_')}_${clean(cmp).replace(/ /g, '_')}.pdf`);
+
+        // Log to history
         let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]');
         h_logs.unshift({ ath, cmp, time: now });
         localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,10)));
@@ -571,14 +444,16 @@
         if(!h_insps.some(i => i.name === insp)) h_insps.push({name: insp, id: inspId});
         localStorage.setItem('h_insps', JSON.stringify(h_insps));
 
-        // Smart reset
+        // Smart Reset
         document.getElementById('athleteName').value = "";
         document.getElementById('brand').value = "";
         document.getElementById('model').value = "";
-        sigData = { a: null, i: null };
+        sigData = {a:null, i:null};
         document.getElementById('stat-a').innerText = '❌';
         document.getElementById('stat-i').innerText = '❌';
+        document.querySelectorAll('.sig-trigger').forEach(b => b.classList.remove('signed'));
         renderHistory();
+        window.scrollTo(0,0);
     }
 
     window.onload = () => { setLang('cs'); renderHistory(); };
