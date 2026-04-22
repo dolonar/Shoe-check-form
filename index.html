@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Shoe check form - World Athletics Official Style</title>
+    <title>Shoe check form - World Athletics Official</title>
     
     <link rel="icon" type="image/png" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/7x5Srxp1/Gemini-Generated-Image-3kqcbr3kqcbr3kqc.png">
@@ -41,19 +41,11 @@
             --primary: #ffffff;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: var(--font-main); }
+        body { background: var(--bg); margin: 0; padding: 10px; color: var(--text-main); transition: 0.3s; }
 
-        body {
-            font-family: var(--font-main);
-            background: var(--bg);
-            margin: 0; padding: 10px;
-            color: var(--text-main);
-            transition: 0.3s;
-            line-height: 1.5;
-        }
-
-        .app-header { display: flex; justify-content: center; align-items: center; width: 100%; padding: 30px 0; position: relative; }
-        .app-header img { max-width: 180px; height: auto; }
+        .app-header { display: flex; justify-content: center; align-items: center; padding: 30px 0; position: relative; }
+        .app-header img { max-width: 180px; }
         .header-actions { position: absolute; right: 10px; }
 
         .icon-btn {
@@ -63,7 +55,7 @@
 
         .card {
             background: var(--card-bg); padding: 25px; border-radius: 28px;
-            box-shadow: 0 12px 45px rgba(0,0,0,0.06); max-width: 850px; margin: 0 auto 30px auto; width: 100%;
+            box-shadow: 0 12px 45px rgba(0,0,0,0.06); max-width: 850px; margin: 0 auto 30px auto;
         }
 
         .lang-switch { display: flex; gap: 12px; margin-bottom: 25px; justify-content: center; }
@@ -88,49 +80,38 @@
         label { display: block; margin-top: 12px; font-weight: 800; font-size: 10px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1.2px; }
         input, select { 
             width: 100%; padding: 16px; margin-top: 5px; border: 1px solid var(--border); 
-            border-radius: 14px; font-size: 16px; background: var(--input-bg); color: var(--text-main); 
-            outline: none; font-family: var(--font-main);
+            border-radius: 14px; font-size: 16px; background: var(--input-bg); color: var(--text-main); outline: none;
         }
 
         .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
         .photo-item {
             background: var(--input-bg); border: 2px solid var(--border); border-radius: 20px; 
-            padding: 25px 10px; text-align: center; position: relative; min-height: 130px; 
+            padding: 30px 10px; text-align: center; position: relative; min-height: 140px; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            font-size: 14px; font-weight: 800; text-transform: uppercase;
+            font-size: 15px; font-weight: 800; text-transform: uppercase;
         }
         .photo-item input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 5; }
         .photo-item.has-file { border-color: var(--success); background: rgba(52, 199, 89, 0.1); }
-        .photo-item span:first-child { font-size: 36px; margin-bottom: 8px; }
+        .photo-item span:first-child { font-size: 36px; margin-bottom: 10px; }
 
         .sig-trigger {
-            width: 100%; padding: 18px; margin-top: 15px; border-radius: 14px; 
+            width: 100%; padding: 20px; margin-top: 15px; border-radius: 14px; 
             border: 2.5px dashed var(--accent); background: var(--input-bg); 
             color: var(--accent); font-weight: 800; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; font-size: 14px;
+            display: flex; justify-content: space-between; align-items: center; text-transform: uppercase; font-size: 15px;
         }
         .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
         .btn-submit { 
-            background: var(--primary); color: white; border: none; width: 100%; padding: 22px; 
-            border-radius: 18px; font-size: 22px; font-weight: 800; cursor: pointer; margin-top: 40px; 
+            background: var(--primary); color: white; border: none; width: 100%; padding: 24px; 
+            border-radius: 20px; font-size: 24px; font-weight: 800; cursor: pointer; margin-top: 40px; 
             font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 1.5px;
         }
 
-        .btn-reset { 
-            background: transparent; color: var(--danger); border: 2px solid var(--danger); width: 100%; 
-            padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; 
-            margin-top: 20px; text-transform: uppercase;
-        }
-
-        .history-section { margin-top: 40px; border-top: 2px solid var(--border); padding-top: 25px; }
+        .history-section { margin-top: 40px; border-top: 3px solid var(--border); padding-top: 25px; }
         .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .history-title { font-family: var(--font-heading); font-size: 26px; text-transform: uppercase; }
-
-        .history-item {
-            background: var(--input-bg); padding: 15px; border-radius: 16px; border: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
-        }
+        .history-title { font-family: var(--font-heading); font-size: 28px; text-transform: uppercase; }
+        .history-item { background: var(--input-bg); padding: 18px; border-radius: 18px; border: 1px solid var(--border); display: flex; justify-content: space-between; margin-bottom: 10px; }
 
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
@@ -138,8 +119,6 @@
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; touch-action: none; background: #fff; }
         .modal-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
         .modal-header h3 { font-family: var(--font-heading); font-size: 26px; margin: 0; text-transform: uppercase; }
-
-        .app-footer { text-align: center; padding: 40px 20px; font-size: 10px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -159,18 +138,17 @@
         </div>
 
         <a href="https://certcheck.worldathletics.org/" target="_blank" class="db-link" id="db-button">
-            <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/></svg>
             <span id="txt-list-link">LIST OF APPROVED ATHLETIC SHOES</span>
         </a>
 
         <div class="grid">
-            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" list="compOptions"></div>
+            <div><label id="lbl-comp">Competition</label><input type="text" id="compName" list="compOptions" placeholder="Závod..."></div>
             <datalist id="compOptions"></datalist>
             <div><label id="lbl-date">Date</label><input type="date" id="raceDate"></div>
         </div>
 
         <div class="grid">
-            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName"></div>
+            <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" placeholder="Jan Novák..."></div>
             <div>
                 <label id="lbl-sex">Category</label>
                 <select id="sex">
@@ -183,12 +161,12 @@
         <div class="grid">
             <div>
                 <label id="lbl-brand">Shoe Brand</label>
-                <input type="text" id="brand" list="brandList" oninput="updateModelSuggestions(this.value)">
+                <input type="text" id="brand" list="brandList" placeholder="Značka..." oninput="handleBrandChange(this.value)">
                 <datalist id="brandList"></datalist>
             </div>
             <div>
                 <label id="lbl-model">Shoe Model</label>
-                <input type="text" id="model" list="modelList">
+                <input type="text" id="model" list="modelList" placeholder="Model...">
                 <datalist id="modelList"></datalist>
             </div>
         </div>
@@ -196,7 +174,7 @@
         <div class="grid">
             <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" list="inspOptions" oninput="autoFillId(this.value)"></div>
             <datalist id="inspOptions"></datalist>
-            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId"></div>
+            <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" placeholder="Průkaz..."></div>
         </div>
 
         <div class="photo-grid">
@@ -216,25 +194,23 @@
         </button>
 
         <button class="btn-submit" id="btn-gen" onclick="generatePDF()">CREATE REPORT</button>
-        <button class="btn-reset" onclick="hardReset()">RESET FORM</button>
 
         <div class="history-section">
             <div class="history-header">
                 <div class="history-title" id="lbl-hist">HISTORY</div>
-                <button onclick="clearHistory()" style="background:none; border:none; color:var(--danger); font-weight:800; cursor:pointer; text-transform:uppercase; font-size:12px;">CLEAR</button>
+                <button onclick="clearHistory()" style="background:none; border:none; color:var(--danger); font-weight:800; cursor:pointer;">CLEAR</button>
             </div>
             <div id="history-container"></div>
         </div>
     </div>
-    <div class="app-footer">Developed by <a href="https://www.instagram.com/doolonar/" target="_blank">David Lux</a> &copy; 2026</div>
 </div>
 
 <div id="sigModal" class="modal">
     <div class="modal-header"><h3 id="m-title-label">Signature</h3><button onclick="closeSig()" style="border:none; background:none; font-size:36px;">✕</button></div>
     <div class="modal-body"><canvas id="sigCanvas"></canvas></div>
     <div style="padding:20px; display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-        <button onclick="clearCanvas()" style="padding:15px; border-radius:12px; border:2px solid var(--danger); background:white; color:var(--danger); font-weight:800; text-transform:uppercase;">Clear</button>
-        <button onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:800; text-transform:uppercase;">Save</button>
+        <button onclick="clearCanvas()" style="padding:15px; border-radius:12px; border:2px solid var(--danger); background:white; color:var(--danger); font-weight:800;">CLEAR</button>
+        <button onclick="saveSig()" style="padding:15px; border-radius:12px; border:none; background:var(--success); color:white; font-weight:800;">SAVE</button>
     </div>
 </div>
 
@@ -242,57 +218,13 @@
     const { jsPDF } = window.jspdf;
     let currentLang = 'cs', sigData = { a: null, i: null }, activePad, activeType;
 
-    // --- KOMPLETNÍ DATABÁZE BOT (Z TVÉHO JSONU) ---
-    const shoeDatabase = {
-        "Adidas": [
-            "Adizero Adios 3", "Adizero Adios 4", "Adizero Adios 5", "Adizero Adios 6", "Adizero Adios 8", "Adizero Adios 9",
-            "Adizero Adios Pro", "Adizero Adios Pro 2", "Adizero Adios Pro 3", "Adizero Adios Pro 4", "Adizero Adios Pro Evo 1",
-            "Adizero Ambition", "Adizero Avanti", "Adizero Avanti TYO", "Adizero Boston 10", "Adizero Finesse",
-            "Adizero Prime SP", "Adizero Prime SP2", "Adizero Takumi Sen 10", "Adizero Takumi Sen 9", "Adizero TJ 2", "Throwstar"
-        ],
-        "Nike": [
-            "Air Zoom Alphafly Next %", "Air Zoom Alphafly Next % 2", "Alphafly 3", "Air Zoom LJ Elite 1.5", "Air Zoom Maxfly",
-            "Air Zoom Maxfly 2", "Air Zoom Victory", "Dragonfly 2", "Dragonfly 2 Elite", "High Jump Elite", "LJ Elite",
-            "Mamba V6", "Maxfly 2", "Pegasus Plus", "Pegasus Turbo 2", "Streakfly 2", "Triple Jump Elite 3", "Vaporfly 3",
-            "Zoom Ja Fly 4", "ZoomX Dragonfly", "ZoomX Streakfly", "ZoomX Vaporfly Next % 3"
-        ],
-        "Asics": [
-            "Cosmoracer LD 2", "Cosmoracer LD 3", "Cosmoracer MD 2", "COSMORACER MD 3", "Cyberblade 16", "Gun Lap 2",
-            "Gun Lap 3", "Heat Fly", "HEAT FLY 2", "HEAT THROW", "Heatflat 12", "Heatsprint 13", "High Jump Pro 3",
-            "Hyper LD 6", "Hyper MD 8", "Hypersprint 8", "Javelin Pro 4", "JETSPRINT 3", "Long Jump Pro 3", "Magic Speed 3",
-            "METASPEED EDGE PARIS", "METASPEED SKY PARIS", "METASPEED SKY+", "Metasprint Tokyo", "Sonicsprint Elite 3", "Throw Pro 3"
-        ],
-        "Puma": [
-            "Berserker Nitro Elite 2", "Deviate Nitro Elite 3", "evoSPEED Distance", "evoSPEED Electric", "evoSPEED High Jump Elite",
-            "evoSPEED Javelin", "evoSPEED Long Jump", "evoSPEED Sprint", "evoSPEED Tokyo Future", "FAST-R Nitro Elite 2",
-            "Long Distance Nitro Elite 3", "Mid Distance Nitro Elite 3"
-        ],
-        "New Balance": [
-            "FuelCell 5280", "FuelCell PVLSE", "FuelCell RC Elite v2", "FuelCell SuperComp Elite v4", "FuelCell SuperComp MD-X v3",
-            "FuelCell SuperComp PWR-X v3", "FuelCell SuperComp SD-X", "LD5K", "SD400", "Sigma Harmony"
-        ],
-        "Hoka": [
-            "Cielo Fly X Elite", "Cielo LD", "Cielo MD", "Cielo Road", "Cielo X1", "Rocket LD", "Rocket X 2", "Rocket X 3"
-        ],
-        "Saucony": [
-            "Endorphin Cheetah", "Endorphin Elite 2", "Endorphin LD", "Endorphin Pro 4", "Havok XC3 Spike", "Kilkenny XC9 Spike",
-            "Terminal VT", "Type A9", "Unleash SD 2"
-        ],
-        "Mizuno": [
-            "Chrono Break", "Chrono Dist 7", "Chrono INX9", "Field Geo AJ-C", "Field Geo HJ-C", "Field Geo LJ-C", "Field Geo RD-C",
-            "Geo Sprint 4", "Geo Spurt Md", "Wave Duel Pro", "Wave Rebellion Pro 2", "X Blast Elite 3"
-        ],
-        "Brooks": ["Hyperion Elite 4", "Hyperion Elite LD 2", "Hyperion Elite MD 2", "WIRE 6"],
-        "On": ["Cloudboom Echo 3.0", "Cloudboom Strike", "Cloudspike 1500m", "Cloudspike Sprint"],
-        "Anta": ["C10 PRO 2.0", "C202 6 PRO"],
-        "Xtep": ["160X 6.0 Pro", "160X Elite"],
-        "Decathlon": ["KD900X LD", "RW900 V 2"],
-        "Under Armour": ["Hovr Shakedown Elite", "Velociti Elite 3"]
+    // --- FULL DATABÁZE VŠECH 52 ZNAČEK A JEJICH MODELŮ ---
+    const shoeDB = {"361 Degrees": ["Biospeed Future", "Biospeed pro", "FLAME 5", "FLAME 5 FUTURE", "Flame", "Flame 2", "Furious", "Furious 2", "Furious Future", "Furious Future 2", "MIRONUDE2", "mironude"], "910 Nineten": ["Geist Ekiden Elite X", "Haze Pro"], "Adidas": ["ADIZERO ADIOS PRO EVO 3 DEV", "ADIZERO ADIOS PRO EVO 3 DEV1", "ADIZERO ADIOS PRO EVO2 DEV", "ADIZERO AMBITION 26", "ADIZERO AVANTI 26", "ADIZERO AVANTI LJ DEV", "ADIZERO AVANTI XC", "ADIZERO FINESSE 26", "ADIZERO PRIME SP 4", "ADIZERO TJ/PV (2)", "Adizero Adios 3", "Adizero Adios 4", "Adizero Adios 5", "Adizero Adios 6", "Adizero Adios 8", "Adizero Adios 9", "Adizero Adios Pro", "Adizero Adios Pro 2", "Adizero Adios Pro 3", "Adizero Adios Pro 4", "Adizero Adios Pro Evo 1", "Adizero Adios Pro Evo 1 v2", "Adizero Adios Pro Evo 2", "Adizero Ambition", "Adizero Ambition 2", "Adizero Ambition 24", "Adizero Ambition Boost", "Adizero Avanti", "Adizero Avanti 24", "Adizero Avanti Boost", "Adizero Avanti LJ", "Adizero Avanti TYO", "Adizero Boston 10", "Adizero Boston 8", "Adizero Boston 9", "Adizero Discus Hammer", "Adizero Finesse", "Adizero Finesse 24", "Adizero HJ", "Adizero HJ FL", "Adizero High Jump", "Adizero Javelin", "Adizero Javelin (22)", "Adizero Javelin 24", "Adizero LJ", "Adizero LJ (3)", "Adizero Prime SP", "Adizero Prime SP 3 Strung", "Adizero Prime SP2", "Adizero Pro", "Adizero RC 2", "Adizero Sub 2", "Adizero TJ 2", "Adizero TJ/PV (with orange sockliner)", "Adizero Takumi Ren 3", "Adizero Takumi Sen 10", "Adizero Takumi Sen 11", "Adizero Takumi Sen 5", "Adizero Takumi Sen 6", "Adizero Takumi Sen 7", "Adizero Takumi Sen 8", "Adizero Takumi Sen 9", "Adizero Throws", "Rio Adizero MD", "Throwstar"], "Altra Running": ["Vanish Carbon", "Vanish Carbon 2"], "ANTA": ["C10 PRO", "C10 PRO 1.5", "C10 PRO 2 CSP", "C10 PRO 2 LCSP", "C10 PRO 2.0", "C202 5 GT", "C202 5 GT PRO", "C202 6", "C202 6 PRO", "C202 G9", "C202 G9 2", "Hai Lang", "TRACKEDGE JV -Dev", "TRACKEDGE LD", "TRACKEDGE SP -Dev"], "Asics": ["COSMORACER MD 3", "CYBER THROW LONDON", "CYBERBLADE 17", "Cosmoracer LD 2", "Cosmoracer LD 3", "Cosmoracer MD 2", "Cyberblade 16", "Cyberblade HF", "DSPURT FX", "Duo Japan", "EFFORT 14", "Effort 13", "Effort MK", "EvoRide", "FREAKS JAPAN", "GEL-DS TRAINER 25", "GEL-FEATHER GLIDE 5", "Gun Lap 2", "Gun Lap 3", "HEAT FLY 2", "HEAT THROW", "HEAT THROW 2", "HI JUMP PRO (L)", "HI JUMP PRO (R)", "HT-JAPAN", "HYPER RACER", "HYPER SPEED", "HYPER SPEED 2", "HYPER SPEED 3", "HYPER SPEED 4", "Heat Fly", "Heatflat 12", "Heatflat FR 7", "Heatsprint 13", "Heatsprint FR 8", "High Jump Pro 2 (L)", "High Jump Pro 2 (R)", "High Jump Pro 3 (L)", "High Jump Pro 3 (R)", "Hyper LD 6", "Hyper MD 7", "Hyper MD 8", "Hyper Throw 3", "Hypersprint 7", "Hypersprint 8", "JAPAN-AR", "JETSPRINT", "JETSPRINT (KY)", "JETSPRINT 2", "JETSPRINT 3", "Japan Arch", "Javelin Pro 2", "Javelin Pro 3", "Javelin Pro 4", "LYTERACER 2", "Long Jump Pro", "Long Jump Pro 2", "Long Jump Pro 3", "MAGIC SPEED", "MAGIC SPEED 2", "MAGIC SPEED 3", "MAGIC SPEED 5", "MAGICSPEED 3", "MARATHON EO JAPAN", "MARATHON EO RP", "MARATHON EO SEIHA", "ME5 TYPE-1", "ME5 TYPE-P", "METARACER", "METASPEED EDGE", "METASPEED EDGE PARIS", "METASPEED EDGE TOKYO", "METASPEED EDGE+", "METASPEED LD 2", "METASPEED LD 2 F", "METASPEED LD LE 2", "METASPEED RAY", "METASPEED RW", "METASPEED SKY", "METASPEED SKY PARIS", "METASPEED SKY TOKYO", "METASPEED SKY+", "METASPEED SP 1.5 F", "MR2 TYPE-1", "MR2 TYPE-2", "MS SP 3-1", "MS SP 3F-1", "MS5 TYPE-1", "MS5 TYPE-P", "MX TYPE-A", "MX TYPE-B", "Metaspeed LD 1.5", "Metaspeed MD", "Metaspeed SP", "Metaspeed SP 0", "Metaspeed SP 1.5", "Metaspeed SP 2", "Metaspeed SP LE", "Metaspeed SP2 F", "Metasprint Tokyo", "S4", "SD-Japan", "SKYSENSOR JAPAN", "SORTIE JAPAN", "SORTIE JAPANSEIHA 2", "SORTIEMAGIC LT", "SORTIEMAGIC LT 2", "SORTIEMAGIC LT 2 TENKA", "SORTIEMAGIC RP 5", "SORTIEMAGIC RP 5 TENKA", "SORTIEMAGIC RP 6", "SP BLADE 10", "SP Blade 9", "SP Blade SF 2", "Sonic Sky Pro", "Sonicsprint Elite", "Sonicsprint Elite 2", "Sonicsprint Elite 3", "TARTHER JAPAN", "TARTHER RP", "TARTHER RP 3", "TARTHEREDGE 2", "TARTHEREDGE 3", "TARTHERZEAL 6", "TF Spike SO (BD)", "TF Spike SO (JP)", "TF Spike SO (RY)", "THROW PRO 3 AG", "Throw Pro 2", "Throw Pro 3", "Triple Jump Pro", "Triple Jump Pro 2", "Windsprint 2", "Windsprint 3"], "Atreyu": ["The Artist"], "BMAI": ["BMAI CARBON 2.0", "BMAI CARBON FLY", "BMAI Carbon 3.0", "BMAI Carbon 3.0 Turbo"], "Brooks": ["Draft XC", "ELMN8 5", "ELMN8 6", "ELMN8 7-R2", "Hyperion 2", "Hyperion Elite 2", "Hyperion Elite 3", "Hyperion Elite 4", "Hyperion Elite 4 PB", "Hyperion Elite 5", "Hyperion Elite 6 R2", "Hyperion Elite LD", "Hyperion Elite LD 2", "Hyperion Elite LD 2 R2", "Hyperion Elite MD", "Hyperion Elite MD 2", "Hyperion Elite MD 2 R2", "Hyperion Tempo 1", "WIRE 6"], "Craft Sportswear": ["Kype Pro", "Nordlite Speed"], "Descente": ["DELTA PRO ELITE", "DELTA PRO LITE", "DELTA PRO RACE", "DELTA PRO TEMPO", "DELTAPRO AERO SPRINT", "DELTAPRO EXP V3", "Delta TRI OP", "Genten RC", "Genten RC+", "Genten-EL", "Genten-EL+", "Genten-ST", "V-Lite"], "Diadora": ["Equipe Corsa", "Gara Carbon", "Gara Carbon 3", "Lungo Carbon W", "Mezzofondo", "Velocita Carbon"], "Dynafish": ["Danian 1.0"], "Ena Athletics Single Member SA": ["Proto Runner 1.0"], "ERKE": ["INFINITE 4", "INFINITE2.0", "Infinite 1.0", "Phoenix", "Phoenix PRO"], "Erke": ["INFINITE2"], "Feet2 Oy": ["Distance", "Evo+", "Evo+ Light", "Racer", "Racer+", "Trail", "Trail+"], "FESSURA": ["RACE 01"], "Fila": ["Float Maxxi 2 Pro"], "Gruppo Dass/Fila": ["Fila KR6", "Float Maxxi Light", "RACER CARBON 2.0", "RACER CARBON TRI", "Racer Carbon 3"], "HEALTH/HIRACER": ["CP5"], "Health/HiRacer": ["HIWINGS"], "HokaONeOne": ["Bondi 7", "CIELO  X1 3.0", "Carbon X", "Carbon X2", "Carbon X3", "Cielo Fly X Elite", "Cielo Fly X Lite", "Cielo LD", "Cielo MD", "Cielo Road", "Cielo X 2 MD", "Cielo X1", "Cielo X1 2.0", "Cielo X1 3.0 Dev", "Clifton 7", "Evo Carbon Rocket", "Evo Rehi", "HOKA CLIFTON 10", "Mach 3", "Mach 4", "Rincon 2", "Rincon 3", "Rocket LD", "Rocket MD", "Rocket X", "Rocket X 3", "Rocket X2", "Speed Evo R", "Tracer 2"], "Jiangsu Do-win Sports Goods Co., Ltd": ["Speedster 3", "TYPHON"], "Joma": ["R.3000", "R.4000", "R.5000", "R1000", "R1100", "R1200 V2", "R1300", "R3000 V2", "R5000", "RS9000"], "KIPRUN": ["AT CROSS", "AT LONG", "KD 500 2", "KD 800", "KD900", "KD900LIGHT", "KD900X", "KD900X LD", "KD900X.2", "KD900XLD+", "KD900XLD.2", "KIPRUN AT LONG", "KIPSONIC  LONG", "KIPSTORM ELITE", "KIPSTORM LAB", "Kiprun Ultralight", "PR893049", "RW500", "RW900 V 1", "RW900 V 2"], "Li-Ning": ["FEIDIAN 4 CHALLENGER", "FEIDIAN 4 ELITE", "FEIDIAN 5 CHALLENGER", "FEIDIAN 5 ELITE", "FEIDIAN 6 CHALLENGER", "FEIDIAN 6 ELITE", "FeiDian", "FeiDian 2.0", "FeiDian 2.0 Elite", "FeiDian 3 Ultra", "FeiDian 4 Ultra", "FeiDian Challenger", "Spike-sample-1", "Spike-sample-2", "Sprint-Spikes", "ZHUIFENG 4", "ZHUIFENG 6"], "Lululemon": ["W Beyondfeel Run", "W Blissfeel Trail Run"], "Macondo": ["Macondo Center"], "MILLS": ["HYPERCHARGE R26", "MILLS ENERCHARGE M1", "MILLS ENERCHARGE M2"], "Mizuno": ["ALL JUMP PRO SO1", "Brave Wing FX", "Break Sprint", "CHRONO DIST NEO", "CHRONO INX JAPAN", "CHRONO INX NEO", "CHRONO INX NEO JAPAN", "Chrono Break", "Chrono Break SO1", "Chrono Break_SO2", "Chrono Dist 7", "Chrono INX9", "Chrono INX9 SO1", "Chrono INX9 SO2", "Chrono INX9 SO3", "Chrono INX9 SO4", "Chrono Onyx 2", "Citius Wing Fx", "DEV-CINJP", "DEV-CRN", "DEV-HWE", "DEV-HWEX1", "DEV-HWP", "DEV-HWPP", "DEV-HWPR", "DEV-HWPX1", "DEV-WRP", "DIST Special", "DUEL FLASH 2 / WIDE", "DUEL SONIC 4 / WIDE", "Duel Flash", "Duel Sonic", "Duel Sonic 3", "Ekiden Spirit", "Field Geo AJ-C", "Field Geo AJ-C, FIELD GEO AJ JAPAN", "Field Geo FT", "Field Geo HJ", "Field Geo HJ SO1", "Field Geo HJ-C", "Field Geo HJ-C, FIELD GEO HJ JAPAN", "Field Geo JT", "Field Geo JT So1", "Field Geo JT-C", "Field Geo JT-C, FIELD GEO JT JAPAN", "Field Geo LJ", "Field Geo LJ SO2", "Field Geo LJ SO3", "Field Geo LJ-C", "Field Geo LJ-C, FIELD GEO LJ JAPAN", "Field Geo RD So1", "Field Geo RD-C", "Field Geo RD-C, FIELD GEO RD JAPAN", "Field Geo Th", "Geo Cyclone", "Geo Silencer Fx", "Geo Sprint 4", "Geo Spurt Md", "Geo Versus Fx", "HIGH JUMP PRO SO2", "HYPERWARP ELITE", "HYPERWARP PRO", "HYPERWARP PURE", "INX Break", "INX Silencer", "INX Sniper", "INX Sprint", "JAVELIN THROW PRO SO5", "JAVELIN THROW PRO SO6", "JAVELIN THROW PRO SO7", "JAVELIN THROW PRO SO8", "Javelin Throw Pro1 So1", "Javelin Throw Pro2 So2", "Javelin Throw Pro3 So3", "Javelin Throw Pro4 So4", "LONG JUMP PRO SO4", "LONG JUMP PRO SO5", "LONG JUMP PRO SO6", "Long Jump Pro1 SO1", "MIZUNO SPRINT", "MIZUNO SPRINT NEO", "SPRINT PRO SO1", "SPRINT PRO SO2", "SPRINT PRO SO3", "Spectra Type  A", "Spectra Type  B (21SS Type B)", "Spectra Type  C", "Spectra Type  D", "Spectra Type  E", "Spectra Type  F", "Spectra Type A So1", "Spectra Type E So1", "Sprint Pro Type A", "Sprint Pro Type A So1", "Sprint Pro Type A So2", "Sprint Pro Type B", "Sprint Pro Type B So1", "Sprint Pro Type B So2", "WAVE AMULET SO1", "WAVE DUEL 4", "WAVE DUEL NEO SO1", "WAVE REBELLION FLASH 3", "WAVE REBELLION PRO 3 / BETA", "WAVE REBELLION PRO LOW", "WAVE REBELLION PRO Natural", "WAVE SPACER GL SO5", "Wave Aero", "Wave Amulet", "Wave Cruise Japan", "Wave Cruise Japan So1", "Wave Cruise Pro", "Wave Duel", "Wave Duel 3", "Wave Duel Gtz", "Wave Duel Gtz2", "Wave Duel Neo", "Wave Duel Neo 2", "Wave Duel Neo 2 Elite", "Wave Duel Neo Sp", "Wave Duel Pro", "Wave Duel Pro Qtr", "Wave Ekiden", "Wave Emperor", "Wave Emperor Japan", "Wave Idaten CB", "Wave Rebellion", "Wave Rebellion Flash 2", "Wave Rebellion Pro", "Wave Rebellion Pro 2", "Wave Sonic", "Wave Sonic 2", "Wave Spacer Gl", "Wave Spacer Gl So1", "Wave Spacer Gl So2", "Wave Spacer Gl So3", "Wave Spacer Gl So4", "Wave Zone Power", "X BLAST ELITE 2", "X BLAST ELITE 3", "X BLAST NEO 2", "X BLAST NEXT", "X BLAST NEXT 2", "X Blast Elite", "X Blast Neo", "X FIRST / WIDE", "X FIRST 2 / WIDE", "X FIRST 2, X FIRST 2 WIDE", "X FIRST 3 / WIDE", "X FIRST, X FIRST WIDE", "X LASER ELITE 2", "X LASER NEXT", "X LASER NEXT 2", "X LASER NEXT 3", "X Laser Elite", "X Sprint", "X Stream MD"], "MIZUNO": ["Mizuno Base One"], "Mount to Coast": ["R1", "S1"], "New Balance": ["1400v6", "1500v4 w1500v4", "1500v6", "Development Shoe 6XFP", "Development Shoe E02", "DynaSoft Flash v7", "FuelCell 5280", "FuelCell PVLSE", "FuelCell Prism", "FuelCell RC Elite", "FuelCell RC Elite v2", "FuelCell Racer TC", "FuelCell Racer VIP", "FuelCell SuperComp Elite v3", "FuelCell SuperComp Elite v4", "FuelCell SuperComp Elite v5", "FuelCell SuperComp LD-X v3", "FuelCell SuperComp MD-X v2", "FuelCell SuperComp MD-X v3", "FuelCell SuperComp PWR-X", "FuelCell SuperComp PWR-X v2", "FuelCell SuperComp PWR-X v3", "FuelCell SuperComp Pacer v2", "FuelCell SuperComp SD-X", "FuelCell SuperComp Trainer v2", "FuelCell SuperComp Trainer v3", "FuelCell SuperComp XC-X", "FuelCell Supercomp Pacer", "Hanzo R v3", "Hanzo R v4", "Hanzo W v1", "Hanzo W v2", "LD5K", "MD500", "MD800", "SD100", "SD200", "SD400", "Sigma Aria", "Sigma Harmony", "Vazee Sigma", "Vazee Verge"], "Nike": ["Air Zoom Alphafly Next %", "Air Zoom Alphafly Next % 2", "Air Zoom LJ Elite 1.5", "Air Zoom Maxfly", "Air Zoom Victory", "Air Zoom Victory Elite", "Alphafly 3", "Dev 121052", "Dev 16141", "Dev 164", "Dev 611", "Dev1820", "Dev187", "Dev1945", "Dragonfly 2", "Dragonfly 2 Elite", "High Jump 3", "High Jump Elite", "Javelin Elite 2", "LJ 4", "LJ Elite", "Mamba V6", "Maxfly 2", "Pegasus Plus", "Pegasus Turbo 2", "Pole Vault Elite", "Rival Distance", "Rival Jump", "Rival Multi", "Rival Sprint", "Streakfly 2", "Triple Jump  Elite 2015", "Triple Jump Elite", "Triple Jump Elite 3", "Vaporfly 4", "Vaporfly 4%", "Victory 2", "Zoom 400", "Zoom Fly 3", "Zoom Gravity", "Zoom Ja Fly", "Zoom Ja Fly 3", "Zoom Ja Fly 4", "Zoom Javelin Elite 3", "Zoom Mamba V", "Zoom Matumbo 3", "Zoom Rival D 10", "Zoom Rival M 9", "Zoom Rival S 9", "Zoom Rival SD", "Zoom Rotational", "Zoom SD 3", "Zoom SD 4", "Zoom Streak 6", "Zoom Streak 7", "Zoom Streak LT 3", "Zoom Streak LT 4", "Zoom Superfly Elite", "Zoom Superfly Elite 2", "Zoom Superfly R 3", "Zoom Victory 2", "Zoom Victory 3", "Zoom Victory Elite", "Zoom Victory Elite 2", "ZoomX Dragonfly", "ZoomX Dragonfly XC", "ZoomX Streakfly", "ZoomX Vaporfly Next %", "ZoomX Vaporfly Next % 2", "ZoomX Vaporfly Next % 3"], "OLYMPIKUS": ["CORRE GRAFENO3", "CORRE PACE", "CORRE SUPRA2", "CORRE TURBO", "CORRE4", "Corre 3", "Corre Grafeno", "Corre Grafeno 2", "Corre Supra", "Corre Trilha", "Corre Vento", "Corre Vento 2"], "ON": ["CLOUDSPIKE SPRINT V", "CloudTri 1", "CloudTri 2", "Cloudboom", "Cloudboom 4", "Cloudboom Dev 5", "Cloudboom Echo", "Cloudboom Echo 3.0", "Cloudboom Strike", "Cloudboom Strike LS", "Cloudboom Strike LS Kuota", "Cloudboom Volt", "Cloudflash", "Cloudspike 1500m", "Cloudspike Amplius 2", "Cloudspike Citius 2", "Cloudspike Citius 2 LS", "Cloudspike DEV10", "Cloudspike Sprint", "Cloudspike Sprint 2", "Cloudspike Steeple 2", "Cloudspike XC"], "ORTUSEIGHT": ["Hyperblast 3.0", "Hyperglide 4.0", "Hypersonic 2.0", "Solar", "Solar 2.0"], "PEAK": ["PEAK UP30 3.0 ELITE", "PEAK UP30 4.0 ELITE", "PEAK UP30 5.0 ELITE", "PEAK UP30 PRO"], "PRO-SPECS": ["INFINITE RUSH"], "Puma": ["Berserker Nitro Elite 2", "Crossfox Nitro Elite", "Deviate Nitro", "Deviate Nitro Elite", "Deviate Nitro Elite 2", "Deviate Nitro Elite 3", "Deviate Nitro Elite 4", "Eternity Nitro", "FAST-FWD Nitro Elite", "FAST-R Nitro Elite", "FAST-R Nitro Elite 2", "FAST-R Nitro Elite 3", "FAST-R Nitro Elite 3.1S", "FAST-R Nitro Elite 3.1W", "Liberate Nitro", "Long Distance Nitro Elite 3", "Mid Distance Nitro Elite", "Mid Distance Nitro Elite 3", "Propio Nitro", "Speed 100 R Ignite 2", "Speed 300 Racer 2", "Speed 500", "Speed 600 2", "Speed Sutamina", "UltraRide", "Velocity Nitro", "evoSPEED Berserker Nitro Elite", "evoSPEED Complete TFX Jump", "evoSPEED Crossfox", "evoSPEED Distance", "evoSPEED Distance Nitro Elite+", "evoSPEED Electric", "evoSPEED Forte Nitro Elite", "evoSPEED FortePro Nitro Elite", "evoSPEED Haraka 2", "evoSPEED High Jump", "evoSPEED High Jump Elite", "evoSPEED High Jump Nitro Elite", "evoSPEED High Jump Power", "evoSPEED Javelin", "evoSPEED Javelin Elite", "evoSPEED Long Distance", "evoSPEED Long Distance Nitro Elite", "evoSPEED Long Jump", "evoSPEED Mid-Distance", "evoSPEED Naio Jump Nitro Elite", "evoSPEED Naio Nitro", "evoSPEED Naio Nitro Elite", "evoSPEED Naio Nitro Elite 2", "evoSPEED Prep Sprint", "evoSPEED Sprint", "evoSPEED Sprint Nitro 2 (evoSPEED Tokyo Nitro)", "evoSPEED Sprint TFX", "evoSPEED Star", "evoSPEED Tokyo Brush", "evoSPEED Tokyo Brush Mid", "evoSPEED Tokyo Future", "evoSPEED Tokyo Future Faster+", "evoSPEED Tokyo Future Jump", "evoSPEED Tokyo Future Mid", "evoSPEED Tokyo Future Nitro Faster+", "evoSPEED Tokyo Nitro", "evoSPEED Tokyo Nitro 400", "evoSPEED Tokyo Nitro Long Jump", "evoSPEED Triple Jump Nitro Elite", "evoSPEED Triple Jump Power", "evoSPEED Triple Jump/PV", "evoSpEED Throw"], "Reebok": ["Floatride Energy X", "RBTC Racer 1", "RBTC Racer 2"], "Reshod": ["Coach Carmen RW", "Pushover RW"], "Salomon": ["Glide Max", "S/LAB 491616", "S/LAB PHANTASM 2 MADE IN FRANCE", "S/LAB PHANTASM 3", "S/LAB Phantasm", "S/LAB Phantasm 2", "S/LAB Phantasm CF", "S/LAB STRATOS"], "Saucony": ["ENDORPHIN PRO 5", "Endorphin 3", "Endorphin Cheetah", "Endorphin DVP3", "Endorphin Edge", "Endorphin Elite", "Endorphin Elite 2", "Endorphin LD", "Endorphin Pro", "Endorphin Pro 2", "Endorphin Pro 3", "Endorphin Pro 4", "Endorphin Pro+", "Endorphin Shift", "Endorphin Shift 2", "Endorphin Speed", "Endorphin Speed 2", "Endorphin Speed 3", "Fastwitch 9", "Fastwitch 9 MH 2", "Freedom ISO", "Havok XC3 Flat", "Havok XC3 Spike", "Kilkenny XC9 Flat", "Kilkenny XC9 Spike", "Kinvara 12", "Kinvara 13", "Kinvara 14", "Lanzar Jav 2", "Ride ISO", "Soarin J2", "Spitfire", "Tempus", "Terminal VT", "Type A8", "Type A9", "Unleash SD 2", "Uplift HJ 2"], "SAYSH": ["Spike One"], "Scott Sports": ["Pursuit", "Speed Carbon RC"], "Skechers": ["GO RUN ALPHA TEMPO", "GO RUN Speed Beast", "Speed 6", "Speed Elite"], "Sonic Cat": ["Wake up"], "Speedland": ["Speedland RX:FPY"], "Techlete": ["70 Meter Ambitions"], "Teva": ["Teva R2T"], "Topo": ["Specter"], "Tracksmith Corporation": ["Eliot Racer"], "Under Armour": ["Centric Grip", "Flow Velociti Elite 2022", "Hovr Miler 3", "Hovr Shakedown", "Hovr Shakedown Elite", "Hovr Silencer", "Hovr Skyline HJ", "Hovr Skyline LJ", "Hovr Skyline TJ", "Hovr Smokerider", "Kick Distance 3", "Kick Sprint 3", "Shakedown Elite LD 3", "Speedform Miler 2", "Sprint Pro 2", "Sprint Pro 3", "U Velociti Elite 2.0", "UA Shakedown Elite 3.5 MD", "UA Sprint Elite DEV", "UA U Silencer 2", "UA Velociti Elite SL DEV", "UA Velociti Racer 2 DEV2", "Unicorn Spike", "Velociti Elite 3", "Velociti Racer", "Velociti Wind"], "Velaasa": ["Revolution & Northern Lights", "Stones", "Velaasa Rockets"], "Volanti": ["911 Dream", "911 Dream II Max", "Bolt 911 Black Sole", "Flow Running Shoes", "H2 Running Shoes", "Panda Running shoes", "Racing Sun", "Rocket Air Running shoes", "Rocket Air Ultrasonic Diamond", "Volanti Rocket Air Track Shoes"], "Winglized - T&F Elite": ["Winglized Zeus 2"], "Xtep": ["060 1.0", "060-Sprint", "160X", "160X  JET", "160X 3.0", "160X 3.0 Pro", "160X 3.5 Pro", "160X 5.0", "160X 5.0 Pro", "160X 6.0", "160X 6.0 Pro", "160X 6.5", "160X 6.5 Pro", "160X 7.0", "160X 7.0 Monxter", "160X 7.0 Pro", "160X Elite", "160X JET", "160X-8.0", "160X-8.0Pro", "160X2", "160XJET", "160XPro", "TZ GLJ-1"], "Xtep Kids": ["Xtep 100 Feiling PRO"], "Zhongqiao Sports_Qiaodan": ["FEITENG ML RACE", "FEIYING PB 5.0", "FEIYING PB 6.0-v1", "FEIYING PLAID 2.0", "FEIYING PLAID 3.0-v1", "FeiYing PB 2.0", "FeiYing PB 3.0", "FeiYing PB 4.0", "FeiYing Plaid", "FeiYing Plaid 1.5", "QING HONG"]
     };
 
     const dictionary = {
-        en: { approved: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", name: "Athlete Name", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", hist: "HISTORY", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", phs: ["Diamond League", "Olympic Games"], names: ["Noah Lyles", "Jakob Ingebrigtsen"] },
-        cs: { approved: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", name: "Jméno atleta", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", hist: "HISTORIE", p1: "BIB a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", phs: ["Zlatá tretra", "MČR Praha"], names: ["Jan Novák", "Jakub Vadlejch"] }
+        en: { approved: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", name: "Athlete Name", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", hist: "HISTORY", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", phs: ["Diamond League", "Olympic Games", "World Athletics Champs"], names: ["Noah Lyles", "Jakob Ingebrigtsen", "Faith Kipyegon"] },
+        cs: { approved: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", name: "Jméno atleta", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", hist: "HISTORIE", p1: "BIB a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", phs: ["Zlatá tretra", "MČR Praha", "Memoriál Josefa Odložila"], names: ["Jan Novák", "Jakub Vadlejch", "Nikola Ogrodníková"] }
     };
 
     function setLang(lang) {
@@ -322,31 +254,22 @@
     }
 
     function updateDatalists() {
-        // Brands
-        const brandList = document.getElementById('brandList');
-        brandList.innerHTML = Object.keys(shoeDatabase).sort().map(b => `<option value="${b}">`).join('');
-        
-        // Comps History
+        document.getElementById('brandList').innerHTML = Object.keys(shoeDB).sort().map(b => `<option value="${b}">`).join('');
         const comps = JSON.parse(localStorage.getItem('h_comps') || '[]');
         document.getElementById('compOptions').innerHTML = comps.map(c => `<option value="${c}">`).join('');
-        
-        // Inspectors History
         const insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
         document.getElementById('inspOptions').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
     }
 
-    function updateModelSuggestions(val) {
+    function handleBrandChange(val) {
         const modelList = document.getElementById('modelList');
         const modelInput = document.getElementById('model');
         modelList.innerHTML = "";
-        
-        const brandKey = Object.keys(shoeDatabase).find(k => k.toLowerCase() === val.toLowerCase().trim());
+        const brandKey = Object.keys(shoeDB).find(k => k.toLowerCase() === val.toLowerCase().trim());
         if(brandKey) {
-            const models = shoeDatabase[brandKey].sort();
+            const models = shoeDB[brandKey].sort();
             modelList.innerHTML = models.map(m => `<option value="${m}">`).join('');
-            // Smart random tip
-            const randomTip = models[Math.floor(Math.random()*models.length)];
-            modelInput.placeholder = (currentLang === 'cs' ? "Např. " : "E.g. ") + randomTip;
+            modelInput.placeholder = (currentLang === 'cs' ? "Např. " : "E.g. ") + models[Math.floor(Math.random()*models.length)];
         } else {
             modelInput.placeholder = "Model...";
         }
@@ -383,36 +306,20 @@
         closeSig();
     }
 
-    function markFilled(id, input) {
-        if(input.files.length > 0) document.getElementById('item-'+id).classList.add('has-file');
-    }
+    function markFilled(id, input) { if(input.files.length > 0) document.getElementById('item-'+id).classList.add('has-file'); }
 
     function renderHistory() {
         const hist = JSON.parse(localStorage.getItem('h_logs') || '[]');
-        document.getElementById('history-container').innerHTML = hist.map(h => `
-            <div class="history-item">
-                <div><b>${h.ath}</b><br><small>${h.cmp}</small></div>
-                <div style="font-size:11px; color:var(--text-gray);">${h.time}</div>
-            </div>
-        `).join('');
+        document.getElementById('history-container').innerHTML = hist.map(h => `<div class="history-item"><div><b>${h.ath}</b><br><small>${h.cmp}</small></div><div style="font-size:11px; color:var(--text-gray); font-weight:700;">${h.time}</div></div>`).join('');
     }
 
-    function clearHistory() { if(confirm("Smazat historii?")) { localStorage.clear(); location.reload(); } }
-    function hardReset() { if(confirm("Reset formuláře?")) location.reload(); }
+    function clearHistory() { if(confirm(currentLang === 'cs' ? "Smazat historii?" : "Clear history?")) { localStorage.clear(); location.reload(); } }
 
     const clean = (s) => s ? s.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
 
     async function generatePDF() {
-        const ath = document.getElementById('athleteName').value;
-        const cmp = document.getElementById('compName').value;
-        const brand = document.getElementById('brand').value;
-        const model = document.getElementById('model').value;
-        const insp = document.getElementById('inspName').value;
-        const inspId = document.getElementById('inspId').value;
-        const date = document.getElementById('raceDate').value;
-
-        if(!ath || !cmp || !brand) { alert("Zadej aspoň atleta, závod a značku!"); return; }
-
+        const ath = document.getElementById('athleteName').value, cmp = document.getElementById('compName').value, brd = document.getElementById('brand').value, mdl = document.getElementById('model').value, insp = document.getElementById('inspName').value, iid = document.getElementById('inspId').value, dt = document.getElementById('raceDate').value;
+        if(!ath || !cmp || !brd) { alert(currentLang === 'cs' ? "Chybí údaje (Závod, Atlet, Značka)!" : "Missing details (Competition, Athlete, Brand)!"); return; }
         const doc = new jsPDF(), now = new Date().toLocaleString();
         doc.setFontSize(22).setFont("helvetica", "bold").text("SHOE CONTROL REPORT", 20, 25);
         doc.setLineWidth(0.5).line(20, 32, 190, 32);
@@ -424,36 +331,28 @@
         doc.setFontSize(14).text(clean(ath), 20, 72);
         
         doc.setFontSize(10).setTextColor(100).text("SHOE", 20, 85);
-        doc.setFontSize(14).text(`${clean(brand)} ${clean(model)}`, 20, 92);
+        doc.setFontSize(14).text(`${clean(brd)} ${clean(mdl)}`, 20, 92);
 
-        if(sigData.a) doc.addImage(sigData.a, 'PNG', 20, 240, 45, 20);
-        if(sigData.i) doc.addImage(sigData.i, 'PNG', 130, 240, 45, 20);
-
+        if(sigData.a) doc.addImage(sigData.a, 'PNG', 20, 240, 50, 20);
+        if(sigData.i) doc.addImage(sigData.i, 'PNG', 130, 240, 50, 20);
         doc.save(`${clean(ath).replace(/ /g, '_')}_${clean(cmp).replace(/ /g, '_')}.pdf`);
 
-        // Log to history
         let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]');
         h_logs.unshift({ ath, cmp, time: now });
-        localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,10)));
-        
+        localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,15)));
+
         let h_comps = JSON.parse(localStorage.getItem('h_comps') || '[]');
         if(!h_comps.includes(cmp)) h_comps.push(cmp);
         localStorage.setItem('h_comps', JSON.stringify(h_comps));
 
         let h_insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
-        if(!h_insps.some(i => i.name === insp)) h_insps.push({name: insp, id: inspId});
+        if(!h_insps.some(i => i.name === insp)) h_insps.push({name: insp, id: iid});
         localStorage.setItem('h_insps', JSON.stringify(h_insps));
 
-        // Smart Reset
-        document.getElementById('athleteName').value = "";
-        document.getElementById('brand').value = "";
-        document.getElementById('model').value = "";
-        sigData = {a:null, i:null};
-        document.getElementById('stat-a').innerText = '❌';
-        document.getElementById('stat-i').innerText = '❌';
+        document.getElementById('athleteName').value = ""; document.getElementById('brand').value = ""; document.getElementById('model').value = "";
+        sigData = {a:null, i:null}; document.getElementById('stat-a').innerText = '❌'; document.getElementById('stat-i').innerText = '❌';
         document.querySelectorAll('.sig-trigger').forEach(b => b.classList.remove('signed'));
-        renderHistory();
-        window.scrollTo(0,0);
+        renderHistory(); window.scrollTo(0,0);
     }
 
     window.onload = () => { setLang('cs'); renderHistory(); };
