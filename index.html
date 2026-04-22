@@ -90,18 +90,21 @@
         @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
 
         label { display: block; margin-top: 15px; font-weight: 800; font-size: 10px; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
+        
         input, select { 
             width: 100%; padding: 16px; margin-top: 5px; border: 1px solid var(--border); 
             border-radius: 14px; font-size: 16px; background: var(--input-bg); color: var(--text-main); 
             outline: none; font-family: var(--font-main);
+            -webkit-appearance: none;
         }
 
+        /* FOTO TLAČÍTKA */
         .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
         .photo-item {
             background: var(--input-bg); border: 2px solid var(--border); border-radius: 18px; padding: 25px 10px;
             text-align: center; position: relative; min-height: 130px; display: flex;
             flex-direction: column; align-items: center; justify-content: center; 
-            font-size: 14px; font-weight: 800; text-transform: uppercase;
+            font-size: 15px; font-weight: 800; text-transform: uppercase;
         }
         .photo-item span:first-child { font-size: 32px; margin-bottom: 8px; }
         .photo-item.has-file { border-color: var(--success); background: rgba(52, 199, 89, 0.05); }
@@ -110,7 +113,7 @@
             width: 100%; padding: 22px; border-radius: 18px; border: 2px dashed var(--border);
             background: var(--input-bg); color: var(--text-gray); font-weight: 800; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 15px;
-            font-size: 14px; text-transform: uppercase;
+            font-size: 15px; text-transform: uppercase;
         }
 
         .sig-trigger {
@@ -118,7 +121,7 @@
             border: 2.5px dashed var(--accent); background: var(--input-bg); 
             color: var(--accent); font-weight: 800; cursor: pointer;
             display: flex; justify-content: space-between; align-items: center; 
-            font-size: 14px; text-transform: uppercase;
+            font-size: 15px; text-transform: uppercase;
         }
         .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
 
@@ -127,6 +130,7 @@
             border-radius: 20px; font-size: 24px; font-weight: 800; cursor: pointer; margin-top: 40px; 
             font-family: var(--font-heading); letter-spacing: 1.5px; text-transform: uppercase;
         }
+
         .btn-reset { 
             background: transparent; color: var(--danger); border: 2px solid var(--danger); width: 100%; 
             padding: 12px; border-radius: 12px; font-size: 11px; font-weight: 800; cursor: pointer; 
@@ -137,10 +141,11 @@
         .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .history-title { font-family: var(--font-heading); font-size: 24px; text-transform: uppercase; }
 
+        /* MODALS */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
-        .modal-body { flex: 1; background: #ffffff; position: relative; }
-        canvas { width: 100%; height: 100%; touch-action: none; background: #fff; }
+        .modal-body { flex: 1; background: #ffffff; position: relative; min-height: 300px; }
+        canvas { width: 100%; height: 100%; touch-action: none; background: #fff; cursor: crosshair; }
         .modal-header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); }
         .modal-header h3 { font-family: var(--font-heading); font-size: 26px; margin: 0; text-transform: uppercase; }
 
@@ -205,8 +210,8 @@
         <div class="grid">
             <div>
                 <label id="lbl-insp-name">Inspector Name</label>
-                <input type="text" id="inspName" list="inspHistory" oninput="autoFillId(this.value)" autocomplete="off" placeholder="Jméno rozhodčího...">
-                <datalist id="inspHistory"></datalist>
+                <input type="text" id="inspName" list="inspHistoryOptions" oninput="autoFillId(this.value)" autocomplete="off" placeholder="Jméno rozhodčího...">
+                <datalist id="inspHistoryOptions"></datalist>
             </div>
             <div>
                 <label id="lbl-insp-id">ID Number</label>
@@ -241,7 +246,7 @@
         <div style="text-align:center;"><button class="btn-reset" onclick="confirmFullReset()" id="btn-reset">RESET FORM</button></div>
 
         <div class="history-section">
-            <div class="history-header"><div class="history-title" id="lbl-hist">HISTORY</div><button onclick="clearHistory()" id="btn-clear-txt" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:12px; font-weight:800;">CLEAR</button></div>
+            <div class="history-header"><div class="history-title" id="lbl-hist">HISTORY</div><button onclick="clearHistory()" id="btn-clear-txt" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:12px; font-weight:800; text-transform:uppercase;">CLEAR</button></div>
             <div id="history-list"></div>
         </div>
     </div>
@@ -262,23 +267,29 @@
     let currentLang = 'cs', sigData = { a: null, i: null }, otherPhotos = [], activePad, activeType;
 
     const shoeDatabase = {
-        "Adidas": ["Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Takumi Sen 10", "Adizero Ambition"],
+        "Adidas": ["Adizero Adios Pro 3", "Adizero Avanti TYO", "Adizero Prime SP2", "Adizero Ambition"],
         "Nike": ["Air Zoom Victory", "Air Zoom Maxfly 2", "ZoomX Dragonfly 2", "Alphafly 3", "Vaporfly 3"],
-        "Asics": ["Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2", "Gun Lap 2"],
+        "Asics": ["Metaspeed Sky Paris", "Metaspeed Edge Paris", "Cosmoracer LD 2"],
         "Puma": ["Berserker Nitro Elite 2", "evoSPEED Sprint", "evoSPEED Tokyo Future"],
         "New Balance": ["FuelCell MD-X v2", "FuelCell SuperComp Elite v4"],
         "Hoka": ["Cielo X1", "Rocket X2"]
     };
 
     const translations = {
-        en: { title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", athlete: "Athlete Name", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", hist: "HISTORY", sigModalTitle: "Signature", warnMsg: "Are you sure you want to send an incomplete form?", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" },
+        en: { title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", athlete: "Athlete Name", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", hist: "HISTORY", sigModalTitle: "Signature", warnMsg: "Send incomplete form?", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" },
         cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", athlete: "Jméno atleta", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", hist: "HISTORIE", sigModalTitle: "Podpis", warnMsg: "vášně chceš odeslat nedokončený formulář", p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)" }
     };
 
+    // --- INITIALIZATION ---
+    window.onload = () => {
+        setLang('cs');
+        const canvas = document.getElementById('sigCanvas');
+        activePad = new SignaturePad(canvas, { backgroundColor: 'rgb(255, 255, 255)' });
+    };
+
     function toggleTheme() {
-        const doc = document.body;
-        const isDark = doc.getAttribute('data-theme') === 'dark';
-        doc.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
         document.getElementById('theme-icon').innerText = isDark ? '🌙' : '☀️';
     }
 
@@ -299,11 +310,12 @@
         updateDatalists(); renderHistory();
     }
 
+    // --- DATALISTS & SUGGESTIONS ---
     function updateDatalists() {
         const comps = JSON.parse(localStorage.getItem('compList') || '[]');
         const insps = JSON.parse(localStorage.getItem('inspList') || '[]');
         document.getElementById('compListOptions').innerHTML = comps.map(c => `<option value="${c}">`).join('');
-        document.getElementById('inspHistory').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
+        document.getElementById('inspHistoryOptions').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
         document.getElementById('idListOptions').innerHTML = insps.map(i => `<option value="${i.id}">`).join('');
         const brands = Object.keys(shoeDatabase).sort();
         document.getElementById('brandListOptions').innerHTML = brands.map(b => `<option value="${b}">`).join('');
@@ -328,16 +340,18 @@
         if (found) document.getElementById('inspId').value = found.id;
     }
 
-    const canvas = document.getElementById('sigCanvas');
-    activePad = new SignaturePad(canvas, { backgroundColor: 'white' });
-
+    // --- SIGNATURES ---
     function openSig(type) {
         activeType = type;
-        document.getElementById('sigModal').classList.add('active');
+        const modal = document.getElementById('sigModal');
+        modal.classList.add('active');
+        
+        const canvas = document.getElementById('sigCanvas');
         const ratio = Math.max(window.devicePixelRatio || 1, 1);
         canvas.width = canvas.offsetWidth * ratio;
         canvas.height = canvas.offsetHeight * ratio;
         canvas.getContext("2d").scale(ratio, ratio);
+        
         activePad.clear();
         if (sigData[type]) activePad.fromDataURL(sigData[type]);
     }
@@ -346,28 +360,51 @@
         if (!activePad.isEmpty()) {
             sigData[activeType] = activePad.toDataURL();
             document.getElementById('stat-' + activeType).innerText = '✅';
+            document.getElementById('btn-sig-' + activeType).classList.add('signed');
         }
         closeSig();
     }
 
     function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
 
+    // --- LOGIC ---
     function markFilled(id) { document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0); }
     function handleOtherPhoto(input) { if (input.files[0]) { otherPhotos.push(input.files[0]); renderOtherList(); } }
-    function renderOtherList() { document.getElementById('otherFileList').innerHTML = otherPhotos.map((f, i) => `<div class="other-tag">Photo ${i + 1}</div>`).join(''); }
+    function renderOtherList() { document.getElementById('otherFileList').innerHTML = otherPhotos.map((f, i) => `<div class="other-tag">Foto ${i + 1}</div>`).join(''); }
+    function confirmFullReset() { if(confirm("Smazat vše?")) { localStorage.clear(); location.reload(); } }
 
-    function confirmFullReset() { if(confirm("Reset form?")) location.reload(); }
-    function renderHistory() { const hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]'); document.getElementById('history-list').innerHTML = hist.map(h => `<div class="history-item"><b>${h.name}</b><small>${h.comp}</small></div>`).join(''); }
-    function clearHistory() { if (confirm("Clear history?")) { localStorage.removeItem('shoeHistory'); renderHistory(); } }
+    function renderHistory() {
+        const list = document.getElementById('history-list');
+        const hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]');
+        list.innerHTML = hist.map(h => `<div class="history-item"><b>${h.name}</b><small>${h.comp}</small></div>`).join('');
+    }
+
+    function clearHistory() { if (confirm("Smazat historii?")) { localStorage.removeItem('shoeHistory'); renderHistory(); } }
 
     const clean = (str) => str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
-    async function processImg(file) { if (!file) return null; return new Promise(resolve => { const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); const ctx = c.getContext('2d'); c.width = img.width; c.height = img.height; ctx.drawImage(img, 0, 0); resolve({ data: c.toDataURL('image/jpeg', 0.8), w: img.width, h: img.height }); }; img.src = e.target.result; }; reader.readAsDataURL(file); }); }
+    async function processImg(file) {
+        return new Promise(resolve => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const c = document.createElement('canvas');
+                    const ctx = c.getContext('2d');
+                    c.width = img.width; c.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    resolve({ data: c.toDataURL('image/jpeg', 0.7), w: img.width, h: img.height });
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
 
+    // --- PDF ENGINE ---
     document.getElementById('btn-gen').onclick = async () => {
         const ath = document.getElementById('athleteName').value, cmp = document.getElementById('compName').value, brd = document.getElementById('brand').value, dt = document.getElementById('raceDate').value, inspN = document.getElementById('inspName').value, inspI = document.getElementById('inspId').value;
         if (!cmp || !ath || !brd) { if (!confirm(translations[currentLang].warnMsg)) return; }
         
-        // Save to memory
         let comps = JSON.parse(localStorage.getItem('compList') || '[]');
         let insps = JSON.parse(localStorage.getItem('inspList') || '[]');
         if (cmp && !comps.includes(cmp.trim())) comps.push(cmp.trim());
@@ -376,23 +413,73 @@
         localStorage.setItem('inspList', JSON.stringify(insps.slice(-20)));
 
         const doc = new jsPDF(), now = new Date().toLocaleString('en-GB'), logo = "https://upload.wikimedia.org/wikipedia/en/c/ce/World_Athletics_Championships.png", t = translations.en;
-        const validPhotos = [];
-        for (let i = 1; i <= 6; i++) { const f = document.getElementById('p'+i).files[0]; if (f) validPhotos.push({ ...await processImg(f), label: t['p'+i] }); }
-        for (let i = 0; i < otherPhotos.length; i++) validPhotos.push({ ...await processImg(otherPhotos[i]), label: "Extra Photo " + (i + 1) });
         
-        doc.addImage(logo, 'PNG', 150, 10, 40, 20); doc.setFontSize(22).setFont("helvetica", "bold").text(t.title, 20, 25); doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 35, 190, 35);
-        doc.setFontSize(10).setTextColor(120).text("COMPETITION", 20, 50); doc.setFontSize(14).setTextColor(0).text(clean(cmp) || "---", 20, 58);
-        doc.setFontSize(10).setTextColor(120).text("ATHLETE", 20, 75); doc.setFontSize(14).text(`${clean(ath)} (${document.getElementById('sex').value})`, 20, 83);
-        doc.setFontSize(10).setTextColor(120).text("SHOE DETAILS", 20, 100); doc.setFontSize(14).text(`${clean(brd)} - ${clean(document.getElementById('model').value)}`, 20, 108);
-        const sigY = 240; doc.setDrawColor(180).line(20, sigY, 85, sigY); doc.line(125, sigY, 190, sigY); doc.setFontSize(9); doc.text(clean(ath) || "---", 52, sigY + 5, {align:'center'}); doc.text(t.sigA, 52, sigY + 9, {align:'center'}); doc.text(`${clean(inspN)} (${clean(inspI)})`, 157, sigY + 5, {align:'center'}); doc.text(t.sigI, 157, sigY + 9, {align:'center'});
-        if (sigData.a) doc.addImage(sigData.a, 'PNG', 27, sigY - 25, 45, 20); if (sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
-        if (validPhotos.length > 0) { doc.addPage(); doc.setFontSize(18).text("PHOTO DOCUMENTATION", 20, 25); validPhotos.forEach((item, i) => { const col = i % 2, row = Math.floor(i / 2), maxWidth = 80, maxHeight = 45; let finalW = maxWidth, finalH = (item.h * maxWidth) / item.w; if (finalH > maxHeight) { finalH = maxHeight; finalW = (item.w * maxHeight) / item.h; } doc.addImage(item.data, 'JPEG', 20 + (col * 90) + (maxWidth - finalW) / 2, 40 + (row * 55) + (maxHeight - finalH) / 2, finalW, finalH); doc.setFontSize(8).text(item.label, 20 + (col * 90), 40 + (row * 55) + 48); }); }
-        doc.save(`${clean(ath).replace(/\s+/g, '_')}_${clean(cmp).replace(/\s+/g, '_')}_${dt || "NoDate"}.pdf`);
-        let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]'); hist.unshift({ name: ath || "N/A", comp: cmp || "N/A", time: now }); localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
-        location.reload(); // Smart reset
-    };
+        const validPhotos = [];
+        for (let i = 1; i <= 6; i++) { 
+            const f = document.getElementById('p'+i).files[0]; 
+            if (f) validPhotos.push({ ...await processImg(f), label: t['p'+i] }); 
+        }
+        for (let i = 0; i < otherPhotos.length; i++) {
+            validPhotos.push({ ...await processImg(otherPhotos[i]), label: "Extra Photo " + (i + 1) });
+        }
 
-    window.onload = () => setLang('cs');
+        doc.addImage(logo, 'PNG', 150, 10, 40, 20);
+        doc.setFontSize(22).setFont("helvetica", "bold").text(t.title, 20, 25);
+        doc.setDrawColor(0).setLineWidth(0.5).line(20, 35, 190, 35);
+        
+        doc.setFontSize(10).setTextColor(100).text("COMPETITION", 20, 50);
+        doc.setFontSize(14).setTextColor(0).text(clean(cmp) || "---", 20, 58);
+        
+        doc.setFontSize(10).setTextColor(100).text("ATHLETE", 20, 75);
+        doc.setFontSize(14).text(`${clean(ath)} (${document.getElementById('sex').value})`, 20, 83);
+        
+        doc.setFontSize(10).setTextColor(100).text("SHOE DETAILS", 20, 100);
+        doc.setFontSize(14).text(`${clean(brd)} - ${clean(document.getElementById('model').value)}`, 20, 108);
+
+        const sigY = 240;
+        doc.line(20, sigY, 85, sigY); doc.line(125, sigY, 190, sigY);
+        doc.setFontSize(9);
+        doc.text(clean(ath) || "---", 52, sigY + 5, {align:'center'});
+        doc.text(t.sigA, 52, sigY + 10, {align:'center'});
+        doc.text(`${clean(inspN)} (${clean(inspI)})`, 157, sigY + 5, {align:'center'});
+        doc.text(t.sigI, 157, sigY + 10, {align:'center'});
+
+        if (sigData.a) doc.addImage(sigData.a, 'PNG', 30, sigY - 25, 45, 20);
+        if (sigData.i) doc.addImage(sigData.i, 'PNG', 135, sigY - 25, 45, 20);
+
+        if (validPhotos.length > 0) {
+            doc.addPage();
+            doc.setFontSize(18).text("PHOTO DOCUMENTATION", 20, 25);
+            validPhotos.forEach((item, i) => {
+                const col = i % 2, row = Math.floor(i / 2), maxWidth = 80, maxHeight = 50;
+                doc.addImage(item.data, 'JPEG', 20 + (col * 90), 40 + (row * 65), maxWidth, maxHeight);
+                doc.setFontSize(8).text(item.label, 20 + (col * 90), 40 + (row * 65) + 55);
+            });
+        }
+
+        doc.save(`${clean(ath).replace(/\s+/g, '_')}_${clean(cmp).replace(/\s+/g, '_')}_${dt || "NoDate"}.pdf`);
+        
+        let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]');
+        hist.unshift({ name: ath || "N/A", comp: cmp || "N/A", time: now });
+        localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
+
+        // Smart Reset
+        document.getElementById('athleteName').value = "";
+        document.getElementById('brand').value = "";
+        document.getElementById('model').value = "";
+        sigData = { a: null, i: null };
+        document.getElementById('stat-a').innerText = '❌';
+        document.getElementById('stat-i').innerText = '❌';
+        document.getElementById('btn-sig-a').classList.remove('signed');
+        document.getElementById('btn-sig-i').classList.remove('signed');
+        for(let i=1; i<=6; i++) {
+            document.getElementById('p'+i).value = "";
+            document.getElementById('item-p'+i).classList.remove('has-file');
+        }
+        otherPhotos = [];
+        document.getElementById('otherFileList').innerHTML = "";
+        renderHistory();
+    };
 </script>
 </body>
 </html>
