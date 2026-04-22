@@ -56,7 +56,8 @@
         .lang-btn { padding: 12px 24px; border-radius: 14px; border: 2px solid var(--border); background: transparent; color: var(--text-main); font-weight: 800; cursor: pointer; text-transform: uppercase; font-size: 11px; }
         .lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-        .db-link { display: flex; align-items: center; justify-content: center; gap: 12px; background: #e8f5e9; color: #2e7d32; text-decoration: none; padding: 20px; border-radius: 18px; font-weight: 800; font-family: var(--font-heading); font-size: 20px; margin-bottom: 30px; width: 100%; text-transform: uppercase; border: 2px solid #a5d6a7; transition: 0.2s; letter-spacing: 1px; }
+        .db-link { display: flex; align-items: center; justify-content: center; gap: 12px; background: #e8f5e9; color: #2e7d32; text-decoration: none; padding: 20px; border-radius: 18px; font-weight: 800; font-family: var(--font-heading); font-size: 20px; margin-bottom: 8px; width: 100%; text-transform: uppercase; border: 2px solid #a5d6a7; transition: 0.2s; letter-spacing: 1px; }
+        .db-update-info { text-align: center; font-size: 11px; color: var(--text-gray); margin-bottom: 25px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
@@ -123,6 +124,7 @@
         <a href="https://certcheck.worldathletics.org/" target="_blank" class="db-link" id="db-button">
             <span id="txt-list-link">LIST OF APPROVED ATHLETIC SHOES</span>
         </a>
+        <div class="db-update-info" id="txt-db-update">Offline Database Updated: April 2026</div>
 
         <div class="grid">
             <div><label id="lbl-comp">Competition</label><input type="text" id="compName" list="compOptions" placeholder="Závod..."></div>
@@ -231,32 +233,34 @@
 
     const dictionary = {
         en: { 
-            approved: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Date", athlete: "Athlete Name", 
+            approved: "LIST OF APPROVED ATHLETIC SHOES", dbUpdate: "Offline Database Updated: April 2026", comp: "Competition", date: "Date", athlete: "Athlete Name", 
             sex: "Category", men: "Men", women: "Women", brand: "Shoe Brand", model: "Shoe Model",
             inspName: "Inspector Name", inspId: "ID Number", disc: "Discipline", sigA: "Athlete Signature", 
             sigI: "Inspector Signature", gen: "CREATE REPORT", hist: "HISTORY", clear: "CLEAR",
             p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", 
             phs: ["Diamond League", "Olympic Games"], names: ["Noah Lyles", "Jakob Ingebrigtsen"], 
             btn_yes: "✅ APPROVED", btn_no: "❌ NOT APPROVED", q: "Is the shoe approved for this discipline?",
-            modalTitle: "Signature", modalClear: "CLEAR", modalSave: "SAVE", otherBtn: "+ Add Extra Photo"
+            modalTitle: "Signature", modalClear: "CLEAR", modalSave: "SAVE", otherBtn: "+ Add Extra Photo",
+            notFoundWA: "Model not found. Please verify directly on the official WA website."
         },
         cs: { 
-            approved: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", athlete: "Jméno atleta", 
+            approved: "SEZNAM SCHVÁLENÉ OBUVI", dbUpdate: "Offline databáze aktualizována: Duben 2026", comp: "Závod", date: "Datum", athlete: "Jméno atleta", 
             sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka obuvi", model: "Model obuvi",
             inspName: "Jméno rozhodčího", inspId: "Číslo průkazu", disc: "Disciplína", sigA: "Podpis atleta", 
             sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", hist: "HISTORIE", clear: "SMAZAT",
             p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", 
             phs: ["Zlatá tretra", "MČR Praha"], names: ["Jan Novák", "Jakub Vadlejch"], 
             btn_yes: "✅ POVOLENO", btn_no: "❌ NEPOVOLENO", q: "Závodí atlet v povolené obuvi pro tuto disciplínu?",
-            modalTitle: "Podpis", modalClear: "SMAZAT", modalSave: "ULOŽIT", otherBtn: "+ Přidat extra fotku"
+            modalTitle: "Podpis", modalClear: "SMAZAT", modalSave: "ULOŽIT", otherBtn: "+ Přidat extra fotku",
+            notFoundWA: "Model nenalezen. Zkontrolujte prosím model přímo na oficiálním webu WA."
         }
     };
 
     function setLang(lang) {
         currentLang = lang; const t = dictionary[lang];
         
-        // LABELS & TEXTS
         document.getElementById('txt-list-link').innerText = t.approved;
+        document.getElementById('txt-db-update').innerText = t.dbUpdate;
         document.getElementById('lbl-comp').innerText = t.comp;
         document.getElementById('lbl-date').innerText = t.date;
         document.getElementById('lbl-name').innerText = t.athlete;
@@ -329,6 +333,7 @@
         const model = document.getElementById('model').value.trim();
         const infoBox = document.getElementById('shoeInfoBox');
         const infoText = document.getElementById('shoeAllowedFor');
+        const t = dictionary[currentLang];
         
         setApproval(null);
 
@@ -345,7 +350,7 @@
             infoText.innerHTML = `${msg}<br><span style="color:var(--accent); font-size:16px;">${texts.join(', ')}</span>`;
             infoBox.style.display = 'block';
         } else if (brand && model) {
-            infoText.innerHTML = currentLang === 'cs' ? "Model nenalezen. Zkontrolujte ručně." : "Model not found. Manual check required.";
+            infoText.innerHTML = t.notFoundWA + `<br><a href="https://certcheck.worldathletics.org/" target="_blank" style="color:var(--accent); text-decoration:underline; display:inline-block; margin-top:8px;">certcheck.worldathletics.org</a>`;
             infoBox.style.display = 'block';
         } else {
             infoBox.style.display = 'none';
@@ -483,14 +488,13 @@
             doc.setFontSize(24).setFont("helvetica", "bold").setTextColor(0);
             doc.text("SHOE CONTROL REPORT", 20, 25);
             
-            // Modrá linka
+            // Modrá linka posunuta dolů, aby neškrtala logo
             doc.setDrawColor(0, 122, 255).setLineWidth(1).line(20, 38, 190, 38);
             
             const leftCol = 20;
             const rightCol = 115;
             let y = 50;
 
-            // Závod a Datum
             doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("COMPETITION", leftCol, y);
             doc.setFontSize(10).setTextColor(120).text("DATE", rightCol, y);
             y += 6;
@@ -498,7 +502,6 @@
             doc.setFontSize(14).setTextColor(0).text(date || "---", rightCol, y);
             y += 12;
 
-            // Atlet a Kategorie
             doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("ATHLETE", leftCol, y);
             doc.setFontSize(10).setTextColor(120).text("CATEGORY", rightCol, y);
             y += 6;
@@ -509,7 +512,6 @@
             doc.setLineWidth(0.2).setDrawColor(220).line(20, y, 190, y);
             y += 10;
 
-            // Bota a Disciplína
             doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("SHOE BRAND & MODEL", leftCol, y);
             y += 6;
             doc.setFontSize(14).setTextColor(0).setFont("helvetica", "bold").text(`${clean(brd)} ${clean(mdl)}`, leftCol, y);
@@ -520,23 +522,16 @@
             doc.setFontSize(14).setTextColor(0).setFont("helvetica", "normal").text(clean(discText) || "---", leftCol, y);
             y += 10;
 
-            // STATUS (Jen jak sis to přál)
+            // Zápis do protokolu pouze pokud je bota explicitně NEPOVOLENA
             if (isShoeApproved === false) {
                 doc.setFontSize(14).setTextColor(255, 0, 0).setFont("helvetica", "bold");
                 doc.text("STATUS: SHOE NOT APPROVED FOR THIS DISCIPLINE", leftCol, y);
-            } else if (isShoeApproved === true) {
-                doc.setFontSize(12).setTextColor(0, 150, 0).setFont("helvetica", "bold");
-                doc.text("STATUS: APPROVED FOR THIS DISCIPLINE", leftCol, y);
-            } else {
-                doc.setFontSize(12).setTextColor(0).setFont("helvetica", "bold");
-                doc.text("STATUS: MANUAL VERIFICATION REQUIRED", leftCol, y);
             }
             y += 15;
 
             doc.setLineWidth(0.2).setDrawColor(220).line(20, y, 190, y);
             y += 10;
 
-            // Rozhodčí
             doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("INSPECTOR NAME", leftCol, y);
             doc.setFontSize(10).setTextColor(120).text("INSPECTOR ID", rightCol, y);
             y += 6;
@@ -544,7 +539,6 @@
             doc.setFontSize(14).setTextColor(0).text(clean(iid) || "---", rightCol, y);
             y += 15;
 
-            // Zaškrtávací pole dokumentace
             doc.setFontSize(10).setTextColor(120).setFont("helvetica", "bold").text("ATTACHED PHOTO DOCUMENTATION", leftCol, y);
             y += 8;
             doc.setFontSize(11).setTextColor(0).setFont("helvetica", "normal");
@@ -558,12 +552,12 @@
                 doc.text(`[ X ]  Extra Photos: ${otherPhotos.length}`, leftCol, y);
             }
 
-            // Podpisy
             const sigY = 260;
             doc.setDrawColor(150).setLineWidth(0.5);
             doc.line(20, sigY, 90, sigY); 
             doc.line(120, sigY, 190, sigY);
             
+            // Jména přímo pod čarou podpisu
             doc.setFontSize(10).setFont("helvetica", "bold").setTextColor(0);
             doc.text(clean(ath) || "---", 55, sigY + 5, {align:'center'});
             doc.text(clean(insp) || "---", 155, sigY + 5, {align:'center'});
@@ -575,7 +569,7 @@
             if(sigData.a) doc.addImage(sigData.a, 'PNG', 25, sigY - 25, 60, 20);
             if(sigData.i) doc.addImage(sigData.i, 'PNG', 125, sigY - 25, 60, 20);
 
-            doc.setFontSize(8).setTextColor(180).setFont("helvetica", "normal").text(`Generated: ${now}`, 190, 285, {align:'right'});
+            doc.setFontSize(8).setTextColor(180).setFont("helvetica", "normal").text(`Generated securely: ${now}`, 190, 285, {align:'right'});
 
             // --- STRANA 2: FOTKY (Mřížka) ---
             if (validPhotos.length > 0) {
@@ -602,10 +596,8 @@
                 });
             }
 
-            // Uložení
             doc.save(`${clean(ath).replace(/ /g, '_')}_${clean(cmp).replace(/ /g, '_')}.pdf`);
 
-            // Historie - Uloží inspektora pouze pokud má vyplněno jméno i ID!
             let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]'); h_logs.unshift({ ath, cmp, time: now }); localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,15)));
             let h_comps = JSON.parse(localStorage.getItem('h_comps') || '[]'); if(!h_comps.includes(cmp)) h_comps.push(cmp); localStorage.setItem('h_comps', JSON.stringify(h_comps));
             
@@ -617,7 +609,6 @@
                 localStorage.setItem('h_insps', JSON.stringify(h_insps));
             }
 
-            // Smart Reset
             document.getElementById('athleteName').value = ""; document.getElementById('brand').value = ""; document.getElementById('model').value = ""; document.getElementById('discipline').value = "";
             sigData = {a:null, i:null}; document.getElementById('stat-a').innerText = '❌'; document.getElementById('stat-i').innerText = '❌'; document.getElementById('shoeInfoBox').style.display = 'none'; setApproval(null);
             document.querySelectorAll('.sig-trigger').forEach(b => b.classList.remove('signed'));
