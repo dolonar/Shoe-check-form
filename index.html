@@ -171,8 +171,7 @@
         </div>
 
         <div class="grid">
-            <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" list="inspOptions" oninput="autoFillId(this.value)" autocomplete="new-password"></div>
-            <datalist id="inspOptions"></datalist>
+            <div><label id="lbl-insp-name">Inspector Name</label><input type="text" id="inspName" placeholder="Rozhodčí..." autocomplete="new-password"></div>
             <div><label id="lbl-insp-id">ID Number</label><input type="text" id="inspId" placeholder="Průkaz..." autocomplete="new-password"></div>
         </div>
 
@@ -249,7 +248,7 @@
             sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", hist: "HISTORIE", clear: "SMAZAT",
             p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka bok", p6: "Vložka shora", 
             phs: ["Zlatá tretra", "MČR Praha"], names: ["Jan Novák", "Jakub Vadlejch"], 
-            btn_yes: "✅ POVOLENO", btn_no: "❌ NEPOVOLENO", q: "Závodí atlet v povolené obuvi pre túto disciplínu?",
+            btn_yes: "✅ POVOLENO", btn_no: "❌ NEPOVOLENO", q: "Závodí atlet v povolené obuvi pro tuto disciplínu?",
             modalTitle: "Podpis", modalClear: "SMAZAT", modalSave: "ULOŽIT", otherBtn: "+ Přidat extra fotku",
             notFoundWA: "Model nenalezen. Zkontrolujte prosím model přímo na oficiálním webu WA."
         }
@@ -308,8 +307,6 @@
         document.getElementById('brandList').innerHTML = Object.keys(shoeDB).sort().map(b => `<option value="${b}">`).join('');
         const comps = JSON.parse(localStorage.getItem('h_comps') || '[]');
         document.getElementById('compOptions').innerHTML = comps.map(c => `<option value="${c}">`).join('');
-        const insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
-        document.getElementById('inspOptions').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
     }
 
     function handleBrandChange(val) {
@@ -345,7 +342,7 @@
             if(rules.includes('H')) texts.push('Throw (Vrhy)');
             if(rules.includes('R')) texts.push('Road (Silnice)');
             
-            const msg = currentLang === 'cs' ? "Oficiálne povolené pre:" : "Officially approved for:";
+            const msg = currentLang === 'cs' ? "Oficiálně schváleno pro:" : "Officially approved for:";
             infoText.innerHTML = `${msg}<br><span style="color:var(--accent); font-size:16px;">${texts.join(', ')}</span>`;
             infoBox.style.display = 'block';
         } else if (brand && model) {
@@ -366,15 +363,6 @@
         
         if(status === true) btnY.classList.add('active');
         if(status === false) btnN.classList.add('active');
-    }
-
-    function autoFillId(val) {
-        // OPRAVA: Prehľadá čistú databázu a ID vloží len pri exaktnej zhode mena.
-        const insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
-        const exactMatch = insps.find(i => i.name.toLowerCase() === val.trim().toLowerCase());
-        if(exactMatch && exactMatch.id) {
-            document.getElementById('inspId').value = exactMatch.id;
-        }
     }
 
     const canvas = document.getElementById('sigCanvas');
@@ -422,10 +410,9 @@
     }
 
     function clearHistory() { 
-        if(confirm(currentLang === 'cs' ? "Zmazať históriu aj uložených rozhodcov?" : "Clear history and saved inspectors?")) { 
+        if(confirm(currentLang === 'cs' ? "Smazat historii?" : "Clear history?")) { 
             localStorage.removeItem('h_logs');
             localStorage.removeItem('h_comps');
-            localStorage.removeItem('h_insps');
             location.reload(); 
         } 
     }
@@ -463,7 +450,7 @@
             const discText = document.getElementById('discipline').value;
 
             if(!ath || !cmp || !brd) { 
-                alert(currentLang === 'cs' ? "Chýbajú údaje (Závod, Atlét, Značka)!" : "Missing details (Competition, Athlete, Brand)!"); 
+                alert(currentLang === 'cs' ? "Chybí údaje (Závod, Atlet, Značka)!" : "Missing details (Competition, Athlete, Brand)!"); 
                 return; 
             }
 
@@ -480,7 +467,7 @@
                 validPhotos.push({ ...await processImg(otherPhotos[i]), label: "Extra Photo " + (i + 1) });
             }
 
-            // --- STRANA 1: PROFESIONÁLNY REPORT ---
+            // --- STRANA 1: PROFESIONÁLNÍ REPORT ---
             doc.addImage(logo, 'PNG', 140, 10, 50, 25);
             doc.setFontSize(24).setFont("helvetica", "bold").setTextColor(0);
             doc.text("SHOE CONTROL REPORT", 20, 25);
@@ -518,7 +505,6 @@
             doc.setFontSize(14).setTextColor(0).setFont("helvetica", "normal").text(clean(discText) || "---", leftCol, y);
             y += 10;
 
-            // STATUS V PROTOKOLE LEN AK JE ZAMIETNUTÉ ALEBO ZACHOVANÉ
             if (isShoeApproved === false) {
                 doc.setFontSize(14).setTextColor(255, 0, 0).setFont("helvetica", "bold");
                 doc.text("STATUS: SHOE NOT APPROVED FOR THIS DISCIPLINE", leftCol, y);
@@ -596,18 +582,8 @@
 
             doc.save(`${clean(ath).replace(/ /g, '_')}_${clean(cmp).replace(/ /g, '_')}.pdf`);
 
-            // Ukladanie historie
             let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]'); h_logs.unshift({ ath, cmp, time: now }); localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,15)));
             let h_comps = JSON.parse(localStorage.getItem('h_comps') || '[]'); if(!h_comps.includes(cmp)) h_comps.push(cmp); localStorage.setItem('h_comps', JSON.stringify(h_comps));
-            
-            // OPRAVA Ukladania rozhodcu (Ulozi iba ak je Meno a ID vyplnene)
-            let h_insps = JSON.parse(localStorage.getItem('h_insps') || '[]'); 
-            if(insp && iid && insp.trim() !== "" && iid.trim() !== "") { 
-                const existingIdx = h_insps.findIndex(i => i.name === insp);
-                if(existingIdx >= 0) h_insps[existingIdx].id = iid;
-                else h_insps.push({name: insp, id: iid});
-                localStorage.setItem('h_insps', JSON.stringify(h_insps));
-            }
 
             document.getElementById('athleteName').value = ""; document.getElementById('brand').value = ""; document.getElementById('model').value = ""; document.getElementById('discipline').value = "";
             sigData = {a:null, i:null}; document.getElementById('stat-a').innerText = '❌'; document.getElementById('stat-i').innerText = '❌'; document.getElementById('shoeInfoBox').style.display = 'none'; setApproval(null);
@@ -622,15 +598,7 @@
         }
     }
 
-    window.onload = () => { 
-        // Automatický čistič zlej pamäte rozhodcov pri načítaní
-        let insps = JSON.parse(localStorage.getItem('h_insps') || '[]');
-        insps = insps.filter(i => i && i.name && i.id && i.name.trim() !== "" && i.id.trim() !== "");
-        localStorage.setItem('h_insps', JSON.stringify(insps));
-
-        setLang('cs'); 
-        renderHistory(); 
-    };
+    window.onload = () => { setLang('cs'); renderHistory(); };
 </script>
 </body>
 </html>
