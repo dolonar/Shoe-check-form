@@ -48,197 +48,72 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* Hlavička */
-        .app-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 20px 0;
-            position: relative;
-        }
+        .app-header { display: flex; justify-content: center; align-items: center; width: 100%; padding: 20px 0; position: relative; }
+        .app-header img { max-width: 160px; height: auto; border-radius: 10px; }
 
-        .app-header img {
-            max-width: 160px;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        .header-actions {
-            position: absolute;
-            right: 10px;
-        }
-
+        .header-actions { position: absolute; right: 10px; }
         .icon-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 8px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: var(--card-bg); border: 1px solid var(--border); padding: 8px;
+            border-radius: 12px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
         }
 
-        /* Karta obsahu */
         .card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-            max-width: 800px;
-            margin: 0 auto 20px auto;
-            width: 100%;
+            background: var(--card-bg); padding: 25px; border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto 20px auto; width: 100%;
         }
 
-        .lang-switch {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 25px;
-            justify-content: center;
-        }
-
+        .lang-switch { display: flex; gap: 8px; margin-bottom: 25px; justify-content: center; }
         .lang-btn {
-            padding: 10px 20px;
-            border-radius: 12px;
-            border: 2px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
-            font-weight: 700;
-            cursor: pointer;
+            padding: 10px 20px; border-radius: 12px; border: 2px solid var(--primary);
+            background: transparent; color: var(--primary); font-weight: 700; cursor: pointer;
         }
+        .lang-btn.active { background: var(--primary); color: white; }
 
-        .lang-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Tlačítko databáze */
         .db-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: rgba(52, 199, 89, 0.4);
-            color: var(--success);
-            text-decoration: none;
-            padding: 16px;
-            border-radius: 15px;
-            font-weight: 700;
-            font-size: 13px;
-            margin-bottom: 25px;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: rgba(52, 199, 89, 0.4); color: var(--success); text-decoration: none;
+            padding: 16px; border-radius: 15px; font-weight: 700; font-size: 13px;
+            margin-bottom: 25px; width: 100%; text-transform: uppercase; letter-spacing: 0.5px;
             border: 1px solid var(--success);
         }
 
-        /* Grid vstupy */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
+        .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+        label { display: block; margin-top: 18px; font-weight: 700; font-size: 11px; color: var(--text-gray); text-transform: uppercase; }
+        input, select { 
+            width: 100%; padding: 14px; margin-top: 6px; border: 1px solid var(--border); 
+            border-radius: 12px; font-size: 16px; background: var(--input-bg); color: var(--text-main); 
         }
 
-        @media (min-width: 600px) {
-            .grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        label {
-            display: block;
-            margin-top: 18px;
-            font-weight: 700;
-            font-size: 11px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 14px;
-            margin-top: 6px;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            font-size: 16px;
-            background: var(--input-bg);
-            color: var(--text-main);
-        }
-
-        /* Fotky */
-        .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 12px;
-        }
-
+        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
         .photo-item {
-            background: var(--input-bg);
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            padding: 15px 5px;
-            text-align: center;
-            position: relative;
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 600;
+            background: var(--input-bg); border: 2px solid var(--border); border-radius: 16px; padding: 15px 5px;
+            text-align: center; position: relative; min-height: 100px; display: flex;
+            flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;
         }
-
-        .photo-item.has-file {
-            border-color: var(--success);
-            background: rgba(52, 199, 89, 0.1);
-        }
+        .photo-item.has-file { border-color: var(--success); background: rgba(52, 199, 89, 0.1); }
 
         .add-photo-btn {
-            width: 100%;
-            padding: 18px;
-            border-radius: 16px;
-            border: 2px dashed var(--border);
-            background: var(--input-bg);
-            color: var(--text-gray);
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            position: relative;
-            margin-top: 15px;
+            width: 100%; padding: 18px; border-radius: 16px; border: 2px dashed var(--border);
+            background: var(--input-bg); color: var(--text-gray); font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px; position: relative; margin-top: 15px;
         }
 
         .other-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; justify-content: center; }
         .other-tag { background: var(--primary); color: white; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
 
-        /* Podpisy */
         .sig-trigger {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            border-radius: 12px;
-            border: 1.5px dashed var(--primary);
-            background: var(--input-bg);
-            color: var(--primary);
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16px;
+            width: 100%; padding: 14px; margin-top: 10px; border-radius: 12px; border: 1.5px dashed var(--primary);
+            background: var(--input-bg); color: var(--primary); font-weight: 600; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center; font-size: 16px;
         }
         .sig-icon { width: 20px; height: 20px; fill: var(--primary); margin-right: 8px; }
         .sig-trigger.signed { border-style: solid; border-color: var(--success); color: var(--success); }
-        .sig-trigger.signed .sig-icon { fill: var(--success); }
 
-        /* Tlačítka */
         .btn-submit { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 18px; font-size: 18px; font-weight: 700; cursor: pointer; margin-top: 30px; box-shadow: 0 4px 15px rgba(0,122,255,0.2); }
         .btn-reset { background: transparent; color: var(--danger); border: 1.5px solid var(--danger); width: 100%; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 15px; }
 
-        /* Historie */
         .history-section { margin-top: 40px; border-top: 2px solid var(--border); padding-top: 20px; }
         .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .history-title { font-size: 14px; color: var(--text-gray); font-weight: 800; text-transform: uppercase; }
@@ -252,7 +127,6 @@
         .app-footer { text-align: center; padding: 30px 20px; font-size: 11px; color: var(--text-gray); }
         .app-footer a { color: var(--primary); text-decoration: none; font-weight: 700; }
 
-        /* Modal */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); z-index: 9999; display: none; flex-direction: column; }
         .modal.active { display: flex; }
         .modal-body { flex: 1; background: #ffffff; position: relative; }
@@ -292,12 +166,38 @@
 
         <div class="grid">
             <div><label id="lbl-name">Athlete Name</label><input type="text" id="athleteName" autocomplete="off"></div>
-            <div><label id="lbl-sex">Category</label><select id="sex"><option value="Men" id="opt-men">Men</option><option value="Women" id="opt-women">Women</option></select></div>
+            <div><label id="lbl-sex">Category</label>
+                <select id="sex">
+                    <option value="Men" id="opt-men">Men</option>
+                    <option value="Women" id="opt-women">Women</option>
+                </select>
+            </div>
         </div>
 
         <div class="grid">
-            <div><label id="lbl-brand">Shoe Brand</label><input type="text" id="brand" autocomplete="off"></div>
-            <div><label id="lbl-model">Shoe Model</label><input type="text" id="model" autocomplete="off"></div>
+            <div>
+                <label id="lbl-brand">Shoe Brand</label>
+                <input type="text" id="brand" list="brandListOptions" autocomplete="off">
+                <datalist id="brandListOptions">
+                    <option value="Adidas">
+                    <option value="Asics">
+                    <option value="Nike">
+                    <option value="Puma">
+                    <option value="New Balance">
+                    <option value="Hoka">
+                    <option value="Saucony">
+                    <option value="Mizuno">
+                    <option value="Brooks">
+                    <option value="Decathlon">
+                    <option value="Under Armour">
+                    <option value="On">
+                </datalist>
+            </div>
+            <div>
+                <label id="lbl-model">Shoe Model</label>
+                <input type="text" id="model" list="modelListOptions" autocomplete="off">
+                <datalist id="modelListOptions"></datalist>
+            </div>
         </div>
 
         <div class="grid">
@@ -348,7 +248,6 @@
             <div id="history-list"></div>
         </div>
     </div>
-
     <div class="app-footer">Developed & Designed by <a href="https://www.instagram.com/doolonar/" target="_blank">David Lux</a> &copy; 2026</div>
 </div>
 
@@ -365,9 +264,14 @@
     const { jsPDF } = window.jspdf;
     let currentLang = 'en', sigData = { a: null, i: null }, otherPhotos = [], activePad, activeType;
 
+    // --- DATA BOT Z TVÉHO SEZNAMU ---
+    const rawShoes = {
+      "Biospeed Future": "Y", "Biospeed pro": "N", "Flame": "N", "Flame 2": "N", "FLAME 5": "N", "FLAME 5 FUTURE": "N", "Furious": "N", "Furious 2": "N", "Furious Future": "N", "Furious Future 2": "N", "mironude": "N", "MIRONUDE2": "N", "Geist Ekiden Elite X": "N", "Haze Pro": "N", "Adizero Adios 3": "N", "Adizero Adios 4": "N", "Adizero Adios 5": "N", "Adizero Adios 6": "N", "Adizero Adios 8": "N", "Adizero Adios 9": "N", "Adizero Adios Pro": "N", "Adizero Adios Pro 2": "N", "Adizero Adios Pro 3": "N", "Adizero Adios Pro 4": "N", "Adizero Adios Pro Evo 1": "N", "Adizero Adios Pro Evo 1 v2": "N", "Adizero Adios Pro Evo 2": "N", "ADIZERO ADIOS PRO EVO 3 DEV": "N", "ADIZERO ADIOS PRO EVO 3 DEV1": "N", "ADIZERO ADIOS PRO EVO2 DEV": "N", "Adizero Ambition": "Y", "Adizero Ambition 2": "Y", "Adizero Ambition 24": "Y", "ADIZERO AMBITION 26": "Y", "Adizero Ambition Boost": "Y", "Adizero Avanti": "Y", "Adizero Avanti 24": "Y", "ADIZERO AVANTI 26": "Y", "Adizero Avanti Boost": "Y", "Adizero Avanti LJ": "Y", "ADIZERO AVANTI LJ DEV": "Y", "Adizero Avanti TYO": "Y", "ADIZERO AVANTI XC": "Y", "Adizero Boston 10": "N", "Adizero Boston 8": "N", "Adizero Boston 9": "N", "Adizero Discus Hammer": "Y", "Adizero Finesse": "Y", "Adizero Finesse 24": "Y", "ADIZERO FINESSE 26": "Y", "Adizero High Jump": "Y", "Adizero HJ": "Y", "Adizero HJ FL": "Y", "Adizero Javelin": "Y", "Adizero Javelin (22)": "Y", "Adizero Javelin 24": "Y", "Adizero LJ": "Y", "Adizero LJ (3)": "Y", "Adizero Prime SP": "Y", "Adizero Prime SP 3 Strung": "Y", "ADIZERO PRIME SP 4": "Y", "Adizero Prime SP2": "Y", "Adizero Pro": "N", "Adizero RC 2": "N", "Adizero Sub 2": "N", "Adizero Takumi Ren 3": "N", "Adizero Takumi Sen 10": "N", "Adizero Takumi Sen 11": "N", "Adizero Takumi Sen 5": "N", "Adizero Takumi Sen 6": "N", "Adizero Takumi Sen 7": "N", "Adizero Takumi Sen 8": "N", "Adizero Takumi Sen 9": "N", "Adizero Throws": "Y", "Adizero TJ 2": "Y", "ADIZERO TJ/PV (2)": "Y", "Adizero TJ/PV (with orange sockliner)": "Y", "Rio Adizero MD": "Y", "Throwstar": "Y", "Vanish Carbon": "N", "Vanish Carbon 2": "N", "C10 PRO": "N", "C10 PRO 1.5": "N", "C10 PRO 2 CSP": "N", "C10 PRO 2 LCSP": "N", "C10 PRO 2.0": "N", "C202 5 GT": "N", "C202 5 GT PRO": "N", "C202 6": "N", "C202 6 PRO": "N", "C202 G9": "N", "C202 G9 2": "N", "Hai Lang": "N", "TRACKEDGE JV -Dev": "Y", "TRACKEDGE LD": "Y", "TRACKEDGE SP -Dev": "Y", "Cosmoracer LD 2": "Y", "Cosmoracer LD 3": "Y", "Cosmoracer MD 2": "Y", "COSMORACER MD 3": "Y", "CYBER THROW LONDON": "Y", "Cyberblade 16": "Y", "CYBERBLADE 17": "Y", "Cyberblade HF": "Y", "DSPURT FX": "Y", "Duo Japan": "Y", "Effort 13": "Y", "EFFORT 14": "Y", "Effort MK": "Y", "EvoRide": "N", "FREAKS JAPAN": "N", "GEL-DS TRAINER 25": "N", "GEL-FEATHER GLIDE 5": "N", "Gun Lap 2": "Y", "Gun Lap 3": "Y", "Heat Fly": "Y", "HEAT FLY 2": "Y", "HEAT THROW": "Y", "HEAT THROW 2": "Y", "Heatflat 12": "Y", "Heatflat FR 7": "Y", "Heatsprint 13": "Y", "Heatsprint FR 8": "Y", "HI JUMP PRO (L)": "Y", "HI JUMP PRO (R)": "Y", "High Jump Pro 2 (L)": "Y", "High Jump Pro 2 (R)": "Y", "High Jump Pro 3 (L)": "Y", "High Jump Pro 3 (R)": "Y", "HT-JAPAN": "Y", "Hyper LD 6": "Y", "Hyper MD 7": "Y", "Hyper MD 8": "Y", "HYPER RACER": "Y", "HYPER SPEED": "N", "HYPER SPEED 2": "N", "HYPER SPEED 3": "N", "HYPER SPEED 4": "N", "Hyper Throw 3": "Y", "Hypersprint 7": "Y", "Hypersprint 8": "Y", "Japan Arch": "Y", "JAPAN-AR": "Y", "Javelin Pro 2": "Y", "Javelin Pro 3": "Y", "Javelin Pro 4": "Y", "JETSPRINT": "Y", "JETSPRINT (KY)": "Y", "JETSPRINT 2": "Y", "JETSPRINT 3": "Y", "Long Jump Pro": "Y", "Long Jump Pro 2": "Y", "Long Jump Pro 3": "Y", "LYTERACER 2": "N", "MAGIC SPEED": "N", "MAGIC SPEED 2": "N", "MAGIC SPEED 3": "N", "MAGIC SPEED 5": "N", "MAGICSPEED 3": "N", "MARATHON EO JAPAN": "N", "MARATHON EO RP": "N", "MARATHON EO SEIHA": "N", "ME5 TYPE-1": "N", "ME5 TYPE-P": "N", "METARACER": "N", "METASPEED EDGE": "N", "METASPEED EDGE PARIS": "N", "METASPEED EDGE TOKYO": "N", "METASPEED EDGE+": "N", "Metaspeed LD 1.5": "Y", "METASPEED LD 2": "Y", "METASPEED LD 2 F": "Y", "METASPEED LD LE 2": "Y", "Metaspeed MD": "Y", "METASPEED RAY": "N", "METASPEED RW": "N", "METASPEED SKY": "N", "METASPEED SKY PARIS": "N", "METASPEED SKY TOKYO": "N", "METASPEED SKY+": "N", "Metaspeed SP": "Y", "Metaspeed SP 0": "Y", "Metaspeed SP 1.5": "Y", "METASPEED SP 1.5 F": "Y", "Metaspeed SP 2": "Y", "Metaspeed SP LE": "Y", "Metaspeed SP2 F": "Y", "Metasprint Tokyo": "Y", "MR2 TYPE-1": "N", "MR2 TYPE-2": "N", "MS SP 3-1": "Y", "MS SP 3F-1": "Y", "MS5 TYPE-1": "N", "MS5 TYPE-P": "N", "MX TYPE-A": "N", "MX TYPE-B": "N", "SD-Japan": "Y", "SKYSENSOR JAPAN": "N", "Sonic Sky Pro": "Y", "Sonicsprint Elite": "Y", "Sonicsprint Elite 2": "Y", "Sonicsprint Elite 3": "Y", "SORTIE JAPAN": "N", "SORTIE JAPANSEIHA 2": "N", "SORTIEMAGIC LT": "N", "SORTIEMAGIC LT 2": "N", "SORTIEMAGIC LT 2 TENKA": "N", "SORTIEMAGIC RP 5": "N", "SORTIEMAGIC RP 5 TENKA": "N", "SORTIEMAGIC RP 6": "N", "SP BLADE 10": "Y", "SP Blade 9": "Y", "SP Blade SF 2": "Y", "TARTHER JAPAN": "N", "TARTHER RP": "N", "TARTHER RP 3": "N", "TARTHEREDGE 2": "N", "TARTHEREDGE 3": "N", "TARTHERZEAL 6": "N", "TF Spike SO (BD)": "Y", "TF Spike SO (JP)": "Y", "TF Spike SO (RY)": "Y", "Throw Pro 2": "Y", "Throw Pro 3": "Y", "THROW PRO 3 AG": "Y", "Triple Jump Pro": "Y", "Triple Jump Pro 2": "Y", "Windsprint 2": "Y", "Windsprint 3": "Y", "BMAI CARBON 2.0": "N", "BMAI Carbon 3.0": "N", "BMAI Carbon 3.0 Turbo": "N", "BMAI CARBON FLY": "N", "Draft XC": "Y", "ELMN8 5": "Y", "ELMN8 6": "Y", "ELMN8 7-R2": "Y", "Hyperion 2": "N", "Hyperion Elite 2": "N", "Hyperion Elite 3": "N", "Hyperion Elite 4": "N", "Hyperion Elite 4 PB": "N", "Hyperion Elite 5": "N", "Hyperion Elite 6 R2": "N", "Hyperion Elite LD": "Y", "Hyperion Elite LD 2": "Y", "Hyperion Elite LD 2 R2": "Y", "Hyperion Elite MD": "Y", "Hyperion Elite MD 2": "Y", "Hyperion Elite MD 2 R2": "Y", "Hyperion Tempo 1": "N", "WIRE 6": "Y", "Kype Pro": "N", "Nordlite Speed": "N", "DELTA PRO ELITE": "N", "DELTA PRO LITE": "N", "DELTA PRO RACE": "N", "DELTA PRO TEMPO": "N", "Delta TRI OP": "Y", "DELTAPRO AERO SPRINT": "Y", "DELTAPRO EXP V3": "N", "Genten RC": "Y", "Genten RC+": "Y", "Genten-EL": "Y", "Genten-EL+": "Y", "Genten-ST": "N", "V-Lite": "Y", "Equipe Corsa": "N", "Gara Carbon": "N", "Gara Carbon 3": "N", "Lungo Carbon W": "Y", "Mezzofondo": "Y", "Velocita Carbon": "Y", "Danian 1.0": "N", "Proto Runner 1.0": "N", "Infinite 1.0": "N", "INFINITE 4": "N", "INFINITE2.0": "N", "Phoenix": "N", "Phoenix PRO": "N", "INFINITE2": "N", "Distance": "N", "Evo+": "N", "Evo+ Light": "N", "Racer": "N", "Racer+": "N", "Trail": "N", "Trail+": "N", "RACE 01": "N", "Float Maxxi 2 Pro": "N", "Fila KR6": "N", "Float Maxxi Light": "N", "RACER CARBON 2.0": "N", "Racer Carbon 3": "N", "RACER CARBON TRI": "N", "CP5": "Y", "HIWINGS": "N", "Bondi 7": "N", "Carbon X": "N", "Carbon X2": "N", "Carbon X3": "N", "CIELO X1 3.0": "N", "Cielo Fly X Elite": "Y", "Cielo Fly X Lite": "Y", "Cielo LD": "Y", "Cielo MD": "Y", "Cielo Road": "N", "Cielo X 2 MD": "Y", "Cielo X1": "N", "Cielo X1 2.0": "N", "Clifton 7": "N", "Evo Carbon Rocket": "N", "Evo Rehi": "Y", "HOKA CLIFTON 10": "N", "Mach 3": "Y", "Mach 4": "N", "Rincon 2": "N", "Rincon 3": "N", "Rocket LD": "Y", "Rocket MD": "Y", "Rocket X": "N", "Rocket X 3": "N", "Rocket X2": "N", "Speed Evo R": "Y", "Tracer 2": "Y", "Speedster 3": "N", "TYPHON": "N", "R.3000": "N", "R.4000": "N", "R.5000": "N", "R1000": "N", "R1100": "Y", "R1200 V2": "Y", "R1300": "Y", "R3000 V2": "N", "RS9000": "N", "AT CROSS": "Y", "AT LONG": "Y", "KD 500 2": "N", "KD 800": "N", "KD900": "N", "KD900LIGHT": "N", "KD900X": "N", "KD900X LD": "N", "KD900X.2": "N", "KD900XLD.2": "N", "KD900XLD+": "N", "KIPRUN AT LONG": "Y", "Kiprun Ultralight": "Y", "KIPSONIC LONG": "Y", "KIPSTORM ELITE": "N", "KIPSTORM LAB": "N", "PR893049": "N", "RW500": "Y", "RW900 V 1": "Y", "RW900 V 2": "Y", "FeiDian": "N", "FeiDian 2.0": "N", "FeiDian 2.0 Elite": "N", "FeiDian 3 Ultra": "N", "FEIDIAN 4 CHALLENGER": "N", "FEIDIAN 4 ELITE": "N", "FeiDian 4 Ultra": "N", "FEIDIAN 5 CHALLENGER": "N", "FEIDIAN 5 ELITE": "N", "FEIDIAN 6 CHALLENGER": "N", "FEIDIAN 6 ELITE": "N", "FeiDian Challenger": "N", "Spike-sample-1": "Y", "Spike-sample-2": "Y", "Sprint-Spikes": "Y", "ZHUIFENG 4": "Y", "ZHUIFENG 6": "Y", "W Beyondfeel Run": "N", "W Blissfeel Trail Run": "N", "Macondo Center": "N", "HYPERCHARGE R26": "N", "MILLS ENERCHARGE M1": "N", "MILLS ENERCHARGE M2": "N", "ALL JUMP PRO SO1": "Y", "Brave Wing FX": "Y", "Break Sprint": "Y", "Chrono Break": "Y", "Chrono Break SO1": "Y", "Chrono Break_SO2": "Y", "Chrono Dist 7": "Y", "CHRONO DIST NEO": "Y", "CHRONO INX JAPAN": "Y", "CHRONO INX NEO": "Y", "CHRONO INX NEO JAPAN": "Y", "Chrono INX9": "Y", "Chrono INX9 SO1": "Y", "Chrono INX9 SO2": "Y", "Chrono INX9 SO3": "Y", "Chrono INX9 SO4": "Y", "Chrono Onyx 2": "Y", "Citius Wing Fx": "Y", "DEV-CINJP": "Y", "DEV-CRN": "Y", "DEV-HWE": "N", "DEV-HWEX1": "N", "DEV-HWP": "N", "DEV-HWPP": "N", "DEV-HWPR": "N", "DEV-HWPX1": "N", "DEV-WRP": "N", "DIST Special": "Y", "Duel Flash": "Y", "DUEL FLASH 2 / WIDE": "Y", "Duel Sonic": "N", "Duel Sonic 3": "N", "DUEL SONIC 4 / WIDE": "Y", "Ekiden Spirit": "Y", "Field Geo AJ-C": "Y", "Field Geo FT": "Y", "Field Geo HJ": "Y", "Field Geo JT": "Y", "Field Geo LJ": "Y", "Field Geo RD": "Y", "Field Geo Th": "Y", "Geo Cyclone": "Y", "Geo Silencer Fx": "Y", "Geo Sprint 4": "Y", "Geo Spurt Md": "Y", "Geo Versus Fx": "Y", "HIGH JUMP PRO SO2": "Y", "HYPERWARP ELITE": "N", "HYPERWARP PRO": "N", "HYPERWARP PURE": "N", "INX Break": "Y", "INX Silencer": "Y", "INX Sniper": "Y", "INX Sprint": "Y", "JAVELIN THROW PRO SO5": "Y", "LONG JUMP PRO SO4": "Y", "Long Jump Pro1 SO1": "Y", "MIZUNO SPRINT": "Y", "MIZUNO SPRINT NEO": "Y", "Spectra Type A": "Y", "Spectra Type B": "Y", "Spectra Type C": "Y", "Spectra Type D": "Y", "Spectra Type E": "Y", "Spectra Type F": "Y", "SPRINT PRO SO1": "Y", "Wave Aero": "N", "Wave Amulet": "N", "Wave Cruise Japan": "N", "Wave Cruise Pro": "N", "Wave Duel": "N", "Wave Duel 3": "N", "WAVE DUEL 4": "N", "Wave Duel Gtz": "N", "Wave Duel Neo": "N", "Wave Duel Pro": "N", "Wave Ekiden": "Y", "Wave Emperor": "N", "Wave Rebellion": "N", "Wave Sonic": "N", "Wave Spacer Gl": "N", "Wave Zone Power": "Y", "X Blast Elite": "Y", "X Blast Neo": "Y", "X Blast Next": "Y", "X FIRST": "Y", "X Laser Elite": "Y", "X Laser Next": "Y", "X Sprint": "Y", "X Stream MD": "Y", "Mizuno Base One": "N", "1400v6": "N", "1500v4": "N", "1500v6": "N", "Development Shoe 6XFP": "Y", "Development Shoe E02": "N", "DynaSoft Flash v7": "Y", "FuelCell 5280": "N", "FuelCell Prism": "N", "FuelCell PVLSE": "Y", "FuelCell Racer TC": "N", "FuelCell RC Elite": "N", "FuelCell SuperComp Elite v4": "N", "FuelCell SuperComp LD-X v3": "Y", "FuelCell SuperComp MD-X v2": "Y", "FuelCell Supercomp Pacer": "N", "FuelCell SuperComp PWR-X": "Y", "FuelCell SuperComp SD-X": "Y", "FuelCell SuperComp Trainer v2": "N", "FuelCell SuperComp XC-X": "Y", "Hanzo R v3": "N", "LD5K": "Y", "MD500": "Y", "MD800": "Y", "SD100": "Y", "SD200": "Y", "SD400": "Y", "Sigma Aria": "Y", "Sigma Harmony": "Y", "Vazee Sigma": "Y", "Vazee Verge": "Y", "Air Zoom Alphafly Next %": "N", "Air Zoom LJ Elite 1.5": "Y", "Air Zoom Maxfly": "Y", "Air Zoom Victory": "Y", "Alphafly 3": "N", "Dev 121052": "Y", "Dragonfly 2": "Y", "Dragonfly 2 Elite": "Y", "High Jump 3": "Y", "High Jump Elite": "Y", "Javelin Elite 2": "Y", "LJ 4": "Y", "LJ Elite": "Y", "Mamba V6": "Y", "Maxfly 2": "Y", "Pegasus Plus": "N", "Pegasus Turbo 2": "N", "Pole Vault Elite": "Y", "Rival Distance": "Y", "Rival Jump": "Y", "Rival Multi": "Y", "Rival Sprint": "Y", "Streakfly 2": "N", "Triple Jump Elite 3": "Y", "Vaporfly 4": "N", "Victory 2": "Y", "Zoom 400": "Y", "Zoom Fly 3": "N", "Zoom Ja Fly 4": "Y", "Zoom Javelin Elite 3": "Y", "Zoom Mamba V": "Y", "Zoom Matumbo 3": "Y", "Zoom Rival D 10": "Y", "Zoom Rival M 9": "Y", "Zoom Rival S 9": "Y", "Zoom Rival SD": "Y", "Zoom Rotational": "Y", "Zoom Superfly Elite 2": "Y", "Zoom Victory 3": "Y", "ZoomX Dragonfly": "Y", "ZoomX Streakfly": "N", "ZoomX Vaporfly Next % 3": "N", "Corre 3": "N", "Corre Grafeno": "N", "Corre Supra": "N", "Corre Vento": "N", "Cloudboom": "N", "Cloudboom 4": "N", "Cloudboom Strike": "N", "Cloudspike 1500m": "Y", "Cloudspike Sprint": "Y", "CloudTri 1": "N", "Hyperblast 3.0": "N", "Solar": "N", "PEAK UP30 5.0 ELITE": "N", "INFINITE RUSH": "N", "Berserker Nitro Elite 2": "Y", "Deviate Nitro": "N", "Deviate Nitro Elite 3": "N", "evoSPEED Complete TFX Jump": "Y", "evoSPEED Electric": "Y", "evoSPEED High Jump Elite": "Y", "evoSPEED Javelin": "Y", "evoSPEED Long Jump": "Y", "evoSPEED Sprint": "Y", "evoSPEED Tokyo Future": "Y", "FAST-FWD Nitro Elite": "N", "FAST-R Nitro Elite 2": "N", "Liberate Nitro": "N", "Long Distance Nitro Elite 3": "Y", "Mid Distance Nitro Elite": "Y", "Speed 600 2": "N", "Floatride Energy X": "N", "RBTC Racer 1": "Y", "S/LAB Phantasm": "Y", "S/LAB PHANTASM 3": "N", "Endorphin 3": "Y", "Endorphin Cheetah": "Y", "Endorphin LD": "Y", "Endorphin Pro 4": "N", "Endorphin Shift": "N", "Endorphin Speed 3": "N", "Havok XC3 Spike": "Y", "Kilkenny XC9 Spike": "Y", "Kinvara 14": "N", "Terminal VT": "Y", "Type A9": "Y", "Unleash SD 2": "Y", "Uplift HJ 2": "Y", "Spike One": "Y", "Speed Carbon RC": "N", "Wake up": "Y", "Eliot Racer": "N", "Centric Grip": "Y", "Hovr Shakedown Elite": "Y", "Hovr Skyline LJ": "Y", "Kick Sprint 3": "Y", "Sprint Pro 3": "Y", "UA Sprint Elite DEV": "Y", "Velociti Racer": "Y", "Velaasa Rockets": "Y", "Bolt 911 Black Sole": "Y", "Rocket Air Ultrasonic Diamond": "Y", "160X 6.0 Pro": "N", "160X Elite": "N", "TZ GLJ-1": "Y", "FEITENG ML RACE": "Y", "FeiYing PB 4.0": "N", "FeiYing Plaid": "N"
+    };
+
     const translations = {
-        en: { title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Date", athlete: "Athlete Name", sex: "Category", men: "Men", women: "Women", brand: "Shoe Brand", model: "Shoe Model", photo: "Photo Documentation", addOther: "+ Add Photo", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", hist: "HISTORY", clearConfirm: "Delete history?", warnMsg: "Are you sure to send an incomplete form?", sigModalTitle: "Signature", sigClear: "Clear", sigSave: "Save", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top", inspName: "Inspector Name", inspId: "ID Number", phComp: "Event Name", phAthlete: "Full Name", phBrand: "Nike", phModel: "Vaporfly 3" },
-        cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", athlete: "Jméno atleta", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka obuvi", model: "Model obuvi", photo: "Fotodokumentace", addOther: "+ Přidat fotku", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", hist: "HISTORIE", clearConfirm: "Smazat celou historii?", warnMsg: "vášně chceš odeslat nedokončený formulář", sigModalTitle: "Podpis", sigClear: "Smazat", sigSave: "Uložit", p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)", inspName: "Jméno rozhodčího", inspId: "Průkaz (číslo)", phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "Nike", phModel: "Vaporfly 3" }
+        en: { title: "SHOE CONTROL REPORT", btnList: "LIST OF APPROVED ATHLETIC SHOES", comp: "Competition", date: "Date", athlete: "Athlete Name", sex: "Category", men: "Men", women: "Women", brand: "Shoe Brand", model: "Shoe Model", photo: "Photo Documentation", addOther: "+ Add Photo", sigA: "Athlete Signature", sigI: "Inspector Signature", gen: "CREATE REPORT", reset: "RESET FORM", hist: "HISTORY", clearConfirm: "Delete entire history?", warnMsg: "vášně chceš odeslat nedokončený formulář", phComp: "Event Name", phAthlete: "Full Name", phBrand: "Nike", phModel: "Vaporfly 3", p1: "BIB & Shoe", p2: "Side View", p3: "Outsole", p4: "Label", p5: "Insole Side", p6: "Insole Top" },
+        cs: { title: "PROTOKOL KONTROLY OBUVI", btnList: "SEZNAM SCHVÁLENÉ OBUVI", comp: "Závod", date: "Datum", athlete: "Jméno atleta", sex: "Kategorie", men: "Muži", women: "Ženy", brand: "Značka obuvi", model: "Model obuvi", photo: "Fotodokumentace", addOther: "+ Přidat fotku", sigA: "Podpis atleta", sigI: "Podpis rozhodčího", gen: "VYTVOŘIT PROTOKOL", reset: "VYMAZAT FORMULÁŘ", hist: "HISTORIE", clearConfirm: "Smazat celou historii?", warnMsg: "vášně chceš odeslat nedokončený formulář", phComp: "např. Zlatá tretra", phAthlete: "Jméno a příjmení", phBrand: "Nike", phModel: "Vaporfly 3", p1: "Startovní číslo a bota", p2: "Pohled z boku", p3: "Podrážka", p4: "Štítek", p5: "Vložka (bok)", p6: "Vložka (shora)" }
     };
 
     function toggleTheme() {
@@ -376,9 +280,12 @@
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         body.setAttribute('data-theme', newTheme);
         document.getElementById('theme-icon').innerText = newTheme === 'light' ? '🌙' : '☀️';
-        localStorage.setItem('theme', newTheme);
+        localStorage.setItem('appTheme', newTheme);
     }
-    if(localStorage.getItem('theme') === 'dark') { document.body.setAttribute('data-theme', 'dark'); document.getElementById('theme-icon').innerText = '☀️'; }
+    if (localStorage.getItem('appTheme') === 'dark') {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('theme-icon').innerText = '☀️';
+    }
 
     function setLang(lang) {
         currentLang = lang; const t = translations[lang];
@@ -390,22 +297,26 @@
         document.getElementById('opt-men').innerText = t.men; document.getElementById('opt-women').innerText = t.women;
         document.getElementById('lbl-brand').innerText = t.brand; document.getElementById('lbl-model').innerText = t.model;
         document.getElementById('lbl-photo').innerText = t.photo; document.getElementById('txt-add-other').innerText = t.addOther;
-        document.getElementById('lbl-insp-name').innerText = t.inspName; document.getElementById('lbl-insp-id').innerText = t.inspId;
         document.getElementById('txt-sig-a').innerText = t.sigA; document.getElementById('txt-sig-i').innerText = t.sigI;
         document.getElementById('btn-gen').innerText = t.gen; document.getElementById('btn-reset').innerText = t.reset;
-        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('btn-clear-txt').innerText = t.clear;
-        document.getElementById('m-title-label').innerText = t.sigModalTitle; document.getElementById('btn-sig-clear').innerText = t.sigClear; document.getElementById('btn-sig-save').innerText = t.sigSave;
-        document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phAthlete; document.getElementById('brand').placeholder = t.phBrand; document.getElementById('model').placeholder = t.phModel;
+        document.getElementById('lbl-hist').innerText = t.hist; document.getElementById('btn-clear-txt').innerText = translations[lang].clearConfirm ? "SMAZAT" : "CLEAR";
+        document.getElementById('compName').placeholder = t.phComp; document.getElementById('athleteName').placeholder = t.phAthlete;
+        document.getElementById('brand').placeholder = t.phBrand; document.getElementById('model').placeholder = t.phModel;
         for(let i=1; i<=6; i++) document.getElementById('p-side'+i).innerText = t['p'+i];
         updateDatalists(); renderHistory();
     }
 
     function updateDatalists() {
+        // Závody a Inspektoři z historie
         const comps = JSON.parse(localStorage.getItem('compList') || '[]');
         const insps = JSON.parse(localStorage.getItem('inspList') || '[]');
         document.getElementById('compListOptions').innerHTML = comps.map(c => `<option value="${c}">`).join('');
         document.getElementById('inspListOptions').innerHTML = insps.map(i => `<option value="${i.name}">`).join('');
         document.getElementById('idListOptions').innerHTML = insps.map(i => `<option value="${i.id}">`).join('');
+        
+        // Modely z tvého seznamu (rawShoes)
+        const models = Object.keys(rawShoes).sort();
+        document.getElementById('modelListOptions').innerHTML = models.map(m => `<option value="${m}">`).join('');
     }
 
     function autoFillId(name) {
@@ -431,14 +342,14 @@
         otherPhotos = []; document.getElementById('otherFileList').innerHTML = "";
     }
 
-    function confirmFullReset() { if(confirm("Reset form?")) location.reload(); }
+    function confirmFullReset() { if (confirm("Reset ALL fields?")) location.reload(); }
     function handleOtherPhoto(input) { if (input.files[0]) { otherPhotos.push(input.files[0]); renderOtherList(); input.value = ""; } }
-    function renderOtherList() { document.getElementById('otherFileList').innerHTML = otherPhotos.map((f, i) => `<div class="other-tag">Photo ${i + 1} <span onclick="otherPhotos.splice(${i}, 1); renderOtherList();" style="cursor:pointer;">✕</span></div>`).join(''); }
+    function renderOtherList() { document.getElementById('otherFileList').innerHTML = otherPhotos.map((f, i) => `<div class="other-tag">Photo ${i + 1} <span onclick="otherPhotos.splice(${i}, 1); renderOtherList();" style="cursor:pointer; font-weight:bold; margin-left:5px;">✕</span></div>`).join(''); }
     function markFilled(id) { document.getElementById('item-' + id).classList.toggle('has-file', document.getElementById(id).files.length > 0); }
 
     const canvas = document.getElementById('sigCanvas');
     activePad = new SignaturePad(canvas, { backgroundColor: 'white' });
-    function openSig(type) { activeType = type; document.getElementById('sigModal').classList.add('active'); const r = Math.max(window.devicePixelRatio || 1, 1); canvas.width = canvas.offsetWidth * r; canvas.height = canvas.offsetHeight * r; canvas.getContext("2d").scale(r, r); activePad.clear(); if (sigData[type]) activePad.fromDataURL(sigData[type]); }
+    function openSig(type) { activeType = type; document.getElementById('sigModal').classList.add('active'); const ratio = Math.max(window.devicePixelRatio || 1, 1); canvas.width = canvas.offsetWidth * ratio; canvas.height = canvas.offsetHeight * ratio; canvas.getContext("2d").scale(ratio, ratio); activePad.clear(); if (sigData[type]) activePad.fromDataURL(sigData[type]); }
     function saveSig() { if (!activePad.isEmpty()) { sigData[activeType] = activePad.toDataURL(); document.getElementById('stat-' + activeType).innerText = '✅'; document.getElementById('btn-sig-' + activeType).classList.add('signed'); } closeSig(); }
     function closeSig() { document.getElementById('sigModal').classList.remove('active'); }
 
@@ -448,6 +359,7 @@
     const clean = (str) => str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "") : "";
     async function processImg(file) { if (!file) return null; return new Promise(resolve => { const reader = new FileReader(); reader.onload = (e) => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; c.getContext('2d').drawImage(img, 0, 0); resolve({ data: c.toDataURL('image/jpeg', 0.8), w: img.width, h: img.height }); }; img.src = e.target.result; }; reader.readAsDataURL(file); }); }
 
+    // --- PDF GENERÁTOR ---
     document.getElementById('btn-gen').onclick = async () => {
         const ath = document.getElementById('athleteName').value, cmp = document.getElementById('compName').value, brd = document.getElementById('brand').value, dt = document.getElementById('raceDate').value, inspN = document.getElementById('inspName').value, inspI = document.getElementById('inspId').value;
         if (!cmp || !ath || !brd) { if (!confirm(translations[currentLang].warnMsg)) return; }
@@ -476,12 +388,14 @@
                 doc.setFontSize(8).setTextColor(120).text(item.label, 20 + (col * 90), 40 + (row * 55) + 48);
             });
         }
-        doc.save(`${clean(ath).replace(/\s+/g, '_')}_${clean(cmp).replace(/\s+/g, '_')}_${dt || "NoDate"}.pdf`);
+        const fileName = `${clean(ath).replace(/\s+/g, '_')}_${clean(cmp).replace(/\s+/g, '_')}_${dt || "NoDate"}.pdf`;
+        doc.save(fileName);
         let hist = JSON.parse(localStorage.getItem('shoeHistory') || '[]'); hist.unshift({ name: ath || "N/A", comp: cmp || "N/A", time: now });
         localStorage.setItem('shoeHistory', JSON.stringify(hist.slice(0, 20)));
         partialReset(); updateDatalists(); renderHistory(); window.scrollTo(0, 0);
     };
-    window.onload = () => setLang('cs');
+
+    window.onload = () => { setLang('cs'); updateDatalists(); };
 </script>
 </body>
 </html>
