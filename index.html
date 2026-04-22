@@ -290,18 +290,18 @@
 </div>
 
 <script>
-    // --- AUTH LOGIKA ---
-    function checkPass(val) {
-        if(val.toLowerCase() === 'atletika'or 'athletics') {
-            document.getElementById('app-lock').style.display = 'none';
-            document.getElementById('app-content').style.display = 'block';
-            localStorage.setItem('unlocked', 'true');
-        }
-    }
-    if(localStorage.getItem('unlocked') === 'true') {
+   // --- AUTH LOGIKA (VÍCE HESEL) ---
+function checkPass(val) {
+    // Seznam všech povolených hesel
+    const povolenyHesla = ['atletika', 'athletics', 'wa2026', ]; 
+    
+    // Převedeme vstup na malá písmena a zkontrolujeme, zda je v seznamu
+    if(povolenyHesla.includes(val.toLowerCase())) {
         document.getElementById('app-lock').style.display = 'none';
         document.getElementById('app-content').style.display = 'block';
+        localStorage.setItem('deviceUnlocked', 'true');
     }
+}
 
     const { jsPDF } = window.jspdf;
     let currentLang = 'en', sigData = { a: null, i: null }, otherPhotos = [], activePad, activeType;
