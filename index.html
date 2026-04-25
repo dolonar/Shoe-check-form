@@ -491,7 +491,42 @@
 
     function renderHistory() {
         const hist = JSON.parse(localStorage.getItem('h_logs') || '[]');
-        document.getElementById('history-container').innerHTML = hist.map(h => `<div class="history-item"><div><b>${h.ath}</b><br><small>${h.cmp}</small></div><div style="font-size:11px; color:var(--text-gray); font-weight:700;">${h.time}</div></div>`).join('');
+        // Přidali jsme onClick a animaci, aby položka vypadala jako tlačítko
+        document.getElementById('history-container').innerHTML = hist.map((h, i) => 
+            `<div class="history-item" style="cursor:pointer; transition:0.2s;" onclick="loadFromHistory(${i})" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+                <div><b>${h.ath}</b><br><small>${h.cmp}</small></div>
+                <div style="font-size:11px; color:var(--text-gray); font-weight:700; text-align:right;">${h.time}<br><span style="color:var(--accent); font-size:10px;">NAČÍST DATA ↺</span></div>
+            </div>`
+        ).join('');
+    }
+
+    // NOVÁ FUNKCE: Načte data z historie zpět do formuláře
+    function loadFromHistory(index) {
+        const hist = JSON.parse(localStorage.getItem('h_logs') || '[]');
+        const h = hist[index];
+        if (!h) return;
+
+        // Vyplní všechna textová pole
+        document.getElementById('compName').value = h.cmp || "";
+        document.getElementById('raceDate').value = h.date || "";
+        document.getElementById('athleteName').value = h.ath || "";
+        document.getElementById('sex').value = h.sex || "Men";
+        document.getElementById('discipline').value = h.disc || "";
+        document.getElementById('serialNum').value = h.serial || "";
+        document.getElementById('brand').value = h.brd || "";
+        
+        // Znovu sestaví roletku pro model a vybere ho
+        handleBrandChange(h.brd || "");
+        document.getElementById('model').value = h.mdl || "";
+        
+        document.getElementById('inspName').value = h.insp || "";
+
+        // Zkontroluje botu proti databázi a obnoví schvalovací tlačítka
+        checkShoeInfo();
+        if (h.appr !== undefined && h.appr !== null) setApproval(h.appr);
+
+        // Hladce vyroluje stránku zpět nahoru
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function clearHistory() { 
