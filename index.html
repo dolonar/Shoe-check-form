@@ -500,7 +500,7 @@
         ).join('');
     }
 
-    // NOVÁ FUNKCE: Načte data z historie zpět do formuláře
+// NOVÁ FUNKCE: Načte data z historie zpět do formuláře VČETNĚ PODPISŮ
     function loadFromHistory(index) {
         const hist = JSON.parse(localStorage.getItem('h_logs') || '[]');
         const h = hist[index];
@@ -524,6 +524,19 @@
         // Zkontroluje botu proti databázi a obnoví schvalovací tlačítka
         checkShoeInfo();
         if (h.appr !== undefined && h.appr !== null) setApproval(h.appr);
+
+        // --- OBNOVA PODPISŮ ---
+        sigData = { a: h.sigA || null, i: h.sigI || null };
+        
+        // Reset vizuálu tlačítek s podpisy
+        document.getElementById('stat-a').innerText = sigData.a ? '✅' : '❌';
+        document.getElementById('stat-i').innerText = sigData.i ? '✅' : '❌';
+        
+        if (sigData.a) document.getElementById('btn-sig-a').classList.add('signed');
+        else document.getElementById('btn-sig-a').classList.remove('signed');
+        
+        if (sigData.i) document.getElementById('btn-sig-i').classList.add('signed');
+        else document.getElementById('btn-sig-i').classList.remove('signed');
 
         // Hladce vyroluje stránku zpět nahoru
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -700,13 +713,17 @@
             doc.save(`${clean(ath).replace(/ /g, '_')}_${clean(cmp).replace(/ /g, '_')}.pdf`);
 
             // Uložení rozšířené historie
+         // Uložení rozšířené historie VČETNĚ PODPISŮ
             let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]'); 
             h_logs.unshift({ 
                 ath: ath, cmp: cmp, time: now, 
                 date: date, sex: sex, disc: discText, 
                 serial: document.getElementById('serialNum').value, 
-                brd: brd, mdl: mdl, insp: insp, appr: isShoeApproved 
+                brd: brd, mdl: mdl, insp: insp, appr: isShoeApproved,
+                sigA: sigData.a, // Uložení podpisu atleta
+                sigI: sigData.i  // Uložení podpisu inspektora
             }); 
+            // Necháváme 15 posledních záznamů, aby se nepřekročil limit 5MB v prohlížeči
             localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,15)));
             let h_comps = JSON.parse(localStorage.getItem('h_comps') || '[]'); if(!h_comps.includes(cmp)) h_comps.push(cmp); localStorage.setItem('h_comps', JSON.stringify(h_comps));
 
