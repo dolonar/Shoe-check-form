@@ -699,7 +699,15 @@
 
             doc.save(`${clean(ath).replace(/ /g, '_')}_${clean(cmp).replace(/ /g, '_')}.pdf`);
 
-            let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]'); h_logs.unshift({ ath, cmp, time: now }); localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,15)));
+            // Uložení rozšířené historie
+            let h_logs = JSON.parse(localStorage.getItem('h_logs') || '[]'); 
+            h_logs.unshift({ 
+                ath: ath, cmp: cmp, time: now, 
+                date: date, sex: sex, disc: discText, 
+                serial: document.getElementById('serialNum').value, 
+                brd: brd, mdl: mdl, insp: insp, appr: isShoeApproved 
+            }); 
+            localStorage.setItem('h_logs', JSON.stringify(h_logs.slice(0,15)));
             let h_comps = JSON.parse(localStorage.getItem('h_comps') || '[]'); if(!h_comps.includes(cmp)) h_comps.push(cmp); localStorage.setItem('h_comps', JSON.stringify(h_comps));
 
             document.getElementById('athleteName').value = ""; document.getElementById('brand').value = ""; document.getElementById('model').value = ""; document.getElementById('discipline').value = ""; document.getElementById('serialNum').value = "";
