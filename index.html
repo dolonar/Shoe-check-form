@@ -181,7 +181,7 @@
             </div>
             <div>
                 <label id="lbl-model">Shoe Model</label>
-                <input type="text" id="model" list="modelList" placeholder="Model..." oninput="checkShoeInfo()" onchange="checkShoeInfo()" autocomplete="new-password">
+                <input type="text" id="model" list="modelList" placeholder="Model..." oninput="checkShoeInfo()" onchange="checkShoeInfo()" onfocus="this.select()" autocomplete="new-password">
                 <datalist id="modelList"></datalist>
             </div>
         </div>
@@ -369,6 +369,15 @@
     }
 
     function handleSerialSearch(val) {
+        // Když je sériové číslo smazáno, smažeme i značku a model
+        if (val.trim() === '') {
+            document.getElementById('brand').value = '';
+            document.getElementById('model').value = '';
+            handleBrandChange(''); 
+            checkShoeInfo();
+            return;
+        }
+
         const cleanVal = val.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
         if (serialDB[cleanVal]) {
             const match = serialDB[cleanVal];
@@ -379,15 +388,21 @@
         }
     }
 
-    function handleBrandChange(val) {
-        const modelList = document.getElementById('modelList');
-        const modelInput = document.getElementById('model');
-        modelList.innerHTML = "";
+        function handleBrandChange(val) {
+                const modelList = document.getElementById('modelList');
+                const modelInput = document.getElementById('model');
+                modelList.innerHTML = "";
+        
+        // Pokud je značka smazaná, smažeme i model
+            if (val.trim() === '') {
+                modelInput.value = '';
+        }
+
         const brandKey = Object.keys(shoeDB).find(k => k.toLowerCase() === val.toLowerCase().trim());
-        if(brandKey) {
-            const models = Object.keys(shoeDB[brandKey]).sort();
-            modelList.innerHTML = models.map(m => `<option value="${m}">`).join('');
-            modelInput.placeholder = (currentLang === 'cs' ? "Např. " : "E.g. ") + models[Math.floor(Math.random()*models.length)];
+            if(brandKey) {
+                const models = Object.keys(shoeDB[brandKey]).sort();
+                modelList.innerHTML = models.map(m => `<option value="${m}">`).join('');
+                modelInput.placeholder = (currentLang === 'cs' ? "Např. " : "E.g. ") + models[Math.floor(Math.random()*models.length)];
         } else {
             modelInput.placeholder = "Model...";
         }
